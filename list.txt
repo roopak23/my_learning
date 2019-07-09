@@ -1,0 +1,12 @@
+NA-
+
+TPM-39018- 989- Fix In Progress
+TPM-38280- 993- Fix in Progress
+TPM-39008- 990- Ready For deployment
+TPM-39006- 991- Ready For Testing
+TPM-38971- 987- Ready for testing
+TPM-39028- 886- To DO
+TPM-38898- 984- Ready For deployment
+TPM-38898- 979- Ready for deployment
+TPM-38341- 978- Blocked
+TPM-38356- 965- Test Failed
