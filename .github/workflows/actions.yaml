@@ -1,0 +1,15 @@
+name: new ci workflow
+on:
+  push:
+     branch: 'master'
+  workflow_dispatch:
+
+jobs:
+  CI:
+   runs-on: self-hosted
+
+   steps:
+      -name: run echo commands
+       run: echo "hello world
+       run: echo $hostname
+     
