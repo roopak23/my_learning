@@ -6,6 +6,6 @@ jobs:
   CI:
     runs-on: self-hosted
     steps:
-       -run: echo 'hello world'
-       -run: echo $HOSTNAME
+       - run: echo 'hello world'
+       - run: echo $HOSTNAME
      
