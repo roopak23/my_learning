@@ -1,5 +1,6 @@
 name: new ci workflow
 on: push
+  workflow_dispatch:
   
 
 jobs:
