@@ -5,8 +5,7 @@ on: push
 jobs:
   CI:
     runs-on: self-hosted
-
     steps:
-       -run: echo "hello world"
-       -run: echo $hostname
+       -run: echo 'hello world'
+       -run: echo $HOSTNAME
      
