@@ -6,10 +6,10 @@ on:
 
 jobs:
   CI:
-   runs-on: self-hosted
+    runs-on: self-hosted
 
-   steps:
+    steps:
       -name: run echo commands
-       run: echo "hello world
+       run: echo "hello world"
        run: echo $hostname
      
