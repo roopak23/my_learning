@@ -1,0 +1,22 @@
+CREATE TABLE IF NOT EXISTS `so_output_overall_media` (
+  `simulation_id` varchar(150) NOT NULL,
+  `advertiser_id` varchar(100) NOT NULL,
+  `advertiser_name` varchar(255) DEFAULT NULL,
+  `brand_name` varchar(100) NOT NULL,
+  `breadcrumb` varchar(255) DEFAULT NULL,
+  `media_type` varchar(100) NOT NULL,
+  `length` int(11) DEFAULT NULL,
+  `perc_length` double NOT NULL,
+  `quantity` int(11) DEFAULT NULL,
+  `format_id` varchar(255) DEFAULT NULL,
+  `partition_date` int(11) DEFAULT NULL,
+  `unit_of_measure_media_type` varchar(255) DEFAULT NULL,
+  `unit_net_price` double DEFAULT NULL,
+  `list_price` double DEFAULT NULL,
+  `total_net_price` double DEFAULT NULL,
+  `discount` double DEFAULT NULL,
+  `price_item_id` varchar(150) DEFAULT NULL,
+  `brand_id` varchar(150) DEFAULT NULL,
+  `market_product_type_id` varchar(200) DEFAULT NULL,
+  PRIMARY KEY (`simulation_id`,`advertiser_id`,`media_type`,`perc_length`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;

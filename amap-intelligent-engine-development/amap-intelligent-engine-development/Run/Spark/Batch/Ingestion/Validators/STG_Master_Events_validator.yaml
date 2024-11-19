@@ -1,0 +1,17 @@
+config:
+  remove_duplicates: true
+  check_mandatory: true
+
+# StringType, BinaryType, BooleanType, DecimalType, FloatType, DoubleType, ByteType, ShortType, IntegerType, LongType, DateType, TimestampType, NullType
+fields:
+  - name: Event_Key
+    type: StringType()
+    mandatory: true
+  - name: Event_Value
+    type: StringType()
+    mandatory: false
+
+# column order from list above
+outputOrder:
+  - Event_Key
+  - Event_Value

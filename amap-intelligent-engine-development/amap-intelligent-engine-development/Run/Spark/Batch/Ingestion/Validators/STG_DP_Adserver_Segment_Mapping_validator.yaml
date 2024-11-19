@@ -1,0 +1,27 @@
+config:
+  remove_duplicates: true
+  check_mandatory: true
+
+fields:
+  - name: segment_id
+    type: StringType()
+    mandatory: true
+  - name: segment_name
+    type: StringType()
+    mandatory: false
+  - name: techincal_remote_id
+    type: StringType()
+    mandatory: false
+  - name: techincal_remote_name
+    type: StringType()
+    mandatory: false
+  - name: adserver_id
+    type: StringType()
+    mandatory: true
+    
+outputOrder:
+  - segment_id
+  - segment_name
+  - techincal_remote_id
+  - techincal_remote_name
+  - adserver_id

@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Release.Name }}-settings-container
+  labels:
+    app: {{ .Release.Name }}
+    chart: {{ .Chart.Name }}
+    release: {{ .Chart.Version }}
+
+data:
+  server.address: "0.0.0.0" # used to expose api outside of the container
+  cloud.config.failFast: "true" # kill app when the config server is unreachable

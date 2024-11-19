@@ -1,0 +1,21 @@
+config:
+  remove_duplicates: true
+  check_mandatory: true
+
+# StringType, BinaryType, BooleanType, DecimalType, FloatType, DoubleType, ByteType, ShortType, IntegerType, LongType, DateType, TimestampType, NullType
+fields:
+  - name: Tech_Line__c
+    type: StringType()
+    mandatory: true
+  - name: Targeting_Remote_Id__c
+    type: StringType()
+    mandatory: false
+  - name: Target_Name__c
+    type: StringType()
+    mandatory: false
+
+# column order from list above
+outputOrder:
+  - Tech_Line__c
+  - Targeting_Remote_Id__c 
+  - Target_Name__c

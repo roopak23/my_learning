@@ -1,0 +1,6 @@
+# AUTHOR: Saverio "Kaspar" Ferrara
+# DESCRIPTION: Basic Airflow container with Hive connectors and additional pip packages
+# BUILD: read the README.md file
+
+#FROM apache/airflow:2.0.0-python3.8
+FROM apache/airflow:PARAMS.AIRFLOW_VERSION

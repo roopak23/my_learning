@@ -1,0 +1,41 @@
+config:
+  remove_duplicates: true
+  check_mandatory: true
+
+# StringType, BinaryType, BooleanType, DecimalType, FloatType, DoubleType, ByteType, ShortType, IntegerType, LongType, DateType, TimestampType, NullType
+fields:
+  - name: Date
+    type: DateType()
+    mandatory: true
+  - name: AD_UNIT_ID
+    type: StringType()
+    mandatory: true
+  - name: AD_UNIT_NAME
+    type: StringType()
+    mandatory: false
+  - name: TOTAL_CODE_SERVED_COUNT
+    type: IntegerType()
+    mandatory: false
+  - name: TOTAL_INVENTORY_LEVEL_UNFILLED_IMPRESSIONS
+    type: IntegerType()
+    mandatory: true
+  - name: TOTAL_UNMATCHED_AD_REQUESTS
+    type: IntegerType()
+    mandatory: true
+  - name: adserver_id
+    type: StringType()
+    mandatory: true
+  - name: metric
+    type: StringType()
+    mandatory: true
+
+# column order from list above
+outputOrder:
+  - Date
+  - AD_UNIT_ID
+  - AD_UNIT_NAME
+  - TOTAL_CODE_SERVED_COUNT
+  - TOTAL_INVENTORY_LEVEL_UNFILLED_IMPRESSIONS
+  - TOTAL_UNMATCHED_AD_REQUESTS
+  - adserver_id
+  - metric

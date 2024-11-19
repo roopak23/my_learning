@@ -1,0 +1,23 @@
+apiVersion: v1
+kind: Service
+
+metadata:
+  name: {{ .Values.@componentID@.id }}
+  labels:
+    app: {{ .Release.Name }}
+    chart: {{ .Chart.Name }}
+    release: {{ .Chart.Version }}
+    component: @componentID@
+
+spec:
+  selector:
+    app: {{ .Release.Name }}
+    release: {{ .Chart.Version }}
+    component: @componentID@
+
+
+  ports:
+    - name: {{ .Values.@componentID@.id }}
+      protocol: TCP
+      port: {{ .Values.@componentID@.service.port | default 8080 }}
+      targetPort: {{ .Values.@componentID@.service.port }}

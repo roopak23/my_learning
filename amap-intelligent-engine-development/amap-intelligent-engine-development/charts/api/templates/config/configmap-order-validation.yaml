@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Release.Name }}-order-validation
+  labels:
+    app: {{ .Release.Name }}
+    chart: {{ .Chart.Name }}
+    release: {{ .Chart.Version }}
+
+data:
+  api.order.line-limit: "100"
+  api.order.target-limit: "1000"
+  api.order.adserver-limit: "5"
+  api.order.adslot-limit: "1000"

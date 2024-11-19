@@ -1,0 +1,15 @@
+config:
+  remove_duplicates: true
+  check_mandatory: true
+
+fields:
+  - name: commercial_audience_id
+    type: StringType()
+    mandatory: true
+  - name: commercial_audience_name
+    type: StringType()
+    mandatory: true
+
+outputOrder:
+  - commercial_audience_id
+  - commercial_audience_name

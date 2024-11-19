@@ -1,0 +1,59 @@
+config:
+  remove_duplicates: true
+  check_mandatory: true
+
+fields:
+  - name: FMH_Common_Sales_Area__c
+    type: StringType()
+    mandatory: true
+  - name: FMH_Content_Partner__c
+    type: StringType()
+    mandatory: true
+  - name: FMH_AD_Platform__c
+    type: StringType()
+    mandatory: false
+  - name: FMH_Ad_Slot_Name_1__c
+    type: StringType()
+    mandatory: false
+  - name: FMH_Ad_Slot_Name_2__c
+    type: StringType()
+    mandatory: false
+  - name: FMH_Ad_Slot_Name_3__c
+    type: StringType()
+    mandatory: false
+  - name: FMH_Ad_Slot_Name_4__c
+    type: StringType()
+    mandatory: false
+  - name: FMH_Ad_Slot_Name_5__c
+    type: StringType()
+    mandatory: false
+  - name: FMH_Ad_Slot_Id_1__c
+    type: StringType()
+    mandatory: false
+  - name: FMH_Ad_Slot_Id_2__c
+    type: StringType()
+    mandatory: false
+  - name: FMH_Ad_Slot_Id_3__c
+    type: StringType()
+    mandatory: false
+  - name: FMH_Ad_Slot_Id_4__c
+    type: StringType()
+    mandatory: false
+  - name: FMH_Ad_Slot_Id_5__c
+    type: StringType()
+    mandatory: false
+    
+outputOrder:
+  - FMH_Common_Sales_Area__c
+  - FMH_Content_Partner__c
+  - FMH_AD_Platform__c
+  - FMH_Ad_Slot_Name_1__c
+  - FMH_Ad_Slot_Name_2__c
+  - FMH_Ad_Slot_Name_3__c
+  - FMH_Ad_Slot_Name_4__c
+  - FMH_Ad_Slot_Name_5__c
+  - FMH_Ad_Slot_Id_1__c
+  - FMH_Ad_Slot_Id_2__c
+  - FMH_Ad_Slot_Id_3__c
+  - FMH_Ad_Slot_Id_4__c
+  - FMH_Ad_Slot_Id_5__c

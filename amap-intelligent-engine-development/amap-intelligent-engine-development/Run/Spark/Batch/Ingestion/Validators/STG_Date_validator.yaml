@@ -1,0 +1,33 @@
+config:
+  remove_duplicates: true
+  check_mandatory: true
+
+# StringType, BinaryType, BooleanType, DecimalType, FloatType, DoubleType, ByteType, ShortType, IntegerType, LongType, DateType, TimestampType, NullType
+fields:
+  - name: date
+    type: DateType()
+    mandatory: true
+  - name: day
+    type: StringType()
+    mandatory: true
+  - name: month
+    type: IntegerType()
+    mandatory: true
+  - name: holiday
+    type: IntegerType()
+    mandatory: true
+  - name: summer_period
+    type: IntegerType()
+    mandatory: true
+  - name: christmas_period
+    type: IntegerType()
+    mandatory: true
+
+# column order from list above
+outputOrder:
+  - date
+  - day 
+  - month 
+  - holiday
+  - summer_period
+  - christmas_period

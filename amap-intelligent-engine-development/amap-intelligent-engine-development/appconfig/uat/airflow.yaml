@@ -1,0 +1,165 @@
+params:
+
+  - name: PARAMS.ENVIRONMENT
+    value: uat
+
+  - name: PARAMS.AWS_REGION
+    value: ap-southeast-2
+    descirption: AWS region where applications will be deployed
+
+  - name: PARAMS.ECR_REPO
+    value: 904458240716.dkr.ecr.ap-southeast-2.amazonaws.com
+    descirption: ECR Reporitory where custome images will be stored
+
+  - name: PARAMS.EKS_CLUSTER_NAME
+    value: foxtel-hawkeye-uat-eks
+    descirption: Cluster Name where applications will be deployed
+
+  - name: PARAMS.HOST
+    value: priv.uatamapie.foxtel.com.au
+    descirption: Host name to use for ingress for internal connections from corporate
+
+
+  - name: PARAMS.INAGE_REPOSITORY
+    value: 904458240716.dkr.ecr.ap-southeast-2.amazonaws.com/airflow
+    descirption: ECR Reporitory where custome images will be stored
+
+  - name: PARAMS.S3_APP_BUCKET_NAME
+    value: foxtel-hawkeye-uat-s3-app
+    descirption: S3 bucket for application configuration data
+
+  - name: PARAMS.S3_DATA_BUCKET_NAME
+    value: foxtel-hawkeye-uat-s3-data
+    descirption: S3 bucket for application configuration data
+
+  - name: PARAMS.S3_LOGS_BUCKET_NAME
+    value: foxtel-hawkeye-uat-s3-logs
+    descirption: S3 bucket for application configuration data
+
+  - name: PARAMS.DB_HOST
+    value: foxtel-hawkeye-uat-rds.cdz6ph7gogn8.ap-southeast-2.rds.amazonaws.com
+    descirption: RDS database endpoint
+
+  - name: PARAMS.DB_NAME
+    value: airflow
+    descirption: Database name for Airflow
+
+  - name: PARAMS.AIRFLOW_DB_USER
+    value: airflow
+    descirption: Database user
+
+  - name: XPARAMS.AIRFLOW_DB_PASS
+    value: airflow_db_user_password_uat
+    descirption: Airflow db user password stored in external provider
+
+  - name: PARAMS.DB_PORT
+    value: 3306
+    descirption: Database port
+
+  - name: XPARAMS.DB_ADMIN_PASS
+    value: mysql_password_for_etl_uat
+    descirption: MySQL db password for ETL stored in external provider - user db_admin 
+
+  - name: XPARAMS.AIRFLOW_ADMIN_PASSWORD
+    value: airflow_admin_password_uat
+    descirption: Airflow Admin Password stored in external provider - UI
+
+  - name: XPARAMS.HIVE_DB_USER_PASSWORD
+    value: hive_metastore_password_uat
+    descirption: hive_user db password stored in external provider
+
+  - name: XPARAMS.EMR_SSH_PRIVATE_KEY
+    value: amap_airflow_ssh_key_uat
+    descirption: SSH key to access ERM clusted stored in external provider
+
+  - name: PARAMS.EC2_DEPLOY_KEY
+    value: foxtel-hawkeye-uat-deployer-key
+    descirption: Static private ip to use for master node of EMR cluster
+
+  - name: PARAMS.EMR_SUBNET
+    value: subnet-001c482731652adc4
+    descirption: Subnet to use for EMR cluster
+
+
+  - name: PARAMS.EMR_STATIC_IP
+    value: 10.109.207.250
+    descirption: Static private ip to use for master node of EMR cluster
+
+  - name: PARAMS.EMR_ADDITIONAL_SECURITY_GROUP
+    value: sg-014a7cae8252813fe
+    descirption: EMR additional security group_id
+
+  - name: PARAMS.EMR_ServiceAccessSecurityGroup
+    value: sg-06f4a17a2041c254c
+    descirption: EMR additional security group_id
+
+  - name: PARAMS.EMR_EmrManagedSlaveSecurityGroup
+    value: sg-05021ac67d4900daa
+    descirption: EMR additional security group_id
+
+
+  - name: PARAMS.EMR_EmrManagedMasterSecurityGroup
+    value: sg-0cc5a76e69764042d
+    descirption: EMR additional security group_id
+
+  - name: PARAMS.EC2_INSTANCE_PROFILE
+    value: foxtel-hawkeye-uat-ec2-instance-profile
+    descirption: EC2 Instance profile to use for EMR workers
+
+  - name: PARAMS.EMR_STACKNAME
+    value: dm_emr_stack
+    descirption: Stack name
+
+  - name: PARAMS.EMR_NAME
+    value: foxtel-hawkeye-uat
+    descirption: EMR cluster name
+
+  - name: PARAMS.EMR_DEFAULT_ROLE
+    value: foxtel-hawkeye-uat-emr-default-role
+    descirption: EMR default role
+
+
+  - name: PARAMS.EMR_AUTOSCALING_ROLE
+    value: foxtel-hawkeye-uat-emr-autoscaling-role
+    descirption: EMR autoscaling role
+
+  - name: PARAMS.AIRFLOW_VERSION
+    value: 2.6.2-python3.10-custom-v0.1
+    descirption: Airflow version for base image
+
+  - name: PARAMS.EMR_SECURITY_CONFIGURATION
+    value: foxtel-hawkeye-uat-emr-sc
+    descirption: EMR security configuration
+
+
+  - name: PARAMS.CUSTOM_GIT_SYNC
+    value: false
+    descirption: true/false
+
+  - name: PARAMS.WEB_REPLICAS
+    value: 1
+    descirption: Web pod replicas
+
+  - name: PARAMS.FLOWER_REPLICAS
+    value: 1
+    descirption: Flower pod replicas
+
+  - name: PARAMS.WORKER_REPLICAS
+    value: 2
+    descirption: Worker pod replicas
+
+  - name: PARAMS.EMR_MIN_CORES
+    value: 2
+    descirption: Worker pod replicas
+
+  - name: PARAMS.EMR_MAX_CORES
+    value: 8
+    descirption: Worker pod replicas
+
+  - name: PARAMS.API_HOST
+    value: https://pub.uatamapie.foxtel.com.au
+    descirption: Host name for API
+
+
+
+

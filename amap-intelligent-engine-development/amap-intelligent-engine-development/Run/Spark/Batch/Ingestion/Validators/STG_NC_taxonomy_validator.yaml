@@ -1,0 +1,31 @@
+config:
+  remove_duplicates: true
+  check_mandatory: true
+
+fields:
+  - name: taxonomy_segment_name
+    type: StringType()
+    mandatory: true
+  - name: taxonomy_segment_type
+    type: StringType()
+    mandatory: true
+  - name: platform
+    type: StringType()
+    mandatory: true
+  - name: platform_segment_unique_id
+    type: StringType()
+    mandatory: true
+  - name: platform_segment_name
+    type: StringType()
+    mandatory: true
+  - name: news_connect_id
+    type: StringType()
+    mandatory: false
+
+outputOrder:
+  - taxonomy_segment_name
+  - taxonomy_segment_type
+  - platform
+  - platform_segment_unique_id
+  - platform_segment_name
+  - news_connect_id

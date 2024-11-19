@@ -1,0 +1,19 @@
+config:
+  remove_duplicates: true
+  check_mandatory: true
+
+fields:
+  - name: External_Id__c
+    type: StringType()
+    mandatory: true
+  - name: Account__c
+    type: StringType()
+    mandatory: true
+  - name: Ad_Ops_System__c
+    type: StringType()
+    mandatory: true
+
+outputOrder:
+  - External_Id__c
+  - Account__c
+  - Ad_Ops_System__c

@@ -1,0 +1,27 @@
+config:
+  remove_duplicates: true
+  check_mandatory: true
+
+fields:
+  - name: remote_id
+    type: StringType()
+    mandatory: true
+  - name: recommendation_id
+    type: StringType()
+    mandatory: true
+  - name: recommendation_type
+    type: StringType()
+    mandatory: false
+  - name: recommendation_value
+    type: StringType()
+    mandatory: false
+  - name: customer_id
+    type: StringType()
+    mandatory: true
+    
+outputOrder:
+  - remote_id
+  - recommendation_id
+  - recommendation_type
+  - recommendation_value
+  - customer_id

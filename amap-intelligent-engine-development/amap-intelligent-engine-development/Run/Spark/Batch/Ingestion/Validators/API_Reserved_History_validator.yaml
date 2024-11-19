@@ -1,0 +1,155 @@
+config:
+  remove_duplicates: true
+  check_mandatory: true
+
+fields:
+  - name: date
+    type: DateType()
+    mandatory: true
+  - name: market_order_line_details_name
+    type: StringType()
+    mandatory: true
+  - name: market_order_line_details_id
+    type: StringType()
+    mandatory: true
+  - name: tech_line_id
+    type: StringType()
+    mandatory: true
+  - name: tech_line_name
+    type: StringType()
+    mandatory: true
+  - name: tech_line_remote_id
+    type: StringType()
+    mandatory: true
+  - name: start_date
+    type: DateType()
+    mandatory: true
+  - name: end_date
+    type: DateType()
+    mandatory: true
+  - name: status
+    type: StringType()
+    mandatory: true
+  - name: media_type
+    type: StringType()
+    mandatory: true
+  - name: commercial_audience
+    type: StringType()
+    mandatory: true
+  - name: quantity
+    type: IntegerType()
+    mandatory: true
+  - name: unit_type
+    type: StringType()
+    mandatory: true
+  - name: unit_price
+    type: DoubleType()
+    mandatory: true
+  - name: unit_net_price
+    type: DoubleType()
+    mandatory: true
+  - name: total_price
+    type: DoubleType()
+    mandatory: true
+  - name: adserver_adslot_name
+    type: StringType()
+    mandatory: true
+  - name: adserver_id
+    type: StringType()
+    mandatory: true
+  - name: adserver_adslot_id
+    type: StringType()
+    mandatory: true
+  - name: adserver_target_remote_id
+    type: StringType()
+    mandatory: true
+  - name: adserver_target_name
+    type: StringType()
+    mandatory: true
+  - name: adserver_target_type
+    type: StringType()
+    mandatory: true
+  - name: adserver_target_category
+    type: StringType()
+    mandatory: true
+  - name: adserver_target_code
+    type: StringType()
+    mandatory: true
+  - name: length
+    type: IntegerType()
+    mandatory: true
+  - name: format_id
+    type: StringType()
+    mandatory: true
+  - name: price_item
+    type: StringType()
+    mandatory: true
+  - name: breadcrumb
+    type: StringType()
+    mandatory: true
+  - name: advertiser_id
+    type: StringType()
+    mandatory: true
+  - name: brand_name
+    type: StringType()
+    mandatory: true
+  - name: market_order_id
+    type: StringType()
+    mandatory: true
+  - name: market_order_name
+    type: StringType()
+    mandatory: true
+  - name: frequency_cap
+    type: IntegerType()
+    mandatory: true
+  - name: day_part
+    type: StringType()
+    mandatory: true
+  - name: priority
+    type: StringType()
+    mandatory: true
+  - name: ad_format_id
+    type: StringType()
+    mandatory: true
+  - name: market_product_type_id
+    type: StringType()
+    mandatory: true
+    
+outputOrder:
+  - date
+  - market_order_line_details_name
+  - market_order_line_details_id
+  - tech_line_id
+  - tech_line_name
+  - tech_line_remote_id
+  - start_date
+  - end_date
+  - status
+  - media_type
+  - commercial_audience
+  - quantity
+  - unit_type
+  - unit_price
+  - unit_net_price
+  - total_price
+  - adserver_adslot_name
+  - adserver_id
+  - adserver_adslot_id
+  - adserver_target_remote_id
+  - adserver_target_name
+  - adserver_target_type
+  - adserver_target_category
+  - adserver_target_code
+  - length
+  - format_id
+  - price_item
+  - breadcrumb
+  - advertiser_id
+  - brand_name
+  - market_order_id
+  - market_order_name
+  - frequency_cap
+  - day_part
+  - priority
+  - ad_format_id
+  - market_product_type_id

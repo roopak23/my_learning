@@ -1,0 +1,36 @@
+config:
+  remove_duplicates: true
+  check_mandatory: true
+
+fields:
+  - name: Id
+    type: StringType()
+    mandatory: true
+  - name: Pricing_Index_Table__c
+    type: StringType()
+    mandatory: false
+  - name: Name
+    type: StringType()
+    mandatory: false
+  - name: Multiplier__c
+    type: DoubleType()
+    mandatory: false
+  - name: Selling_Type__c
+    type: StringType()
+    mandatory: false
+  - name: Spot_Length__c
+    type: DoubleType()
+    mandatory: false
+  - name: Commercial_Audience__c
+    type: StringType()
+    mandatory: false    
+    
+outputOrder:
+  - Id
+  - Pricing_Index_Table__c
+  - Name
+  - Multiplier__c
+  - Selling_Type__c
+  - Spot_Length__c
+  - Commercial_Audience__c
+

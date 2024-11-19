@@ -1,0 +1,27 @@
+
+# General configuration of the DAG
+DAG:
+  MYSQL_PATH: '/opt/airflow/dags/Spark/Installation'
+
+
+
+# Environment configuration (AWS, AZR, GCP)
+Environment:
+  NAME: AWS
+  BUCKET_NAME: dev-dm3-data
+  TABLEHOST: s3 #wasb #gs
+
+
+# Variables for Tables
+Tables:
+  ENDDATE: (pendulum.now(tz='Australia/Sydney')- timedelta(1)).strftime('%Y%m%d')
+  WEEKDATE: days_ago(7).strftime('%Y%m%d')
+  MONTHDATE: days_ago(30).strftime('%Y%m%d')
+
+  RUNDATE: days_ago(0).strftime('%Y-%m-%d')
+  RUNDAY: days_ago(0).day
+  RUNWEEK: days_ago(0).isocalendar()[1]
+  RUNMONTH: days_ago(0).month
+  RUNYEAR: days_ago(0).year
+
+# EOF

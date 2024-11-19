@@ -1,0 +1,40 @@
+DEFAULT_APP_PORT: @app-port@
+
+server:
+  port: ${APP_PORT:${DEFAULT_APP_PORT}}
+
+api:
+  inventory:
+    line-limit: 100
+    target-limit: 1000
+    adserver-limit: 5
+    adslot-limit: 1000
+    metric-limit: 5
+  audience:
+    name-limit: 1000
+    adserver-limit: 5
+    metric-limit: 5
+
+spring:
+  main:
+    allow-circular-references: true
+  application:
+    name: "@spring.application.name@"
+  profiles:
+    active: "@spring.profiles.active@"
+    include: "@spring.profiles.include@"
+  cloud:
+    config:
+      name: auth , settings , settings-${spring.profiles.active} , db, db-${spring.profiles.active}, ms-cookie, ${spring.application.name}, ${spring.application.name}-${spring.profiles.active}
+    kubernetes:
+      config:
+        namespace: ${APP_NAMESPACE:default}
+        sources:
+         - name: dm3-api-settings
+         - name: dm3-api-settings-${spring.profiles.active}
+         - name: dm3-api-ms-cookie
+         - name: dm3-api-db
+         - name: dm3-api-auth
+         - name: dm3-api-${spring.application.name}
+         - name: dm3-api-${spring.application.name}-${spring.profiles.active}
+         - name: dm3-api-inventory-validation

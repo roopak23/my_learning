@@ -1,0 +1,29 @@
+config:
+  remove_duplicates: true
+  check_mandatory: true
+
+# StringType, BinaryType, BooleanType, DecimalType, FloatType, DoubleType, ByteType, ShortType, IntegerType, LongType, DateType, TimestampType, NullType
+fields:
+  - name: Name
+    type: StringType()
+    mandatory: true
+  - name: Type__c
+    type: StringType()
+    mandatory: true
+  - name: Targeting__c
+    type: StringType()
+    mandatory: false
+  - name: Id
+    type: StringType()
+    mandatory: false
+  - name: Audience_Segment__c
+    type: StringType()
+    mandatory: false
+
+# column order from list above
+outputOrder:
+  - Name 
+  - Type__c 
+  - Targeting__c
+  - Id
+  - Audience_Segment__c

@@ -1,0 +1,27 @@
+apiVersion: v1
+kind: Service
+
+metadata:
+  name: {{ .Values.orderManagement.id }}
+  labels:
+    app: {{ .Release.Name }}
+    chart: {{ .Chart.Name }}
+    release: {{ .Chart.Version }}
+    component: orderManagement
+  annotations:
+    {{- if .Values.orderManagement.service.annotations }}
+      {{ toYaml .Values.orderManagement.service.annotations | indent 2 }}
+    {{- end }}
+
+spec:
+  selector:
+    app: {{ .Release.Name }}
+    release: {{ .Chart.Version }}
+    component: orderManagement
+
+
+  ports:
+    - name: {{ .Values.orderManagement.id }}
+      protocol: TCP
+      port: {{ .Values.orderManagement.service.port | default 8080 }}
+      targetPort: {{ .Values.orderManagement.service.port }}

@@ -1,0 +1,35 @@
+config:
+  remove_duplicates: true
+  check_mandatory: true
+
+fields:
+  - name: Id
+    type: StringType()
+    mandatory: true
+  - name: Name
+    type: StringType()
+    mandatory: false
+  - name: Status__c
+    type: StringType()
+    mandatory: false
+  - name: Market_Order__c
+    type: StringType()
+    mandatory: true
+  - name: Ad_Ops_System__c
+    type: StringType()
+    mandatory: true
+  - name: Remote_Id__c
+    type: StringType()
+    mandatory: true
+  - name: Total_Price__c
+    type: DoubleType()
+    mandatory: false
+    
+outputOrder:
+  - Id
+  - Name
+  - Status__c
+  - Market_Order__c
+  - Ad_Ops_System__c
+  - Remote_Id__c
+  - Total_Price__c

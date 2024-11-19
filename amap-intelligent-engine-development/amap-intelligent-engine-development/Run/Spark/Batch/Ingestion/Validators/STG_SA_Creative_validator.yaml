@@ -1,0 +1,43 @@
+config:
+  remove_duplicates: true
+  check_mandatory: true
+
+fields:
+  - name: Id
+    type: StringType()
+    mandatory: true
+  - name: AdvertiserId__c
+    type: StringType()
+    mandatory: false
+  - name: Ad_Ops_System_Name__c
+    type: StringType()
+    mandatory: false
+  - name: Remote_Id__c
+    type: StringType()
+    mandatory: false
+  - name: Tech_Line__c
+    type: StringType()
+    mandatory: false
+  - name: Size__c
+    type: StringType()
+    mandatory: true
+  - name: Type__c
+    type: StringType()
+    mandatory: true
+  - name: Creative_URL__c
+    type: StringType()
+    mandatory: false
+  - name: Call_To_Action_Type__c
+    type: StringType()
+    mandatory: false
+    
+outputOrder:
+  - Id
+  - AdvertiserId__c
+  - Ad_Ops_System_Name__c
+  - Remote_Id__c
+  - Tech_Line__c
+  - Size__c
+  - Type__c
+  - Creative_URL__c
+  - Call_To_Action_Type__c

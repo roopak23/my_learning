@@ -1,0 +1,18 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Release.Name }}-inventory-validation
+  labels:
+    app: {{ .Release.Name }}
+    chart: {{ .Chart.Name }}
+    release: {{ .Chart.Version }}
+
+data:
+  api.inventory.line-limit: "100"
+  api.inventory.target-limit: "1000"
+  api.inventory.adserver-limit: "5"
+  api.inventory.adslot-limit: "1000"
+  api.inventory.metric-limit: "5"
+  api.audience.name-limit: "1000"
+  api.audience.adserver-limit: "5"
+  api.audience.metric-limit: "5"

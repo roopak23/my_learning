@@ -1,0 +1,23 @@
+ [
+        {% for i in get_data_dict['data'] %} 
+      {
+        "cod_instance":"{{i[0]}}",
+        "name":"{{i[1]}}",
+        "description":"{{i[2]}}",
+        "entity_type_name":"{{i[3]}}",
+        "creation_date":"{{i[4]}}",
+        "creation_user":"{{i[5]}}",
+        "creation_user_id":"{{i[6]}}",
+        "simulationname":"{{i[7]}}",
+        "simulationcreation":"{{i[8]}}",
+        "simulationstatus":"{{i[9]}}",
+        "createdby":"{{i[10]}}",
+        "startdate":"{{i[11]}}",
+        "enddate":"{{i[12]}}",
+        "type":"{{i[13]}}",
+        "media":"{{i[14]}}",
+        "status":"{{i[15]}}",
+        "partition_date":"{{i[16]}}"
+        },
+            {% endfor %}
+    ]

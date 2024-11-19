@@ -1,0 +1,35 @@
+config:
+  remove_duplicates: true
+  check_mandatory: true
+
+fields:
+  - name: Id__c
+    type: StringType()
+    mandatory: true
+  - name: Industry_Name__c 
+    type: StringType()
+    mandatory: true
+  - name: System_Id__c
+    type: StringType()
+    mandatory: true
+  - name: System_Name__c
+    type: StringType()
+    mandatory: false
+  - name: Cpm__c
+    type: DoubleType()
+    mandatory: false
+  - name: Cpc__c
+    type: DoubleType()
+    mandatory: false
+  - name: Ctr__c
+    type: DoubleType()
+    mandatory: false
+    
+outputOrder:
+  - Id__c
+  - Industry_Name__c 
+  - System_Id__c
+  - System_Name__c
+  - Cpm__c
+  - Cpc__c
+  - Ctr__c

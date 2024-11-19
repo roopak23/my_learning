@@ -1,0 +1,343 @@
+config:
+  remove_duplicates: false
+  check_mandatory: false
+
+# StringType, BinaryType, BooleanType, DecimalType, FloatType, DoubleType, ByteType, ShortType, IntegerType, LongType, DateType, TimestampType, NullType
+  
+fields:
+
+  - name: active_view_eligible_impression
+    type: StringType()
+    mandatory: false
+  - name: ad_unit_id
+    type: StringType()
+    mandatory: true
+  - name: advertiser
+    type: StringType()
+    mandatory: false
+  - name: advertiser_id
+    type: StringType()
+    mandatory: true
+  - name: adx_account_id
+    type: StringType()
+    mandatory: false
+  - name: anonymous
+    type: StringType()
+    mandatory: false
+  - name: audience_segment_ids
+    type: StringType()
+    mandatory: false
+  - name: band_width
+    type: StringType()
+    mandatory: false
+  - name: bandwidth_group_id
+    type: StringType()
+    mandatory: false
+  - name: bandwidth_id
+    type: StringType()
+    mandatory: false
+  - name: browser
+    type: StringType()
+    mandatory: false
+  - name: browser_id
+    type: StringType()
+    mandatory: false
+  - name: buyer
+    type: StringType()
+    mandatory: false
+  - name: city
+    type: StringType()
+    mandatory: false
+  - name: city_id
+    type: StringType()
+    mandatory: false
+  - name: cms_metadata
+    type: StringType()
+    mandatory: false
+  - name: country
+    type: StringType()
+    mandatory: false
+  - name: country_id
+    type: StringType()
+    mandatory: false
+  - name: creative_id
+    type: StringType()
+    mandatory: false
+  - name: creative_size
+    type: StringType()
+    mandatory: false
+  - name: creative_size_delivered
+    type: StringType()
+    mandatory: false
+  - name: creative_version
+    type: StringType()
+    mandatory: false
+  - name: custom_targeting
+    type: StringType()
+    mandatory: false
+  - name: deal_id
+    type: StringType()
+    mandatory: false
+  - name: deal_type
+    type: StringType()
+    mandatory: false
+  - name: device_category
+    type: StringType()
+    mandatory: false
+  - name: domain
+    type: StringType()
+    mandatory: false
+  - name: estimated_backfill_revenue
+    type: StringType()
+    mandatory: false
+  - name: event_key_part
+    type: StringType()
+    mandatory: false
+  - name: event_time_usec2
+    type: StringType()
+    mandatory: false
+  - name: gfp_content_id
+    type: StringType()
+    mandatory: false
+  - name: ip
+    type: StringType()
+    mandatory: false
+  - name: impression_id
+    type: StringType()
+    mandatory: false
+  - name: is_companion
+    type: StringType()
+    mandatory: false
+  - name: is_interstitial
+    type: StringType()
+    mandatory: false
+  - name: key_part
+    type: StringType()
+    mandatory: false
+  - name: line_item_id
+    type: StringType()
+    mandatory: true
+  - name: metro
+    type: StringType()
+    mandatory: false
+  - name: metro_id
+    type: StringType()
+    mandatory: false
+  - name: mobile_app_id
+    type: StringType()
+    mandatory: false
+  - name: mobile_capability
+    type: StringType()
+    mandatory: false
+  - name: mobile_carrier
+    type: StringType()
+    mandatory: false
+  - name: mobile_device
+    type: StringType()
+    mandatory: false
+  - name: native_format
+    type: StringType()
+    mandatory: false
+  - name: native_style
+    type: StringType()
+    mandatory: false
+  - name: os
+    type: StringType()
+    mandatory: false
+  - name: os_id
+    type: StringType()
+    mandatory: false
+  - name: os_version
+    type: StringType()
+    mandatory: false
+  - name: optimization_type
+    type: StringType()
+    mandatory: false
+  - name: order_id
+    type: StringType()
+    mandatory: false
+  - name: pod_position
+    type: StringType()
+    mandatory: false
+  - name: postal_code
+    type: StringType()
+    mandatory: false
+  - name: postal_code_id
+    type: StringType()
+    mandatory: false
+  - name: product
+    type: StringType()
+    mandatory: false
+  - name: publisher_provided_id
+    type: StringType()
+    mandatory: false
+  - name: referer_url
+    type: StringType()
+    mandatory: false
+  - name: region
+    type: StringType()
+    mandatory: false
+  - name: region_id
+    type: StringType()
+    mandatory: false
+  - name: request_language
+    type: StringType()
+    mandatory: false
+  - name: requested_ad_unit_sizes
+    type: StringType()
+    mandatory: false
+  - name: seller_reserve_price
+    type: StringType()
+    mandatory: false
+  - name: serving_restriction
+    type: StringType()
+    mandatory: false
+  - name: targeted_custom_criteria
+    type: StringType()
+    mandatory: false
+  - name: time
+    type: StringType()
+    mandatory: false
+  - name: time_usec
+    type: StringType()
+    mandatory: false
+  - name: time_usec2
+    type: StringType()
+    mandatory: false
+  - name: user_id
+    type: StringType()
+    mandatory: false
+  - name: video_fallback_position
+    type: StringType()
+    mandatory: false
+  - name: video_position
+    type: StringType()
+    mandatory: false
+  - name: yield_group_company_id
+    type: StringType()
+    mandatory: false
+  - name: yield_group_names
+    type: StringType()
+    mandatory: false
+  - name: meta_application_name_version
+    type: StringType()
+    mandatory: false
+  - name: meta_application_run_id
+    type: StringType()
+    mandatory: false
+  - name: meta_event_table_name
+    type: StringType()
+    mandatory: false
+  - name: meta_timestamp
+    type: StringType()
+    mandatory: false
+  - name: meta_schema_version
+    type: StringType()
+    mandatory: false
+  - name: meta_partition_date
+    type: StringType()
+    mandatory: false
+  - name: meta_partition_hh
+    type: StringType()
+    mandatory: false
+  - name: meta_partition_valid
+    type: StringType()
+    mandatory: false
+  - name: meta_uuid
+    type: StringType()
+    mandatory: false
+  - name: meta_payload
+    type: StringType()
+    mandatory: false
+  - name: meta_physical_partition_date
+    type: StringType()
+    mandatory: false
+  - name: meta_physical_partition_hh
+    type: StringType()
+    mandatory: false
+
+outputOrder:
+
+  - active_view_eligible_impression
+  - ad_unit_id
+  - advertiser
+  - advertiser_id
+  - adx_account_id
+  - anonymous
+  - audience_segment_ids
+  - band_width
+  - bandwidth_group_id
+  - bandwidth_id
+  - browser
+  - browser_id
+  - buyer
+  - city
+  - city_id
+  - cms_metadata
+  - country
+  - country_id
+  - creative_id
+  - creative_size
+  - creative_size_delivered
+  - creative_version
+  - custom_targeting
+  - deal_id
+  - deal_type
+  - device_category
+  - domain
+  - estimated_backfill_revenue
+  - event_key_part
+  - event_time_usec2
+  - gfp_content_id
+  - ip
+  - impression_id
+  - is_companion
+  - is_interstitial
+  - key_part
+  - line_item_id
+  - metro
+  - metro_id
+  - mobile_app_id
+  - mobile_capability
+  - mobile_carrier
+  - mobile_device
+  - native_format
+  - native_style
+  - os
+  - os_id
+  - os_version
+  - optimization_type
+  - order_id
+  - pod_position
+  - postal_code
+  - postal_code_id
+  - product
+  - publisher_provided_id
+  - referer_url
+  - region
+  - region_id
+  - request_language
+  - requested_ad_unit_sizes
+  - seller_reserve_price
+  - serving_restriction
+  - targeted_custom_criteria
+  - time
+  - time_usec
+  - time_usec2
+  - user_id
+  - video_fallback_position
+  - video_position
+  - yield_group_company_id
+  - yield_group_names
+  - meta_application_name_version
+  - meta_application_run_id
+  - meta_event_table_name
+  - meta_timestamp
+  - meta_schema_version
+  - meta_partition_date
+  - meta_partition_hh
+  - meta_partition_valid
+  - meta_uuid
+  - meta_payload
+  - meta_physical_partition_date
+  - meta_physical_partition_hh

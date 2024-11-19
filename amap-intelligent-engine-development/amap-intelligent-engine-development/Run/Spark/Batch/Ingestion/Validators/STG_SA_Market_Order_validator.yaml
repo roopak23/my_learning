@@ -1,0 +1,101 @@
+config:
+  remove_duplicates: true
+  check_mandatory: true
+
+# StringType, BinaryType, BooleanType, DecimalType, FloatType, DoubleType, ByteType, ShortType, IntegerType, LongType, DateType, TimestampType, NullType
+fields:
+  - name: Id
+    type: StringType()
+    mandatory: true
+  - name: Brand_Name__c
+    type: StringType()
+    mandatory: false
+  - name: Brand__c
+    type: StringType()
+    mandatory: false
+  - name: Name
+    type: StringType()
+    mandatory: false
+  - name: campaign_name__c
+    type: StringType()
+    mandatory: false
+  - name: Agency__c
+    type: StringType()
+    mandatory: false
+  - name: advertiser__c
+    type: StringType()
+    mandatory: true
+  - name: Advertiser_Name__c
+    type: StringType()
+    mandatory: false
+  - name: BusinessGoals__c
+    type: StringType()
+    mandatory: false
+  - name: Status__c
+    type: StringType()
+    mandatory: false
+  - name: From__c
+    type: LongType()
+    mandatory: false
+  - name: To__c
+    type: LongType()
+    mandatory: false
+  - name: Commercial_Audience__c
+    type: StringType()
+    mandatory: false
+  - name: Total_Net_Price__c
+    type: DoubleType()
+    mandatory: false
+  - name: Total_Price__c
+    type: DoubleType()
+    mandatory: false
+  - name: LastViewedDate
+    type: LongType()
+    mandatory: false
+  - name: LastModifiedDate
+    type: LongType()
+    mandatory: false
+  - name: Tag__c
+    type: StringType()
+    mandatory: false
+  - name: TargetQuantity__c
+    type: StringType()
+    mandatory: false
+  - name: Target_Goal__c
+    type: DoubleType()
+    mandatory: false
+  - name: Agency_Name__c
+    type: StringType()
+    mandatory: false
+  - name: IAB_Code__c
+    type: StringType()
+    mandatory: false
+  - name: Commerical_Audience__c
+    type: StringType()
+    mandatory: false
+
+# column order from list above
+outputOrder:
+  - Id
+  - Brand_Name__c
+  - Brand__c
+  - Name
+  - campaign_name__c
+  - Agency__c
+  - advertiser__c
+  - Advertiser_Name__c
+  - BusinessGoals__c
+  - Status__c
+  - From__c
+  - To__c
+  - Commercial_Audience__c
+  - Total_Net_Price__c
+  - Total_Price__c
+  - LastViewedDate
+  - LastModifiedDate
+  - Tag__c
+  - TargetQuantity__c
+  - Target_Goal__c
+  - Agency_Name__c
+  - IAB_Code__c
+  - Commerical_Audience__c

@@ -1,0 +1,131 @@
+# The yaml file which will build the new dag must be placed in Run/Airflow/dags/scripts/batch/pipelines folder.
+# Then you have to create script for this custom config as shown below:
+
+#   from dag_generator import create_dag
+#   #
+#   ROOT_PATH = "/opt/airflow/dags"
+#   variable_name = create_dag('config_name_config.yaml')
+#
+#   # EOF
+
+# Here you can define all variables placed in the Run/Airflow/dags/scripts/batch/variables.yaml with the same keys and nesting. It is optional, if not defined it will be fetched from variables.yaml
+
+Name: Name_Of_The_Pipeline # The name which will appear in Airflow UI and also would be used to trigger this DAG from another DAG.
+
+Tags: # The list of tags which will appear in Airflow UI and can be used to filter DAG groups marked with same tag. Tags are optional, when omitted script will add "DEV" tag automatically. Tags when applied, need to be put in yaml as list.
+    - Tag_Of_The_Pipeline
+    - Tag_2
+
+Steps_Order: # If you add this key you have to define the list of task dependencies in "Airflow way". If you don't add Steps_Order, the dependencies will build automatically as a sequence in order how the tasks are added in steps key.
+    - Start >> [Wait_for_files, Create_cluster] >> Preparation >> Additional_Scripts >> Creation >> Ingestion >> Aggregation >> Trigger_Pipelines >> Terminate_cluster >> End
+    - Aggregation >> Execute_models >> Segmentation >> Migration >> Execution >> Mark_completed >> Terminate_cluster
+
+Steps: # Here you should indicate all the tasks to be performed in a given pipeline. Start and End can be omitted.
+    Create_cluster: []  # This key activates creating cluster step. No parameters needed for now.
+
+    Preparation: [] # This key activates preparation step. No parameters needed for now.
+
+    Creation:  # This key activates creation step.
+        Files: # For Creation you have to nest the "Files" key and put the sql file names from the Run/Spark/Batch/Creation directory.
+        - name_of_the_file.sql
+        - name_of_another_file.sql
+        - SA_STG_Market_Order_Line_Details.sql
+
+    Ingestion: # In the ingestion step you have to nest the structure as in "original" pipeline.
+        Parameters: # Parameters are optional. If not defined here it will be fetched from variables.yaml storageName=BUCKET_NAME, remoteDir=INPUT_FILES_DIR, environment=NAME
+            storageName: amap-s3-dev-01 # Name of the bucket.
+            remoteDir: data/inbound/import # Directory in the bucket.
+            environment: AWS # Name of the environment. Should stay as AWS now.
+        Tasks:
+            - task_id: Name_of_the_task_ingest # Name of the task which will appear in Airflow UI.
+              pattern: Name_of_the_file.*[cC][sS][vV] # Name of the file (with regex for date and csv extension).
+              validator: Name_of_the_validator.yaml # Name of the validator yaml file from Run/Spark/Batch/Ingestion/Validators.
+              delimiter: "|"
+              table: Name_of_the_table_in_hive # Name of Hive table.
+              partitionedBy: partition_date # Should stay as partition_date.
+              schedule_enabled: true # It is the flag for Wait_For_Files task. If True or False W4F looks for specific file in pipeline run, but if True the task fail when file is missing, if False task will be set as skipped if file is missing.
+              poke_interval: 60 # Parameter for W4F - how many seconds will wait to check if file is on S3. When schedule_enabled on False, poke_interval is fixed to 10.
+              timeout: 900 # Parameter for W4F - how long will look for file. When schedule_enabled on False, timeout is fixed to 31.
+
+            - task_id: STG_SA_Market_Order_Line_Details
+              pattern: STG_SA_Market_Order_Line_Details.*[cC][sS][vV]
+              validator: STG_SA_Market_Order_Line_Details_validator.yaml
+              delimiter: "~"
+              table: STG_SA_Market_Order_Line_Details
+              partitionedBy: partition_date
+              schedule_enabled: true
+              poke_interval: 60
+              timeout: 900
+
+    Aggregation: # In the aggregation step you have to nest the structure in "Tasks" key as in "original" pipeline.
+        Tasks:
+            - taskid: Name_of_the_task # Name of the task which will appear in Airflow UI and also would be use to build dependencies.
+              active: true # On/Off flag for specific step.
+              dependencies_task: [] # The dependencies list. Important rule! - you can build dependency only for aggregation task within specific pipeline!
+              task_type: aggregation # Task type dependent of the use case - aggregation, temp_booked, pyspark or execute_model
+              options: [] # When task_type is execute_model then dag_id needs to be specified here.
+              file_name: name_of_the_file.hql # Name of the hql file from Run/Spark/Batch/Aggregation.
+
+            - taskid: Aggregation_process_ML_model
+              active: true
+              dependencies_task:
+                - Name_of_the_task
+              task_type: execute_model
+              options: DM_Model_Userdata_Clustering
+              file_name: []
+
+            - taskid: TRF_Market_Order_Line_Details
+              active: true
+              dependencies_task:
+                - Name_of_the_task
+              task_type: aggregation
+              options: []
+              file_name: agg_TRF_Market_Order_Line_Details.hql
+
+    Execute_models: []  # This key activates models step. No parameters needed for now.
+
+    #DEPRICATED Segmentation: [] # This key activates the segmenation step. python file from Run/Spark/Batch/Segtool is copied to the mashine and then executed.
+
+    Trigger_Pipelines: # This key activates triggering step.
+        Name: # In this key you can specify custom name of step. If not specified the name "Trigger_Pipelines" will be used.
+        Mark_Scheduled: True # True: adds tasks that will set pipelines triggered in this step as "SCHEDULED" in the ETL_Traffic_Lights table. False if not specified.
+        Tasks: # In the task key put the names of the pipelines in the list. Names from Name key, dag_id, name from the UI).
+            - Name_Of_Another_Pipeline
+            - Name_Of_3rd_Pipeline
+            - Name_Of_4th_Pipeline
+        Tasks_Order: # If you add this key you have to define the list of task dependencies in "Airflow way". If you don't add Tasks_Order, the dependencies fot this task group will build automatically. Every task in task group will be parallel.
+            - Name_Of_4th_Pipeline >> [Name_Of_Another_Pipeline >> Name_Of_3rd_Pipeline]
+
+    Migration: # In the migration step you have to nest the structure in "Tasks" key as in aggregation step of the "original" pipeline.
+        Tasks:
+            - taskid: Migrate_TRF_campaign_monitoring # Name of the task which will appear in Airflow UI and also would be use to build dependencies.
+              active: true # On/Off flag for specific step.
+              dependencies_task: []  # The dependencies list. Important rule! - you can build dependency only for mig task within specific pipeline!
+              task_type: migration # Task type dependent of the use case - only migration for now.
+              options: [] # Not used now.
+              file_name: MIG_campaign_monitoring.sql # Name of the hql file from Run/Spark/Batch/Migration.
+
+    Execution:  # In the execution step you have to nest the structure in "Tasks" key as in "original" pipeline.
+        Tasks:
+            - taskid: Mysql_Campaign_Monitoring_Update # Name of the task which will appear in Airflow UI and also would be used to build dependencies.
+              active: true # On/Off flag for specific step.
+              dependencies_task: [ ] # The dependencies list. Important rule! - you can build dependency only for exec task within specific pipeline!
+              task_type: mysql_execution # Task type dependent of the use case - only mysql_execution for now.
+              options: [ ] # Not used now.
+              file_name: Mysql_Campaign_Monitoring_Update.sql # Name of the hql file from Run/Spark/Batch/Execution.
+
+    Mark_completed: [] # This key activates mark_completed step for specific pipeline. No parameters needed for now. Name of the pipeline will be used as component_name in etl_traffic_lights RDS table.
+
+    Terminate_cluster: []  # This key activates terminating cluster step. No parameters needed for now.
+
+    Wait_for_files: [] # This key activates wait for files step. No parameters needed for now. The list of files build on parameters from ingestion task. This task will not appear in pipeline if there will be no ingestion.
+
+    Additional_Scripts: # This key activates additional step with a custom code provided as a multiline yaml string.
+        Code: | # Put your code like as a value for a nested key, Remember to add the "|" at the beginning to enable multi-line string with indentation. You can split your code to a few blocks, just simply add another Code_x key.
+            adjust_python = SSHOperator(
+                task_id='adjust_python',
+                ssh_conn_id='my_emr_ssh',
+                command='sudo python3 -m pip install install opencage'
+            )
+
+# E.O.F.

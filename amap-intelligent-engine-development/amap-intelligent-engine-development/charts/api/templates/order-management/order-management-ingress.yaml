@@ -1,0 +1,31 @@
+{{- if .Values.orderManagement.ingress.enabled }}
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+
+metadata:
+  name: {{ .Values.orderManagement.id }}
+  labels:
+    app: {{ .Release.Name }}
+    chart: {{ .Chart.Name }}
+    release: {{ .Chart.Version }}
+    component: orderManagement
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    nginx.ingress.kubernetes.io/backend-protocol: HTTP
+    nginx.ingress.kubernetes.io/configuration-snippet: |
+      rewrite ^(/dashboard)$ $1/ redirect;
+    # nginx.ingress.kubernetes.io/rewrite-target: /$2
+spec:
+  rules:
+    - host: {{.Values.orderManagement.ingress.host }}
+      http:
+        paths:
+          - path: {{.Values.orderManagement.ingress.path }}(/|$)(.*)
+            pathType: Prefix
+            backend:
+              service: 
+                name: {{ .Values.orderManagement.name }}
+                port: 
+                  number: {{ .Values.orderManagement.service.port }}
+
+{{- end }}

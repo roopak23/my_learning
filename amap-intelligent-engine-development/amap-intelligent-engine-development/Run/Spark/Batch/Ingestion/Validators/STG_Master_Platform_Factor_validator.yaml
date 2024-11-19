@@ -1,0 +1,17 @@
+config:
+  remove_duplicates: true
+  check_mandatory: true
+
+# StringType, BinaryType, BooleanType, DecimalType, FloatType, DoubleType, ByteType, ShortType, IntegerType, LongType, DateType, TimestampType, NullType
+fields:
+  - name: platform_name
+    type: StringType()
+    mandatory: true
+  - name: factor
+    type: DoubleType()
+    mandatory: true
+
+# column order from list above
+outputOrder:
+  - platform_name
+  - factor

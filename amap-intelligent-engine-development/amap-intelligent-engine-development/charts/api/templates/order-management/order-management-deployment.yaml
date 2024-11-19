@@ -1,0 +1,94 @@
+apiVersion: apps/v1
+kind: Deployment
+
+metadata:
+  name: {{ .Values.orderManagement.name }}
+  labels:
+    app: {{ .Values.orderManagement.id }}
+  labels:
+    app: {{ .Release.Name }}
+    chart: {{ .Chart.Name }}
+    release: {{ .Chart.Version }}
+    component: orderManagement
+
+spec:
+  replicas: 1
+
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 0
+
+  selector:
+    matchLabels:
+      app: {{ .Release.Name }}
+      release: {{ .Chart.Version }}
+      component: orderManagement
+
+  template:
+    metadata:
+      annotations:
+        checksum/configmap-db: {{ include (print $.Template.BasePath "/config/configmap-db.yaml") . | sha256sum }}
+        checksum/configmap-ms-cookies: {{ include (print $.Template.BasePath "/config/configmap-ms-cookies.yaml") . | sha256sum }}
+        checksum/configmap-settings-container: {{ include (print $.Template.BasePath "/config/configmap-settings-container.yaml") . | sha256sum }}
+        checksum/configmap-settings-local: {{ include (print $.Template.BasePath "/config/configmap-settings-local.yaml") . | sha256sum }}
+        checksum/configmap-settings: {{ include (print $.Template.BasePath "/config/configmap-settings.yaml") . | sha256sum }}
+        checksum/configmap-orderManagement: {{ include (print $.Template.BasePath "/order-management/configmap-order-management.yaml") . | sha256sum }}
+        checksum/configmap-feign: {{ include (print $.Template.BasePath "/config/configmap-feign.yaml") . | sha256sum }}
+
+
+      labels:
+        app: {{ .Release.Name }}
+        release: {{ .Chart.Version }}
+        component: orderManagement
+
+    spec:
+      restartPolicy: Always
+      serviceAccountName: {{ .Values.orderManagement.name }}-serviceaccount
+
+      {{- if .Values.orderManagement.nodeSelector }}
+      nodeSelector:
+        {{- toYaml .Values.orderManagement.nodeSelector | nindent 8 }}
+      {{- end }}
+      {{- if .Values.orderManagement.affinity }}
+      affinity:
+        {{- toYaml .Values.orderManagement.affinity | nindent 8 }}
+      {{- end }}
+      {{- if .Values.orderManagement.tolerations }}
+      tolerations:
+        {{- toYaml .Values.orderManagement.tolerations | nindent 8 }}
+      {{- end }}
+
+      containers:
+        - name: {{ .Values.orderManagement.name }}
+          image: {{ .Values.orderManagement.image.repository }}:{{ .Values.orderManagement.image.tag }}
+          imagePullPolicy: {{ .Values.orderManagement.image.imagePullPolicy }}
+
+          ports:
+            - name: {{ .Values.orderManagement.id }}
+              containerPort: {{ .Values.orderManagement.service.port }}
+              protocol: TCP
+
+          env:
+            {{- if .Values.orderManagement.deployment.extraEnv }}
+              {{ toYaml .Values.orderManagement.deployment.extraEnv | indent 12 }}
+            {{- end }}
+            - name: "APP_PORT"
+              value: "{{ .Values.orderManagement.service.port }}"
+            - name: "APP_NAMESPACE"
+              value: "{{ .Release.Namespace }}"
+
+          resources:
+            {{- toYaml .Values.orderManagement.deployment.resources | nindent 12 }}
+          
+          livenessProbe:
+            httpGet:
+              scheme: HTTP
+              path: /actuator/health
+              port: {{ .Values.orderManagement.service.port }}
+            initialDelaySeconds: 90
+            periodSeconds: 20
+            timeoutSeconds: 5
+    
+

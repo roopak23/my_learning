@@ -1,0 +1,36 @@
+config:
+  remove_duplicates: true
+  check_mandatory: true
+
+fields:
+  - name: Id
+    type: StringType()
+    mandatory: false
+  - name: Type__c
+    type: StringType()
+    mandatory: false
+  - name: Remote_Id__c
+    type: StringType()
+    mandatory: true
+  - name: Remote_name__c
+    type: StringType()
+    mandatory: false
+  - name: Ad_Ops_System_Name__c
+    type: StringType()
+    mandatory: true
+  - name: Category__c
+    type: StringType()
+    mandatory: false
+  - name: Code__c
+    type: StringType()
+    mandatory: false
+
+outputOrder:
+  - Id
+  - Type__c
+  - Remote_Id__c
+  - Remote_name__c
+  - Ad_Ops_System_Name__c
+  - Category__c
+  - Code__c
+

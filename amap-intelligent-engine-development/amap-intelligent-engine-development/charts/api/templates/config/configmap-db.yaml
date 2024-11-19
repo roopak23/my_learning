@@ -1,0 +1,32 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Release.Name }}-db
+  labels:
+    app: {{ .Release.Name }}
+    chart: {{ .Chart.Name }}
+    release: {{ .Chart.Version }}
+  annotations: {}
+
+data:
+  db.host: "{{ .Values.general.db.host }}"
+  db.port: "{{ .Values.general.db.port }}"
+  db.pass: "{{ .Values.general.db.pass }}"
+  db.username: "{{ .Values.general.db.user }}"
+  spring.datasource.driver-class-name: "org.mariadb.jdbc.Driver"
+  spring.datasource.password: "${db.pass}"
+  spring.datasource.username: "${db.username}"
+  spring.datasource.testWhileIdle: "true"
+  spring.datasource.timeBetweenEvictionRunsMillis: "60000"
+  spring.datasource.url: "jdbc:mariadb://${db.host}:${db.port}/${db.schema}?autoReconnect=true&sslMode=trust&zeroDateTimeBehavior=convertToNull"
+  spring.datasource.validationQuery: "SELECT 1"
+  spring.jpa.hibernate.ddl-auto: "none"
+  spring.jpa.hibernate.naming.physical-strategy: "org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl"
+  spring.jpa.open-in-view: "false"
+  spring.jpa.properties.hibernate.dialect: "org.hibernate.dialect.MariaDBDialect"
+  spring.jpa.properties.hibernate.enable_lazy_load_no_trans: "true"
+  spring.jpa.show-sql: "false"
+  spring.liquibase.change-log: "classpath:db/changelog/master.xml"
+  spring.liquibase.database-change-log-lock-table: "databasechangeloglock"
+  spring.liquibase.database-change-log-table: "databasechangelog"
+  spring.liquibase.enabled: "true"

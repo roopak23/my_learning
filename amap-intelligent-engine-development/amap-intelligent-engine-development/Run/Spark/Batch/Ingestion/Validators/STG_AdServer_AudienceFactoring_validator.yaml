@@ -1,0 +1,29 @@
+config:
+  remove_duplicates: true
+  check_mandatory: true
+
+# StringType, BinaryType, BooleanType, DecimalType, FloatType, DoubleType, ByteType, ShortType, IntegerType, LongType, DateType, TimestampType, NullType
+fields:
+  - name: platform
+    type: StringType()
+    mandatory: true
+  - name: dimension_level
+    type: StringType()
+    mandatory: true
+  - name: dimension
+    type: StringType()
+    mandatory: true
+  - name: audience_name
+    type: StringType()
+    mandatory: true
+  - name: audience_percentage
+    type: StringType()
+    mandatory: true
+
+# column order from list above
+outputOrder:
+  - platform
+  - dimension_level
+  - dimension
+  - audience_name
+  - audience_percentage

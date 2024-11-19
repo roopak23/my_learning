@@ -1,0 +1,79 @@
+# Config File for DM3 API Deployment
+
+general:
+  nginxProxy: https://priv.devamapie.foxtel.com.au/
+  db:
+    host: 
+    port: 
+    user: 
+    pass: 
+
+iam:
+  keycloak:
+    authServerBaseUrl: {{ .Values.general.nginxProxy }}/keycloak
+    reaml: DM3
+    client:
+      name: dm3-microservices
+      isPublic: true
+    principal:
+      attribute: preferred_username
+      useResourceRoleMappings: true
+    ssl: none
+
+orderManagement:
+  name: "order-mng"
+  id: "order-mng"
+
+  image:
+    repository: 
+    tag: order-management_v1
+    imagePullPolicy: IfNotPresent
+
+  deployment:
+    replicas: 1
+    resources: {}
+    extraEnv: []
+
+  service:
+    port: "8090"
+
+  db:
+    schema: data_activation
+
+  ingress:
+    enabled: true
+    host: priv.devamapie.foxtel.com.au
+    path: "/API/order"
+
+  nodeSelector: []
+  affinity: []
+  tolerations: []
+
+inventoryManagement:
+  name: "inv-mng"
+  id: "inv-mng"
+
+  image:
+    repository: 229747392762.dkr.ecr.eu-west-1.amazonaws.com/dm3-api
+    tag: inventory-management_v1
+    imagePullPolicy: IfNotPresent
+
+  deployment:
+    replicas: 1
+    resources: {}
+    extraEnv: []
+
+  service:
+    port: "8090"
+
+  db:
+    schema: data_activation
+
+  ingress:
+    enabled: true
+    host: priv.devamapie.foxtel.com.au
+    path: "/API/inventory"
+
+  nodeSelector: []
+  affinity: []
+  tolerations: []

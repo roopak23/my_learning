@@ -1,0 +1,38 @@
+config:
+  remove_duplicates: true
+  check_mandatory: true
+
+fields:
+  - name: Id
+    type: StringType()
+    mandatory: true
+  - name: Name
+    type: StringType()
+    mandatory: false
+  - name: Ad_Ops_System_Name__c
+    type: StringType()
+    pk: true
+    mandatory: true
+  - name: Child_Remote_Id__c
+    type: StringType()
+    pk: true
+    mandatory: false
+  - name: Parent_Remote_Id__c
+    type: StringType()
+    mandatory: false
+  - name: Ad_Slot_Child__c
+    type: StringType()
+    mandatory: false
+  - name: Ad_Slot_Parent__c
+    type: StringType()
+    mandatory: false
+
+
+outputOrder:
+  - Id
+  - Name
+  - Ad_Ops_System_Name__c
+  - Child_Remote_Id__c
+  - Parent_Remote_Id__c
+  - Ad_Slot_Child__c
+  - Ad_Slot_Parent__c

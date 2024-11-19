@@ -1,0 +1,102 @@
+# Config File for DM3 API Deployment
+
+general:
+  nginxProxy: https://PARAMS.API_HOST
+  db:
+    host: PARAMS.DB_HOST
+    port: PARAMS.DB_PORT
+    user: PARAMS.API_DB_USER
+    pass: PARAMS.API_DB_PASS
+  # vault:
+  #   host: https://PARAMS.VAULT_HOST
+
+iam:
+  keycloak:
+    host: https://PARAMS.KEYCLOAK_URL
+    realm: DM3
+    client:
+      name: dm3-microservices
+      isPublic: true
+    principal:
+      attribute: preferred_username
+      useResourceRoleMappings: true
+    ssl: "NONE"
+
+orderManagement:
+  name: "order-mng"
+  id: "order-mng"
+
+  image:
+    repository: PARAMS.ECR_REPO/order-management
+    tag: PARAMS.ORDER_MANAGEMENT_TAG
+    imagePullPolicy: IfNotPresent
+
+  deployment:
+    replicas: 1
+    resources:
+      requests:
+        cpu: 1000m
+      limits:
+        cpu: 2000m
+    extraEnv: []
+
+  service:
+    port: "8090"
+    annotations:
+      alb.ingress.kubernetes.io/healthcheck-path: /actuator/health
+
+
+  db:
+    schema: data_activation
+
+  ingress:
+    enabled: false
+    host: PARAMS.API_HOST
+    path: "/orders"
+
+  nodeSelector:
+    group: data
+  affinity: []
+  tolerations: []
+
+inventoryManagement:
+  name: "inv-mng"
+  id: "inv-mng"
+
+  image:
+    repository: PARAMS.ECR_REPO/inventory-management
+    tag: PARAMS.INVENTORY_MANAGEMENT_TAG
+    imagePullPolicy: Always
+
+  deployment:
+    replicas: 1
+    resources:
+      requests:
+        cpu: 500m
+      limits:
+        cpu: 1
+    extraEnv: []
+  service:
+    port: "8090"
+    annotations:
+      alb.ingress.kubernetes.io/healthcheck-path: /actuator/health
+
+  db:
+    schema: data_activation
+
+  ingress:
+    enabled: false
+    host: PARAMS.API_HOST
+    path: "/inventory"
+
+  nodeSelector:
+    group: data
+  affinity: []
+  tolerations: []
+
+hpa:
+  enabled: true
+  minReplicas: PARAMS.API_MINREPLICAS
+  maxReplicas: PARAMS.API_MAXREPLICAS
+  averageCpuUtilization: PARAMS.API_CPUUTILIZATION
+  

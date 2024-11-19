@@ -1,0 +1,3 @@
+INSERT OVERWRITE TABLE TRF_Master_AdSlotSkip 
+SELECT adserver_adslot_id
+FROM STG_Master_AdSlotSkip

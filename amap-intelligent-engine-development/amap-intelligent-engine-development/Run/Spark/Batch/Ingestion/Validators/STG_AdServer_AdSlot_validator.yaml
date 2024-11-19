@@ -1,0 +1,33 @@
+config:
+  remove_duplicates: true
+  check_mandatory: true
+
+# StringType, BinaryType, BooleanType, DecimalType, FloatType, DoubleType, ByteType, ShortType, IntegerType, LongType, DateType, TimestampType, NullType
+fields:
+  - name: adserver_id
+    type: StringType()
+    mandatory: true
+  - name: id
+    type: StringType()
+    mandatory: true
+  - name: name
+    type: StringType()
+    mandatory: false
+  - name: adUnitCode
+    type: StringType()
+    mandatory: false
+  - name: status
+    type: StringType()
+    mandatory: false
+  - name: ParentId
+    type: StringType()
+    mandatory: false
+
+# column order from list above
+outputOrder:
+  - adserver_id
+  - id
+  - name
+  - adUnitCode
+  - status
+  - ParentId

@@ -1,0 +1,46 @@
+config:
+  remove_duplicates: true
+  check_mandatory: true
+
+# StringType, BinaryType, BooleanType, DecimalType, FloatType, DoubleType, ByteType, ShortType, IntegerType, LongType, DateType, TimestampType, NullType
+fields:
+  - name: DATE
+    type: DateType()
+    mandatory: true
+  - name: AD_UNIT_ID
+    type: StringType()
+    mandatory: true
+  - name: AD_UNIT_NAME
+    type: StringType()
+    mandatory: false
+  - name: AUDIENCE_SEGMENT_ID
+    type: StringType()
+    mandatory: true
+  - name: AUDIENCE_SEGMENT_NAME
+    type: StringType()
+    mandatory: false
+  - name: AD_SERVER_IMPRESSIONS
+    type: IntegerType()
+    mandatory: true
+  - name: AD_SERVER_CLICKS
+    type: IntegerType()
+    mandatory: true
+  - name: adserver_id
+    type: StringType()
+    mandatory: true
+  - name: adserver_target_type
+    type: StringType()
+    mandatory: false
+  
+
+# column order from list above
+outputOrder:
+  - DATE
+  - AD_UNIT_ID
+  - AD_UNIT_NAME
+  - AUDIENCE_SEGMENT_ID
+  - AUDIENCE_SEGMENT_NAME
+  - AD_SERVER_IMPRESSIONS
+  - AD_SERVER_CLICKS
+  - adserver_id
+  - adserver_target_type

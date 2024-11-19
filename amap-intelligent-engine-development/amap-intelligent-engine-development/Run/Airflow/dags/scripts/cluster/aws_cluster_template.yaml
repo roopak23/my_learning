@@ -1,0 +1,213 @@
+## THIS FILE IS TEMPLATED
+#
+# TODO: Change most of this fields to a variable from the variables.yaml
+#
+
+## General Definitions
+Name: PARAMS.EMR_NAME
+ReleaseLabel: emr-6.10.0
+JobFlowRole: PARAMS.EC2_INSTANCE_PROFILE
+ServiceRole: PARAMS.EMR_DEFAULT_ROLE
+AutoScalingRole: PARAMS.EMR_AUTOSCALING_ROLE
+VisibleToAllUsers: true
+LogUri: s3://PARAMS.S3_LOGS_BUCKET_NAME/logs/emr_logs
+
+
+
+## Increase root volume size
+EbsRootVolumeSize: 100
+
+## Add security configuration to encrypt root volumes of EMR nodes
+SecurityConfiguration: PARAMS.EMR_SECURITY_CONFIGURATION
+
+## Master and Slave types
+Instances:
+  Ec2KeyName: PARAMS.EC2_DEPLOY_KEY
+  Ec2SubnetId: PARAMS.EMR_SUBNET
+  AdditionalMasterSecurityGroups:
+    - PARAMS.EMR_ADDITIONAL_SECURITY_GROUP
+  AdditionalSlaveSecurityGroups:
+    - PARAMS.EMR_ADDITIONAL_SECURITY_GROUP
+  ServiceAccessSecurityGroup: PARAMS.EMR_ServiceAccessSecurityGroup
+  EmrManagedSlaveSecurityGroup: PARAMS.EMR_EmrManagedSlaveSecurityGroup
+  EmrManagedMasterSecurityGroup: PARAMS.EMR_EmrManagedMasterSecurityGroup
+  InstanceGroups:
+    - Name: Master node
+      Market: ON_DEMAND
+      InstanceRole: MASTER
+      InstanceType: m5d.2xlarge
+      InstanceCount: 1
+    - Name: Core node
+      Market: ON_DEMAND
+      InstanceRole: CORE
+      InstanceType: m5d.2xlarge
+      InstanceCount: PARAMS.EMR_MIN_CORES
+  KeepJobFlowAliveWhenNoSteps: true
+  TerminationProtected: false
+
+## Scaling Policy
+ManagedScalingPolicy:
+  ComputeLimits:
+    UnitType: Instances
+    MinimumCapacityUnits: PARAMS.EMR_MIN_CORES
+    MaximumCapacityUnits: PARAMS.EMR_MAX_CORES
+
+## Applications
+Applications:
+  - Name: Hive
+  - Name: Spark
+  - Name: Livy
+  - Name: Zeppelin
+  - Name: TensorFlow
+  - Name: Ganglia
+
+## Bootstrap
+BootstrapActions:
+  # Bootstrap action required to patch log4j on EMR clusters. See AWS documentation here: https://docs.aws.amazon.com/emr/latest/ReleaseGuide/emr-log4j-vulnerability.html
+  #- Name: Log4JPatch
+  #  ScriptBootstrapAction:
+  #    Path: 's3://PARAMS.S3_APP_BUCKET_NAME/app/Spark/Setup/patch-log4j-emr-6.5.0-v1.sh'
+  # Bootratrap 1
+  - Name: SetStaticIP
+    ScriptBootstrapAction:
+      Args:
+        - PARAMS.EMR_STATIC_IP
+      Path: 's3://PARAMS.S3_APP_BUCKET_NAME/app/Spark/Setup/00a_emr-set-private-ip.sh'
+
+  # Bootratrap 2
+  - Name: InstallBatchpipeline
+    ScriptBootstrapAction:
+      Args:
+        - AWS
+        - PARAMS.S3_APP_BUCKET_NAME
+      Path: 's3://PARAMS.S3_APP_BUCKET_NAME/app/Spark/Setup/00b_copy_and_install.sh'
+
+  # Bootratrap 3
+  # - Name: InstallSegToolModules
+  #   ScriptBootstrapAction:
+  #     Args:
+  #       - eu-west-1a
+  #       - dm3_dev_segtool_new
+  #       - dev-dm3-data
+  #       - dm-dev-db.cluster-cvm6b2mayn6u.eu-west-1.rds.amazonaws.com
+  #       - dm_admin
+  #       - AQICAHjK82bGsVvHdF62QCaO8UUS0P9yEg3dYfae4HqK2XozuQHodv/Ip3tiuSlQrCoACkj1AAAAajBoBgkqhkiG9w0BBwagWzBZAgEAMFQGCSqGSIb3DQEHATAeBglghkgBZQMEAS4wEQQMnjcqW3aGlV9X1G12AgEQgCfv4cN2vNgCq9PNZdGB0vXFUsxc2Auy7ppmRApRgnGEO1/PSDbuUKY=
+  #       - DEV
+  #       - arn:aws:kms:eu-west-1:229747392762:key/2ba510ec-27b7-4c3e-ab0d-284d04e6c3f5
+  #       - dev-dm3-data
+  #       - eu-west-1
+  #       - gdpr_admin1
+  #       - gdpr_admin1
+  #       - gdpr_admin1
+  #       - "true"
+  #     Path: 's3://dev-dm3-data/cf/CF_BRANCH/setup/amap-install-segtool-emr.sh'
+  #     #Path: 's3://dev-dm3-data/cf/CF_BRANCH/setup/ava-install-segtool-emr.sh'
+
+  # Bootstrap 4
+  #- Name: Set bucketing as optional for Hive ACID
+  #  ScriptBootstrapAction:
+  #    Path: 's3://aws-bigdata-blog/artifacts/hive-acid-blog/make_bucketing_optional_for_hive_acid_EMR_6_1.sh'
+
+
+# Steps
+Steps:
+  - Name: HiveMetadataUpdateLocation
+    ActionOnFailure: CONTINUE
+    HadoopJarStep:
+      Jar: 's3://PARAMS.AWS_REGION.elasticmapreduce/libs/script-runner/script-runner.jar'
+      Args:
+        - 's3://PARAMS.S3_APP_BUCKET_NAME/app/Spark/Setup/01_emr_update_hive_meta.sh'
+  - Name: ConfigureZeppelin
+    ActionOnFailure: CONTINUE
+    HadoopJarStep:
+      Jar: 's3://PARAMS.AWS_REGION.elasticmapreduce/libs/script-runner/script-runner.jar'
+      Args:
+        - 's3://PARAMS.S3_APP_BUCKET_NAME/app/Spark/Setup/02_configure_zeppelin.sh'
+
+  # - Name: UpdateSegmentsMetadata
+  #   ActionOnFailure: CONTINUE
+  #   HadoopJarStep:
+  #     Jar: 's3://eu-west-1.elasticmapreduce/libs/script-runner/script-runner.jar'
+  #     Args:
+  #       #- 's3://dev-dm3-data/cf/CF_BRANCH/setup/ava-segtool-metadata.sh'
+  #       - 's3://dev-dm3-data/cf/CF_BRANCH/setup/amap-segtool-metadata.sh'
+  #       - "true"
+  #       - dm-dev-db.cluster-cvm6b2mayn6u.eu-west-1.rds.amazonaws.com
+  #       - dm_admin
+  #       - AQICAHjK82bGsVvHdF62QCaO8UUS0P9yEg3dYfae4HqK2XozuQHodv/Ip3tiuSlQrCoACkj1AAAAajBoBgkqhkiG9w0BBwagWzBZAgEAMFQGCSqGSIb3DQEHATAeBglghkgBZQMEAS4wEQQMnjcqW3aGlV9X1G12AgEQgCfv4cN2vNgCq9PNZdGB0vXFUsxc2Auy7ppmRApRgnGEO1/PSDbuUKY=
+
+## Configurations
+Configurations:
+  - Classification: spark-defaults
+    Properties:
+      spark.network.timeout: '180'
+      spark.rpc.lookupTimeout: '180'
+      spark.executorEnv.MASTER_STATIC_IP: PARAMS.EMR_STATIC_IP
+      spark.yarn.appMasterEnv.MASTER_STATIC_IP: PARAMS.EMR_STATIC_IP
+  - Classification: spark-env
+    Properties: {}
+    Configurations:
+      - Classification: "export"
+        Properties:
+          MASTER_STATIC_IP: PARAMS.EMR_STATIC_IP
+  - Classification: zeppelin-site
+    Properties:
+      zeppelin.notebook.s3.user: 'emr_notebooks'
+      zeppelin.notebook.s3.bucket: PARAMS.S3_APP_BUCKET_NAME
+      zeppelin.notebook.s3.endpoint: 's3.amazonaws.com'
+      zeppelin.notebook.storage: 'org.apache.zeppelin.notebook.repo.S3NotebookRepo'
+  - Classification: livy-conf
+    Properties:
+      livy.spark.deployMode: 'cluster'
+      livy.spark.deploy-mode: 'cluster'
+  - Classification: hive-site
+    Properties:
+      hive.support.concurrency: 'true'
+      hive.exec.dynamic.partition.mode: nonstrict
+      hive.txn.manage: org.apache.hadoop.hive.ql.lockmgr.DbTxnManager
+      hive.tez.container.size: '2048'
+      hive.tez.counters.max: '2048'
+      hive.auto.convert.join: 'false'
+      javax.jdo.option.ConnectionURL: jdbc:mysql://PARAMS.DB_HOST:3306/hive_metastore?createDatabaseIfNotExist=true
+      javax.jdo.option.ConnectionDriverName: org.mariadb.jdbc.Driver
+      javax.jdo.option.ConnectionUserName: hive_user
+      javax.jdo.option.ConnectionPassword: PARAMS.HIVE_DB_USER_PASSWORD
+  - Classification: mapred-site
+    Properties:
+      mapreduce.job.counters.max: '1024'
+      mapreduce.job.counters.counter.name.max: '256'
+      mapreduce.job.counters.groups.max: '256'
+      mapreduce.job.counters.group.name.max: '256'
+  - Classification: emrfs-site
+    Properties:
+      fs.s3.maxConnections: '1000'
+  - Classification: yarn-site
+    Properties:
+      yarn.app.mapreduce.a.mb: '2048'
+      yarn.nodemanager.vmem-pmem-ratio: '4'
+      yarn.nodemanager.pmem-check-enabled: 'false'
+      yarn.nodemanager.vmem-check-enabled: 'false'
+  - Classification: tez-site
+    Properties:
+      tez.am.resource.memory.mb: '2048'
+  - Classification: capacity-scheduler
+    Properties:
+      yarn.scheduler.capacity.maximum-am-resource-percent: '0.9'
+  - Classification: spark
+    Properties:
+      maximizeResourceAllocation: 'true'
+ # - Classification: spark-env
+ #   Configurations:
+ #     - Classification: export
+ #       Properties:
+ #         PYSPARK_PYTHON: /usr/bin/python3
+ #         PYSPARK_DRIVER_PYTHON: /usr/bin/python3
+
+## Tags
+Tags:
+  - Key: Stack
+    Value: PARAMS.EMR_STACKNAME
+  - Key: Name
+    Value: PARAMS.EMR_NAME
+  - Key: Environment
+    Value: PARAMS.ENVIRONMENT

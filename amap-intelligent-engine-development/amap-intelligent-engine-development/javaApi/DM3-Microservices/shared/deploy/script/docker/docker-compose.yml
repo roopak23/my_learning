@@ -1,0 +1,80 @@
+version: "2.4"
+
+#x-ms-link: &basic-links
+#  - config-server:config
+#  - registry:registry
+
+x-ms-depend-on: &ms-depend-on
+  config-server:
+    condition: service_healthy
+  registry:
+    condition: service_healthy
+
+services:
+  config-server:
+    build: 
+      context: ./config-server
+      args: 
+        PORT: 8888
+    container_name: config-server_@project.version@
+    networks:
+      - dashboards
+    ports:
+      - "8888:8888"
+    environment:
+      APP_PORT: "8888"
+    depends_on: 
+      registry:
+        condition: service_healthy
+  registry:
+    build:
+      context: ./eureka-gateway
+      args: 
+        PORT: 8761
+    container_name: eureka-gateway_@project.version@
+    networks:
+      - dashboards
+    ports:
+      - "8761:8761"
+    environment:
+      APP_PORT: "8761"
+#  api-gateway:
+#    build:
+#      context: ./api-gateway
+#      args:
+#        PORT: 8082
+#    container_name: api-gateway_@project.version@
+#    networks:
+#      - dashboards
+#    ports:
+#      - "8082:8082"
+#    links:
+#      - "config-server:config"
+#      - "registry:registry"
+#      - "dm-sa-integration:dm-sa-integration"
+#    environment:
+#      APP_PORT: "8082"
+#    depends_on:
+#      << : *ms-depend-on
+  dm-sa-integration:
+    build: 
+      context: ./dm-sa-integration
+      args: 
+        PORT: 8087
+    container_name: dm-sa-integration_@project.version@
+    networks:
+      - dashboards
+    ports: 
+      - "8087:8087"
+    links: 
+      - "config-server:config"
+      - "registry:registry"
+    environment:
+      APP_PORT: "8087"
+    depends_on: 
+      << : *ms-depend-on
+
+networks:
+  dashboards:
+    name: dm-sa-integration
+    driver: bridge

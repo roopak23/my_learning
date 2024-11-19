@@ -1,0 +1,268 @@
+{
+  "name" : "AMAP_NifiConnectors_Params",
+  "description" : "",
+  "parameters" : [ {
+    "parameter" : {
+      "name" : "DM3_AccessKeyId",
+      "description" : "",
+      "sensitive" : true
+    }
+  }, {
+    "parameter" : {
+      "name" : "DM3_Airflow_URL_DAG",
+      "description" : "",
+      "sensitive" : false,
+      "value" : "https://priv.devamapie.foxtel.com.au/airflow/api/v1/dags/"
+    }
+  }, {
+    "parameter" : {
+      "name" : "DM3_Airflow_User",
+      "description" : "",
+      "sensitive" : false,
+      "value" : "nifi"
+    }
+  }, {
+    "parameter" : {
+      "name" : "DM3_Airlfow_Password",
+      "description" : "admin",
+      "sensitive" : true
+    }
+  }, {
+    "parameter" : {
+      "name" : "DM3_Current_date",
+      "description" : "",
+      "sensitive" : false,
+      "value" : "${now():minus(86400000):format('yyyy-MM-dd', 'Australia/Sydney')}"
+    }
+  }, {
+    "parameter" : {
+      "name" : "DM3_ETL_Process_Date",
+      "description" : "",
+      "sensitive" : false,
+      "value" : "${now():minus(86400000):format('yyyyMMdd', 'Australia/Sydney')}"
+    }
+  }, {
+    "parameter" : {
+      "name" : "DM3_GMT_Time",
+      "description" : "",
+      "sensitive" : false,
+      "value" : "T02:00:00.000+0000"
+    }
+  }, {
+    "parameter" : {
+      "name" : "DM3_Run_date",
+      "description" : "",
+      "sensitive" : false,
+      "value" : "${now():format('yyyyMMdd', 'Australia/Sydney')}"
+    }
+  }, {
+    "parameter" : {
+      "name" : "DM3_SecretAccessKey",
+      "description" : "",
+      "sensitive" : true
+    }
+  }, {
+    "parameter" : {
+      "name" : "DM3_Target_S3_Bucket",
+      "description" : "",
+      "sensitive" : false,
+      "value" : "amap-dm-product-dev-s3-data"
+    }
+  }, {
+    "parameter" : {
+      "name" : "DM3_Target_S3_Prefix",
+      "description" : "",
+      "sensitive" : false,
+      "value" : "data/inbound/import/"
+    }
+  }, {
+    "parameter" : {
+      "name" : "DMP_AccessKeyId",
+      "description" : "",
+      "sensitive" : true
+    }
+  }, {
+    "parameter" : {
+      "name" : "DMP_Prefix_AudienceSegmentMap",
+      "description" : "",
+      "sensitive" : false,
+      "value" : "dummy_dmp_src_bucket/audience-segment-map/"
+    }
+  }, {
+    "parameter" : {
+      "name" : "DMP_Prefix_AudienceSegments",
+      "description" : "",
+      "sensitive" : false,
+      "value" : "dummy_dmp_src_bucket/audience-segments/"
+    }
+  }, {
+    "parameter" : {
+      "name" : "DMP_Prefix_Industry_Benchmark",
+      "description" : "",
+      "sensitive" : false,
+      "value" : "Industry_benchmark/"
+    }
+  }, {
+    "parameter" : {
+      "name" : "DMP_Prefix_SiteUserData",
+      "description" : "",
+      "sensitive" : false,
+      "value" : "dummy_dmp_src_bucket/site-user-data/"
+    }
+  }, {
+    "parameter" : {
+      "name" : "DMP_SecretAccessKey",
+      "description" : "",
+      "sensitive" : true
+    }
+  }, {
+    "parameter" : {
+      "name" : "DMP_Source_S3_Bucket",
+      "description" : "",
+      "sensitive" : false,
+      "value" : "amap-dm-product-dev-s3-data"
+    }
+  }, {
+    "parameter" : {
+      "name" : "FB_Adserver_Id",
+      "description" : "",
+      "sensitive" : false
+    }
+  }, {
+    "parameter" : {
+      "name" : "GAM_Account_ID",
+      "description" : "",
+      "sensitive" : false,
+      "value" : ""
+    }
+  }, {
+    "parameter" : {
+      "name" : "GAM_Application_Name",
+      "description" : "",
+      "sensitive" : false,
+      "value" : ""
+    }
+  }, {
+    "parameter" : {
+      "name" : "GAM_JsonKey_Path",
+      "description" : "",
+      "sensitive" : false,
+      "value" : "/opt/nifi/nifi-current/development/google_json/gam_ad_ops_system.json"
+    }
+  }, {
+    "parameter" : {
+      "name" : "GAM_Network_Code",
+      "description" : "",
+      "sensitive" : false,
+      "value" : ""
+    }
+  }, {
+    "parameter" : {
+      "name" : "MYSQL_Jdbc_Jar_Location",
+      "description" : "",
+      "sensitive" : false,
+      "value" : "/opt/nifi/nifi-current/development/mysql_jdbc/mariadb-java-client-2.7.3.jar"
+    }
+  }, {
+    "parameter" : {
+      "name" : "MYSQL_Jdbc_Password",
+      "description" : "",
+      "sensitive" : true
+    }
+  }, {
+    "parameter" : {
+      "name" : "MYSQL_Jdbc_Password_monitoring",
+      "description" : "",
+      "sensitive" : true
+    }
+  }, {
+    "parameter" : {
+      "name" : "MYSQL_Jdbc_User",
+      "description" : "",
+      "sensitive" : false,
+      "value" : "nifi"
+    }
+  }, {
+    "parameter" : {
+      "name" : "MYSQL_Jdbc_User_monitoring",
+      "description" : "",
+      "sensitive" : false,
+      "value" : "monitoring"
+    }
+  }, {
+    "parameter" : {
+      "name" : "MySQL_Jdbc_URL_monitoring",
+      "description" : "",
+      "sensitive" : false,
+      "value" : "jdbc:mysql://amap-dm-product-dev-rds.cvm6b2mayn6u.eu-west-1.rds.amazonaws.com:3306/monitoring"
+    }
+  }, {
+    "parameter" : {
+      "name" : "MySQL_Jdbc_Url",
+      "description" : "",
+      "sensitive" : false,
+      "value" : "jdbc:mysql://amap-dm-product-dev-rds.cvm6b2mayn6u.eu-west-1.rds.amazonaws.com:3306/data_activation"
+    }
+  }, {
+    "parameter" : {
+      "name" : "SalesforcePushBulkLoadAPIURL",
+      "description" : "",
+      "sensitive" : false,
+      "value" : ""
+    }
+  }, {
+    "parameter" : {
+      "name" : "SalesforcePushOAuthURL",
+      "description" : "",
+      "sensitive" : false,
+      "value" : ""
+    }
+  }, {
+    "parameter" : {
+      "name" : "SalesforcePushPassword",
+      "description" : "",
+      "sensitive" : false,
+      "value" : ""
+    }
+  }, {
+    "parameter" : {
+      "name" : "SalesforcePushUser",
+      "description" : "",
+      "sensitive" : false,
+      "value" : ""
+    }
+  }, {
+    "parameter" : {
+      "name" : "Salesforce_Jar_Location",
+      "description" : "",
+      "sensitive" : false,
+      "value" : "/opt/nifi/nifi-current/development/salesforce_jdbc/sforce-jdbc.jar"
+    }
+  }, {
+    "parameter" : {
+      "name" : "Salesforce_Password",
+      "description" : "",
+      "sensitive" : true
+    }
+  }, {
+    "parameter" : {
+      "name" : "Salesforce_Prefix",
+      "description" : "",
+      "sensitive" : false
+    }
+  }, {
+    "parameter" : {
+      "name" : "Salesforce_Url",
+      "description" : "",
+      "sensitive" : false,
+      "value" : ""
+    }
+  }, {
+    "parameter" : {
+      "name" : "Salesforce_User",
+      "description" : "",
+      "sensitive" : false,
+      "value" : ""
+    }
+  } ]
+}

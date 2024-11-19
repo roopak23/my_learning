@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Release.Name }}-unit-to-metric
+  labels:
+    app: {{ .Release.Name }}
+    chart: {{ .Chart.Name }}
+    release: {{ .Chart.Version }}
+
+data:
+  application.unit.to.metric.mapping.CPC: "click"
+  application.unit.to.metric.mapping.CPM: "impression"
+  application.unit.to.metric.mapping.CPV: "view"
+  application.unit.to.metric.mapping.CPCV: "view"

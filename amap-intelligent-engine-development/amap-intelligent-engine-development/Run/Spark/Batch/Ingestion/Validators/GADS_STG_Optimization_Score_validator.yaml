@@ -1,0 +1,35 @@
+config:
+  remove_duplicates: true
+  check_mandatory: true
+
+fields:
+  - name: tech_order_remote_id
+    type: StringType()
+    mandatory: false
+  - name: tech_order_remote_name
+    type: StringType()
+    mandatory: false
+  - name: status
+    type: StringType()
+    mandatory: false
+  - name: start_date
+    type: DateType()
+    mandatory: false
+  - name: end_date
+    type: DateType()
+    mandatory: false
+  - name: type
+    type: StringType()
+    mandatory: false
+  - name: actual_pacing
+    type: DoubleType()
+    mandatory: false
+    
+outputOrder:
+  - tech_order_remote_id
+  - tech_order_remote_name
+  - status
+  - start_date
+  - end_date
+  - type
+  - actual_pacing

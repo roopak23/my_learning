@@ -1,0 +1,38 @@
+Name: ETL_Daily_Run
+
+Tags:
+    - Common
+    - Campaign_Monitoring
+    - Inventory_Management
+    - Suggested_For_You
+    - Audience_CDP
+
+Steps:
+    Trigger_Pipelines:
+        Mark_Scheduled: True
+        Tasks:
+            - Common
+            - Campaign_Monitoring
+            - Inventory_Management
+            - Suggested_For_You
+            # - Audience_CDP
+        Tasks_Order:
+            -  Common >> [Inventory_Management]
+            -  Common >> [Campaign_Monitoring, Inventory_Management]
+            #-  Common >> [Campaign_Monitoring, Audience_CDP, Inventory_Management]
+            - Inventory_Management >> Suggested_For_You
+
+    Migration:
+        Tasks:
+            - taskid: Migrate_ingestion_metadata.sql
+              active: true
+              dependencies_task: [ ]
+              task_type: migration
+              options: [ ]
+              file_name: MIG_ingestion_metadata.sql
+
+    Mark_Completed: []
+
+    # Terminate_Cluster: []
+
+# E.O.F.

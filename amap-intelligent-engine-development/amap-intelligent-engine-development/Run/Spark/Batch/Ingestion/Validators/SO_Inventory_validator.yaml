@@ -1,0 +1,75 @@
+config:
+  remove_duplicates: true
+  check_mandatory: true
+
+fields:
+  - name: date
+    type: DateType()
+    mandatory: true
+  - name: adserver_adslot_id
+    type: StringType()
+    mandatory: true
+  - name: adserver_id
+    type: StringType()
+    mandatory: true
+  - name: metric
+    type: StringType()
+    mandatory: true
+  - name: media_type
+    type: StringType()
+    mandatory: true
+  - name: catalog_value
+    type: StringType()
+    mandatory: false
+  - name: record_type
+    type: StringType()
+    mandatory: false
+  - name: catalog_item_id
+    type: StringType()
+    mandatory: true
+  - name: catalog_item_name
+    type: StringType()
+    mandatory: false
+  - name: adserver_target_remote_id
+    type: StringType()
+    mandatory: true
+  - name: adserver_target_name
+    type: StringType()
+    mandatory: false
+  - name: adserver_target_type
+    type: StringType()
+    mandatory: false
+  - name: adserver_target_category
+    type: StringType()
+    mandatory: false
+  - name: adserver_target_code
+    type: StringType()
+    mandatory: false
+  - name: future_capacity
+    type: IntegerType()
+    mandatory: true
+  - name: booked
+    type: IntegerType()
+    mandatory: true
+  - name: reserved
+    type: IntegerType()
+    mandatory: true
+
+outputOrder:
+  - date
+  - adserver_adslot_id
+  - adserver_id
+  - metric
+  - media_type
+  - catalog_value
+  - record_type
+  - catalog_item_id
+  - catalog_item_name
+  - adserver_target_remote_id
+  - adserver_target_name
+  - adserver_target_type
+  - adserver_target_category
+  - adserver_target_code
+  - future_capacity
+  - booked
+  - reserved

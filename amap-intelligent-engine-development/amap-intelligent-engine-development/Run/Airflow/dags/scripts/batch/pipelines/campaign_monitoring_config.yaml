@@ -1,0 +1,255 @@
+Name: Campaign_Monitoring
+
+Tags:
+    - Campaign_Monitoring
+
+Steps_Order:
+    - Start >> [Create_Cluster, Wait_For_Files]
+    - Create_Cluster >> [Preparation, Creation] >> Ingestion
+    - Wait_For_Files >> Ingestion
+    - Ingestion >> Aggregation >> Migration >> Mark_Completed >> End
+
+Steps:
+    Create_Cluster: []
+    Wait_For_Files: []
+    Preparation: []
+    Creation:
+        Files:
+            - SA_STG_Account.sql
+            - SA_STG_Ad_Ops_System.sql
+            - SA_STG_Brand.sql
+            - SA_STG_Creative.sql
+            - SA_STG_Market_Order.sql
+            - SA_STG_Market_Order_Line_Details.sql
+            - SA_STG_Past_Campaign_Performances.sql
+            - SA_STG_AMAP_Account_Ad_Ops_Syst.sql
+            - SA_STG_Targeting.sql
+            - SA_STG_Tech_Line_Details.sql
+            - SA_STG_Tech_Line_Targeting.sql
+            - SA_STG_Tech_Order.sql
+            - TRF_Advertiser.sql
+            - TRF_Campaign.sql
+            - TRF_Fact_Input.sql
+            - TRF_Monitoring_Insights.sql
+            - TRF_Pacing.sql
+            - TRF_Past_Campaign_Performances.sql
+
+            
+
+    Ingestion:
+        Tasks:
+            - task_id: STG_SA_Account_ingest
+              pattern: STG_SA_Account.*[cC][sS][vV]
+              validator: STG_SA_Account_validator.yaml
+              delimiter: "|"
+              table: STG_SA_Account
+              partitionedBy: partition_date
+              schedule_enabled: true
+              poke_interval: 60
+              timeout: 900
+              
+            - task_id: STG_SA_Ad_Ops_System_ingest
+              pattern: STG_SA_Ad_Ops_System.*[cC][sS][vV]
+              validator: STG_SA_Ad_Ops_System_validator.yaml
+              delimiter: "|"
+              table: STG_SA_Ad_Ops_System
+              partitionedBy: partition_date
+              schedule_enabled: true
+              poke_interval: 60
+              timeout: 900
+              
+            - task_id: STG_SA_Brand_ingest
+              pattern: STG_SA_Brand.*[cC][sS][vV]
+              validator: STG_SA_Brand_validator.yaml
+              delimiter: "|"
+              table: STG_SA_Brand
+              partitionedBy: partition_date
+              schedule_enabled: true
+              poke_interval: 60
+              timeout: 900
+              
+            - task_id: STG_SA_Creative_ingest
+              pattern: STG_SA_Creative.*[cC][sS][vV]
+              validator: STG_SA_Creative_validator.yaml
+              delimiter: "^"
+              table: STG_SA_Creative
+              partitionedBy: partition_date
+              schedule_enabled: true
+              poke_interval: 60
+              timeout: 900
+              
+            - task_id: STG_SA_AMAP_Account_Ad_Ops_Syst_ingest
+              pattern: STG_SA_AMAP_Account_Ad_Ops_Syst.*[cC][sS][vV]
+              validator: STG_SA_AMAP_Account_Ad_Ops_Syst_validator.yaml
+              delimiter: "|"
+              table: STG_SA_AMAP_Account_Ad_Ops_Syst
+              partitionedBy: partition_date
+              schedule_enabled: true
+              poke_interval: 60
+              timeout: 900
+              
+            - task_id: STG_SA_Market_Order
+              pattern: STG_SA_Market_Order_[0-9].*[cC][sS][vV]
+              validator: STG_SA_Market_Order_validator.yaml
+              delimiter: "|"
+              table: STG_SA_Market_Order
+              partitionedBy: partition_date
+              schedule_enabled: false
+              poke_interval: 60
+              timeout: 900
+
+            - task_id: STG_SA_Market_Order_Line_Details
+              pattern: STG_SA_Market_Order_Line_Details.*[cC][sS][vV]
+              validator: STG_SA_Market_Order_Line_Details_validator.yaml
+              delimiter: "^"
+              table: STG_SA_Market_Order_Line_Details
+              partitionedBy: partition_date
+              schedule_enabled: true
+              poke_interval: 60
+              timeout: 900
+
+            - task_id: STG_SA_Past_Campaign_Performances_ingest
+              pattern: STG_SA_Past_Campaign_Performances.*[cC][sS][vV]
+              validator: STG_SA_Past_Campaign_Performances_validator.yaml
+              delimiter: "|"
+              table: STG_SA_Past_Campaign_Performances
+              partitionedBy: partition_date
+              schedule_enabled: true
+              poke_interval: 60
+              timeout: 900
+
+            - task_id: STG_SA_Targeting_ingest
+              pattern: STG_SA_Targeting.*[cC][sS][vV]
+              validator: STG_SA_Targeting_validator.yaml
+              delimiter: "|"
+              table: STG_SA_Targeting
+              partitionedBy: partition_date
+              schedule_enabled: true
+              poke_interval: 60
+              timeout: 900
+
+            - task_id: STG_SA_Tech_Line_Details_ingest
+              pattern: STG_SA_Tech_Line_Details.*[cC][sS][vV]
+              validator: STG_SA_Tech_Line_Details_validator.yaml
+              delimiter: "|"
+              table: STG_SA_Tech_Line_Details
+              partitionedBy: partition_date
+              schedule_enabled: true
+              poke_interval: 60
+              timeout: 900
+
+            - task_id: STG_SA_Tech_Line_Targeting_ingest
+              pattern: STG_SA_Tech_Line_Targeting.*[cC][sS][vV]
+              validator: STG_SA_Tech_Line_Targeting_validator.yaml
+              delimiter: "^"
+              table: STG_SA_Tech_Line_Targeting
+              partitionedBy: partition_date
+              schedule_enabled: true
+              poke_interval: 60
+              timeout: 900
+            
+            - task_id: STG_SA_Tech_Order_ingest
+              pattern: STG_SA_Tech_Order.*[cC][sS][vV]
+              validator: STG_SA_Tech_Order_validator.yaml
+              delimiter: "|"
+              table: STG_SA_Tech_Order
+              partitionedBy: partition_date
+              schedule_enabled: true
+              poke_interval: 60
+              timeout: 900
+
+
+    Aggregation:
+        Tasks:
+            - taskid: STG_SA_Past_Campaign_Performances_update
+              active: true
+              dependencies_task: [ ]
+              task_type: aggregation
+              options: [ ]
+              file_name: STG_Past_Campaign_Performances_Update.hql
+
+            - taskid: TRF_Advertiser
+              active: true
+              dependencies_task: [ ]
+              task_type: aggregation
+              options: [ ]
+              file_name: agg_TRF_Advertiser.hql
+            
+            - taskid: TRF_Past_Campaign_Performances
+              active: true
+              dependencies_task:
+                - STG_SA_Past_Campaign_Performances_update
+              task_type: aggregation
+              options: [ ]
+              file_name: agg_TRF_Past_Campaign_Performances.hql
+
+            - taskid: TRF_Campaign
+              active: true
+              dependencies_task: [ ]
+              task_type: aggregation
+              options: [ ]
+              file_name: agg_TRF_Campaign.hql
+
+            - taskid: TRF_Pacing
+              active: true
+              dependencies_task:
+                - TRF_Past_Campaign_Performances
+              task_type: aggregation
+              options: [ ]
+              file_name: agg_TRF_Pacing.hql
+
+            - taskid: TRF_Fact_Input
+              active: true
+              dependencies_task:
+                - TRF_Campaign
+                - STG_SA_Past_Campaign_Performances_update
+                - TRF_Past_Campaign_Performances
+                - TRF_Pacing
+              task_type: aggregation
+              options: [ ]
+              file_name: agg_TRF_Fact_Input.hql
+
+            - taskid: TRF_Monitoring_Insights
+              active: true
+              dependencies_task:
+                - TRF_Fact_Input
+                - TRF_Past_Campaign_Performances
+                - TRF_Pacing
+                - TRF_Advertiser
+              task_type: aggregation
+              options: [ ]
+              file_name: agg_TRF_Monitoring_Insights.hql
+
+    Migration:
+        Tasks:
+            - taskid: Migrate_campaign_monitoring
+              active: true
+              dependencies_task: [ ]
+              task_type: migration
+              options: [ ]
+              file_name: MIG_campaign_monitoring.sql
+
+    Mark_Completed: []
+
+MySQL_Creation:
+    Tables:
+    - Mysql_campaign_monitoring.sql
+
+Data_Retention:
+    Retention_Groups:
+        - Group_id: 1
+          Tables:
+            - STG_SA_Creative
+            - STG_SA_Past_Campaign_Performances
+            - STG_SA_Tech_Line_Targeting
+            - TRF_Campaign
+            - TRF_Fact_Input
+            - TRF_Monitoring_Insights
+            - TRF_Pacing
+
+          Retention_period: 90
+
+
+
+
+# E.O.F.

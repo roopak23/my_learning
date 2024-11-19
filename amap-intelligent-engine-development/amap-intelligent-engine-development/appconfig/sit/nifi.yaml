@@ -1,0 +1,69 @@
+params:
+
+  - name: PARAMS.CLUSTER_MODE
+    value: false
+    descirption: option for cluster mode installation
+
+  - name: PARAMS.CERT_ARN
+    value: arn:aws:acm:ap-southeast-2:956659591835:certificate/fb0d4f8c-7923-4f97-a2f5-79a9f6a8a696
+    descirption: certificate used for cluster mode installation
+
+  - name: PARAMS.AWS_REGION
+    value: ap-southeast-2
+    descirption: AWS region where applications will be deployed
+
+  - name: PARAMS.ECR_REPO
+    value: 956659591835.dkr.ecr.ap-southeast-2.amazonaws.com
+    descirption: ECR Reporitory where custome images will be stored
+
+  # - name: PARAMS.VAULT_HOST
+  #   value: vaultdev.avs-accenture.com
+  #   descirption: Host where kecyloack is deployed
+
+  - name: PARAMS.EKS_CLUSTER_NAME
+    value: foxtel-hawkeye-sit-eks
+    descirption: Cluster Name where applications will be deployed
+
+  - name: PARAMS.PRIVATE_HOST
+    value: priv.sitamapie.foxtel.com.au
+    descirption: Host name to use for ingress for internal connections from corporate
+
+  - name: PARAMS.S3_APP_BUCKET_NAME
+    value: foxtel-hawkeye-sit-s3-app
+    descirption: S3 bucket for application configuration data
+
+  - name: PARAMS.KEYCLOAK_URL
+    value: priv.sitamapie.foxtel.com.au/keycloak
+    descirption: Secret to connect to Keycloak
+
+  - name: XPARAMS.KEYCLOAK_SECRET
+    value: nifi_keycloak_secret_sit
+    descirption: Secret to connect to Keycloak - stored in external provider
+
+  - name: PARAMS.VPC_CIDR_BLOCK
+    value: 10.109.160.0/19
+    descirption: VPC CIDR block
+
+  - name: PARAMS.PROCESS_GROUP_ID
+    value: bce7efb4-7a3b-4ada-bab8-0ee569674731
+    descirption: Nifi Main process group retrieved after initial deployment
+
+  # - name: PARAMS.VPN_CIDR_BLOCK
+  #   value: 
+  #   descirption: VPN CIDR block
+  
+  - name: PARAMS.DEFAULT_TEMPLATES
+    value: "DM_to_CRM_s3.xml,DM_to_DP_s3.xml,DM_to_IL.xml,Execute_Airflow_ETL.xml,Google_Download.xml,Salesforce_Download.xml,Salesforce_Push.xml"
+    descirption: Default templates
+
+
+
+
+
+
+
+
+
+
+
+

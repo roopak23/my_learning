@@ -1,0 +1,110 @@
+config:
+  remove_duplicates: true
+  check_mandatory: true
+
+# StringType, BinaryType, BooleanType, DecimalType, FloatType, DoubleType, ByteType, ShortType, IntegerType, LongType, DateType, TimestampType, NullType
+fields:
+  - name: name
+    type: StringType()
+    mandatory: false
+  - name: dfp_id
+    type: StringType()
+    mandatory: true
+  - name: dfp_name
+    type: StringType()
+    mandatory: true
+  - name: source
+    type: StringType()
+    mandatory: true
+  - name: methodology
+    type: StringType()
+    mandatory: false
+  - name: segmentgroup
+    type: StringType()
+    mandatory: true
+  - name: pricing_category
+    type: StringType()
+    mandatory: false
+  - name: dfp_size
+    type: StringType()
+    mandatory: false
+  - name: total_ubs
+    type: IntegerType()
+    mandatory: true
+  - name: external_id
+    type: StringType()
+    mandatory: false
+  - name: islookalike
+    type: StringType()
+    mandatory: false
+  - name: ispremium
+    type: StringType()
+    mandatory: false
+  - name: crmaudiencesegment
+    type: StringType()
+    mandatory: false
+  - name: status
+    type: StringType()
+    mandatory: false
+  - name: has_near_insights
+    type: StringType()
+    mandatory: false
+  - name: advertiser
+    type: StringType()
+    mandatory: false
+  - name: segmentgroupsubcategory
+    type: StringType()
+    mandatory: true
+  - name: segmentgroupcategory
+    type: StringType()
+    mandatory: true
+  - name: subcategory
+    type: StringType()
+    mandatory: true
+  - name: category
+    type: StringType()
+    mandatory: true
+  - name: disable_near_insights
+    type: StringType()
+    mandatory: false
+  - name: disable_insights
+    type: StringType()
+    mandatory: false
+  - name: near_insight_text
+    type: StringType()
+    mandatory: false
+  - name: dt
+    type: StringType()
+    mandatory: false
+  - name: adserver_id
+    type: StringType()
+    mandatory: true
+
+
+# column order from list above
+outputOrder:
+  - name
+  - dfp_id
+  - dfp_name
+  - source
+  - methodology
+  - segmentgroup
+  - pricing_category
+  - dfp_size
+  - total_ubs
+  - external_id
+  - islookalike
+  - ispremium
+  - crmaudiencesegment
+  - status
+  - has_near_insights
+  - advertiser
+  - segmentgroupsubcategory
+  - segmentgroupcategory
+  - subcategory
+  - category
+  - disable_near_insights
+  - disable_insights
+  - near_insight_text
+  - dt
+  - adserver_id

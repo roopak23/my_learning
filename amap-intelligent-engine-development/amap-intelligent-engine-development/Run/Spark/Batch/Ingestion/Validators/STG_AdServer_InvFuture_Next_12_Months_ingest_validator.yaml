@@ -1,0 +1,41 @@
+config:
+  remove_duplicates: true
+  check_mandatory: true
+
+# StringType, BinaryType, BooleanType, DecimalType, FloatType, DoubleType, ByteType, ShortType, IntegerType, LongType, DateType, TimestampType, NullType
+fields:
+  - name: DATE
+    type: StringType()
+    mandatory: true
+  - name: AD_UNIT_ID
+    type: StringType()
+    mandatory: true
+  - name: AD_UNIT_NAME
+    type: StringType()
+    mandatory: false
+  - name: SELL_THROUGH_FORECASTED_IMPRESSIONS
+    type: IntegerType()
+    mandatory: true
+  - name: SELL_THROUGH_RESERVED_IMPRESSIONS
+    type: IntegerType()
+    mandatory: true
+  - name: SELL_THROUGH_AVAILABLE_IMPRESSIONS
+    type: IntegerType()
+    mandatory: true
+  - name: adserver_id
+    type: StringType()
+    mandatory: true
+  - name: metric
+    type: StringType()
+    mandatory: true
+
+# column order from list above
+outputOrder:
+  - DATE
+  - AD_UNIT_ID
+  - AD_UNIT_NAME
+  - SELL_THROUGH_FORECASTED_IMPRESSIONS
+  - SELL_THROUGH_RESERVED_IMPRESSIONS
+  - SELL_THROUGH_AVAILABLE_IMPRESSIONS
+  - adserver_id
+  - metric

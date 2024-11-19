@@ -1,0 +1,44 @@
+config:
+  remove_duplicates: true
+  check_mandatory: true
+
+fields:
+  - name: Id
+    type: StringType()
+    mandatory: true
+  - name: Catalog_Item__c
+    type: StringType()
+    mandatory: true
+  - name: Currency__c
+    type: StringType()
+    mandatory: false
+  - name: Commercial_Audience__c
+    type: StringType()
+    mandatory: false
+  - name: Price_List__c
+    type: StringType()
+    mandatory: false
+  - name: Price_Per_Unit__c
+    type: DoubleType()
+    mandatory: true
+  - name: Spot_Lenght__c
+    type: DoubleType()
+    mandatory: false    
+  - name: Unit__c
+    type: StringType()
+    mandatory: true
+    
+outputOrder:
+  - Id
+  - Catalog_Item__c
+  - Currency__c
+  - Commercial_Audience__c
+  - Price_List__c
+  - Price_Per_Unit__c
+  - Spot_Lenght__c
+  - Unit__c
+
+
+    
+    
+

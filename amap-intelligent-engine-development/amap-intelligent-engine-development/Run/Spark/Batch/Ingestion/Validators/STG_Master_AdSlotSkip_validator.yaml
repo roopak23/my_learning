@@ -1,0 +1,14 @@
+config:
+  remove_duplicates: true
+  check_mandatory: true
+
+# StringType, BinaryType, BooleanType, DecimalType, FloatType, DoubleType, ByteType, ShortType, IntegerType, LongType, DateType, TimestampType, NullType
+fields:
+  - name: adserver_adslot_id
+    type: StringType()
+    pk: true
+    mandatory: true
+
+# column order from list above
+outputOrder:
+  - adserver_adslot_id

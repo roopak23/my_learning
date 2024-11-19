@@ -1,0 +1,24 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: {{ .Values.inventoryManagement.name }}-role
+  labels:
+    app: {{ .Release.Name }}
+    chart: {{ .Chart.Name }}
+    release: {{ .Chart.Version }}
+    component: inventoryManagement
+rules:
+  - apiGroups: [""]
+    resources: ["pods"]
+    verbs:
+      - "create"
+      - "get"
+      - "delete"
+      - "list"
+      - "watch"
+  - apiGroups: [""]
+    resources: ["pods/log"]
+    verbs: ["get", "list"]
+  - apiGroups: [""]
+    resources: ["configmaps"]
+    verbs: ["get", "list"]

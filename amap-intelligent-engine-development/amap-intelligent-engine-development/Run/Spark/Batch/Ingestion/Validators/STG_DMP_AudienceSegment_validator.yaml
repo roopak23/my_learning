@@ -1,0 +1,40 @@
+config:
+  remove_duplicates: true
+  check_mandatory: true
+
+fields:
+  - name: Category
+    type: StringType()
+    mandatory: true
+  - name: SubCategory
+    type: StringType()
+    mandatory: true
+  - name: segment_type
+    type: StringType()
+    mandatory: true
+  - name: segment_name
+    type: StringType()
+    mandatory: true
+  - name: SegmentId
+    type: StringType()
+    mandatory: true
+  - name: SegmentIdLong
+    type: StringType()
+    mandatory: true
+  - name: LastComputeDay
+    type: StringType()
+    mandatory: true
+  - name: Description
+    type: StringType()
+    mandatory: true
+
+    
+outputOrder:
+  - Category
+  - SubCategory
+  - segment_type
+  - segment_name
+  - SegmentId
+  - SegmentIdLong
+  - LastComputeDay
+  - Description

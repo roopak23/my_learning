@@ -1,0 +1,27 @@
+config:
+  remove_duplicates: true
+  check_mandatory: true
+
+fields:
+  - name: userid
+    type: StringType()
+    mandatory: true
+  - name: publisheruserid
+    type: StringType()
+    mandatory: true
+  - name: segmentid
+    type: StringType()
+    mandatory: true
+
+
+outputOrder:
+  - userid
+  - publisheruserid
+  - segmentid
+
+
+
+
+
+
+

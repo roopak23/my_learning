@@ -1,0 +1,31 @@
+params:
+
+  - name: PARAMS.AWS_ACCOUNT_NUM
+    value: 667518499308
+    descirption: AWS account id where applications will be deployed
+
+  - name: PARAMS.AWS_REGION
+    value: ap-southeast-2
+    descirption: AWS region where applications will be deployed
+
+  - name: PARAMS.SERVICE_ACCOUNT_NAME
+    value: foxtel-hawkeye-prod-service-account-role-
+    descirption: AWS service account name
+
+  - name: PARAMS.EKS_CLUSTER_NAME
+    value: foxtel-hawkeye-prod-eks
+    descirption: Cluster Name where applications will be deployed
+
+
+
+
+
+
+
+
+
+
+
+
+
+

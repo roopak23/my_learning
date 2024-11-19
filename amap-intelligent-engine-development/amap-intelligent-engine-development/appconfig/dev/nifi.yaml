@@ -1,0 +1,67 @@
+params:
+
+  - name: PARAMS.CLUSTER_MODE
+    value: false
+    descirption: option for cluster mode installation
+
+  - name: PARAMS.CERT_ARN
+    value: arn:aws:acm:ap-southeast-2:787189406110:certificate/551a5a7d-740d-4956-ae7e-63170dac7675
+    descirption: certificate used for cluster mode installation
+
+  - name: PARAMS.AWS_REGION
+    value: ap-southeast-2
+    descirption: AWS region where applications will be deployed
+
+  - name: PARAMS.ECR_REPO
+    value: 787189406110.dkr.ecr.ap-southeast-2.amazonaws.com
+    descirption: ECR Reporitory where custome images will be stored
+
+  # - name: PARAMS.VAULT_HOST
+  #   value: vaultdev.avs-accenture.com
+  #   descirption: Host where kecyloack is deployed
+
+  - name: PARAMS.EKS_CLUSTER_NAME
+    value: foxtel-hawkeye-dev-eks
+    descirption: Cluster Name where applications will be deployed
+
+  - name: PARAMS.PRIVATE_HOST
+    value: priv.devamapie.foxtel.com.au
+    descirption: Host name to use for ingress for internal connections from corporate
+
+  - name: PARAMS.S3_APP_BUCKET_NAME
+    value: foxtel-hawkeye-dev-s3-app
+    descirption: S3 bucket for application configuration data
+
+  - name: PARAMS.KEYCLOAK_URL
+    value: priv.devamapie.foxtel.com.au/keycloak
+    descirption: Secret to connect to Keycloak
+
+  - name: XPARAMS.KEYCLOAK_SECRET
+    value: nifi_keycloak_secret_dev
+    descirption: Secret to connect to Keycloak - stored in external provider
+
+  - name: PARAMS.VPC_CIDR_BLOCK
+    value: 10.109.128.0/19
+    descirption: VPC CIDR block
+
+  - name: PARAMS.PROCESS_GROUP_ID
+    value: 0412045f-1541-4a7d-9581-f3f7c8acacc4
+    descirption: Nifi Main process group retrieved after initial deployment
+
+  # - name: PARAMS.VPN_CIDR_BLOCK
+  #   value: 
+  #   descirption: VPN CIDR block used only in clustermode
+  
+  - name: PARAMS.DEFAULT_TEMPLATES
+    value: "DM_to_CRM_s3.xml,DM_to_DP_s3.xml,DM_to_IL.xml,Execute_Airflow_ETL.xml,Google_Download.xml,Salesforce_Download.xml,Salesforce_Push.xml"
+    descirption: Default templates
+    
+
+
+
+
+
+
+
+
+

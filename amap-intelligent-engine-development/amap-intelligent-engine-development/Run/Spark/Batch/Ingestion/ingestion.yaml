@@ -1,0 +1,485 @@
+# Configuration file for DM3
+#
+# This files define the structure, location and pattern of file
+# to be ingested into hive for batch processing
+#
+
+parameters:
+    # Environment specific parameters
+    storageName: PARAMS.S3_DATA_BUCKET_NAME
+    remoteDir: data/inbound/import
+    rejectedFilesDir: data/inbound/rejected
+    environment: AWS
+
+    # System specific variables
+    validator_path: validators
+
+ingestion:
+
+  - task_id: STG_DMP_AudienceSegmentMap_ingest
+    pattern: STG_DMP_AudienceSegmentMap.*[cC][sS][vV]
+    validator: STG_DMP_AudienceSegmentMap_validator.yaml
+    delimiter: "^"
+    table: STG_DMP_AudienceSegmentMap
+    partitionedBy: partition_date
+    schedule_enabled: false
+    poke_interval: 60
+    timeout: 900
+
+  - task_id: STG_DMP_AudienceSegment_ingest
+    pattern: STG_DMP_AudienceSegment.*[cC][sS][vV]
+    validator: STG_DMP_AudienceSegment_validator.yaml
+    delimiter: ","
+    table: STG_DMP_AudienceSegment
+    partitionedBy: partition_date
+    schedule_enabled: false
+    poke_interval: 60
+    timeout: 900
+
+  - task_id: STG_DMP_SiteUserData_ingest
+    pattern: STG_DMP_SiteUserData.*[cC][sS][vV]
+    validator: STG_DMP_SiteUserData_validator.yaml
+    delimiter: "^"
+    table: STG_DMP_SiteUserData
+    partitionedBy: partition_date
+    schedule_enabled: false
+    poke_interval: 60
+    timeout: 900
+
+  - task_id: STG_AdServer_InvHistorical_ingest
+    pattern: STG_AdServer_InvHistorical.*[cC][sS][vV]
+    validator: STG_AdServer_InvHistorical_validator.yaml
+    delimiter: ","
+    table: STG_AdServer_InvHistorical
+    partitionedBy: partition_date
+    schedule_enabled: false
+    poke_interval: 60
+    timeout: 1800
+
+  - task_id: STG_AdServer_InvFuture_ingest
+    pattern: STG_AdServer_InvFuture.*[cC][sS][vV]
+    validator: STG_AdServer_InvFuture_validator.yaml
+    delimiter: ","
+    table: STG_AdServer_InvFuture
+    partitionedBy: partition_date
+    schedule_enabled: false
+    poke_interval: 60
+    timeout: 1800
+
+  - task_id: STG_AdServer_InvFuture_Next_12_Months_ingest
+    pattern: STG_AdServer_Booking_Next_12_Months.*[cC][sS][vV]
+    validator: STG_AdServer_InvFuture_Next_12_Months_ingest_validator.yaml
+    delimiter: ","
+    table: STG_AdServer_InvFuture_Next_12_Months
+    partitionedBy: partition_date
+    schedule_enabled: false
+    poke_interval: 60
+    timeout: 1800
+
+  - task_id: STG_AdServer_InvFuture_Next_3_Months_ingest
+    pattern: STG_AdServer_Booking_Next_3_Months.*[cC][sS][vV]
+    validator: STG_AdServer_InvFuture_Next_3_Months_ingest_validator.yaml
+    delimiter: ","
+    table: STG_AdServer_InvFuture_Next_3_Months
+    partitionedBy: partition_date
+    schedule_enabled: false
+    poke_interval: 60
+    timeout: 1800
+
+  - task_id: STG_AdServer_AudienceSegment_ingest
+    pattern: STG_AdServer_AudienceSegment.*[cC][sS][vV]
+    validator: STG_AdServer_AudienceSegment_validator.yaml
+    delimiter: "^"
+    table: STG_AdServer_AudienceSegment
+    partitionedBy: partition_date
+    schedule_enabled: false
+    poke_interval: 60
+    timeout: 3600
+
+  - task_id: STG_AdServer_AdSlot_ingest
+    pattern: STG_AdServer_AdSlot.*[cC][sS][vV]
+    validator: STG_AdServer_AdSlot_validator.yaml
+    delimiter: "|"
+    table: STG_AdServer_AdSlot
+    partitionedBy: partition_date
+    schedule_enabled: false
+    poke_interval: 60
+    timeout: 900
+
+  - task_id: STG_AdServer_PerformanceGathering_ingest
+    pattern: STG_AdServer_PerformanceGathering.*[cC][sS][vV]
+    validator: STG_AdServer_PerformanceGathering_validator.yaml
+    delimiter: ","
+    table: STG_AdServer_PerformanceGathering
+    partitionedBy: partition_date
+    schedule_enabled: false
+    poke_interval: 60
+    timeout: 1800
+
+  - task_id: STG_SA_Account_ingest
+    pattern: STG_SA_Account.*[cC][sS][vV]
+    validator: STG_SA_Account_validator.yaml
+    delimiter: "|"
+    table: STG_SA_Account
+    partitionedBy: partition_date
+    schedule_enabled: true
+    poke_interval: 60
+    timeout: 900
+
+  - task_id: STG_SA_Ad_Ops_System_ingest
+    pattern: STG_SA_Ad_Ops_System.*[cC][sS][vV]
+    validator: STG_SA_Ad_Ops_System_validator.yaml
+    delimiter: "|"
+    table: STG_SA_Ad_Ops_System
+    partitionedBy: partition_date
+    schedule_enabled: true
+    poke_interval: 60
+    timeout: 900
+
+  - task_id: STG_SA_Ad_Slot_ingest
+    pattern: STG_SA_Ad_Slot.*[cC][sS][vV]
+    validator: STG_SA_Ad_Slot_validator.yaml
+    delimiter: "^"
+    table: STG_SA_Ad_Slot
+    partitionedBy: partition_date
+    schedule_enabled: true
+    poke_interval: 60
+    timeout: 900
+
+  - task_id: STG_SA_AdFormatSpec_ingest
+    pattern: STG_SA_AdFormatSpec.*[cC][sS][vV]
+    validator: STG_SA_AdFormatSpec_validator.yaml
+    delimiter: "^|"
+    table: STG_SA_AdFormatSpec
+    partitionedBy: partition_date
+    schedule_enabled: true
+    poke_interval: 60
+    timeout: 900
+
+  - task_id: STG_SA_AFSAdSlot_ingest
+    pattern: STG_SA_AFSAdSlot.*[cC][sS][vV]
+    validator: STG_SA_AFSAdSlot_validator.yaml
+    delimiter: "|"
+    table: STG_SA_AFSAdSlot
+    partitionedBy: partition_date
+    schedule_enabled: true  
+    poke_interval: 60
+    timeout: 900
+
+  - task_id: STG_SA_AMAP_Account_Ad_Ops_Syst_ingest
+    pattern: STG_SA_AMAP_Account_Ad_Ops_Syst.*[cC][sS][vV]
+    validator: STG_SA_AMAP_Account_Ad_Ops_Syst_validator.yaml
+    delimiter: "|"
+    table: STG_SA_AMAP_Account_Ad_Ops_Syst
+    partitionedBy: partition_date
+    schedule_enabled: true
+    poke_interval: 60
+    timeout: 900
+
+  - task_id: STG_SA_CatalogItem_ingest
+    pattern: STG_SA_CatalogItem.*[cC][sS][vV]
+    validator: STG_SA_CatalogItem_validator.yaml
+    delimiter: "^"
+    table: STG_SA_CatalogItem
+    partitionedBy: partition_date
+    schedule_enabled: true
+    poke_interval: 60
+    timeout: 900
+
+  - task_id: STG_SA_Price_Item_ingest
+    pattern: STG_SA_Price_Item.*[cC][sS][vV]
+    validator: STG_SA_Price_Item_validator.yaml
+    delimiter: "|"
+    table: STG_SA_Price_Item
+    partitionedBy: partition_date
+    schedule_enabled: true
+    poke_interval: 60
+    timeout: 900
+
+  - task_id: STG_SA_Targeting_ingest
+    pattern: STG_SA_Targeting.*[cC][sS][vV]
+    validator: STG_SA_Targeting_validator.yaml
+    delimiter: "|"
+    table: STG_SA_Targeting
+    partitionedBy: partition_date
+    schedule_enabled: true
+    poke_interval: 60
+    timeout: 900
+
+  - task_id: STG_SA_Market_Order_Line_Details
+    pattern: STG_SA_Market_Order_Line_Details.*[cC][sS][vV]
+    validator: STG_SA_Market_Order_Line_Details_validator.yaml
+    delimiter: "^"
+    table: STG_SA_Market_Order_Line_Details
+    partitionedBy: partition_date
+    schedule_enabled: true
+    poke_interval: 60
+    timeout: 900
+
+  - task_id: API_Reserved_History_ingest
+    pattern: API_Reserved_History.*[cC][sS][vV]
+    validator: API_Reserved_History_validator.yaml
+    delimiter: "|"
+    table: API_Reserved_History
+    partitionedBy: partition_date
+    schedule_enabled: false
+    poke_interval: 60
+    timeout: 900
+
+  - task_id: STG_NC_anagraphic_ingest
+    pattern: STG_NC_anagraphic.*[cC][sS][vV]
+    validator: STG_NC_anagraphic_validator.yaml
+    delimiter: "|"
+    table: STG_NC_anagraphic
+    partitionedBy: partition_date
+    schedule_enabled: true
+    poke_interval: 60
+    timeout: 900  
+
+  - task_id: STG_NC_taxonomy_ingest
+    pattern: STG_NC_taxonomy.*[cC][sS][vV]
+    validator: STG_NC_taxonomy_validator.yaml
+    delimiter: ";"
+    table: STG_NC_taxonomy
+    partitionedBy: partition_date
+    schedule_enabled: false
+    poke_interval: 60
+    timeout: 900 
+      
+
+  - task_id: STG_SA_AudienceReach_ingest
+    pattern: STG_SA_AudienceReach.*[cC][sS][vV]
+    validator: STG_SA_AudienceReach_validator.yaml
+    delimiter: "|"
+    table: STG_SA_AudienceReach
+    partitionedBy: partition_date
+    schedule_enabled: false
+    poke_interval: 60
+    timeout: 900  
+
+  - task_id: STG_SA_Market_Order
+    pattern: STG_SA_Market_Order.*[cC][sS][vV]
+    validator: STG_SA_Market_Order_validator.yaml
+    delimiter: "|"
+    table: STG_SA_Market_Order
+    partitionedBy: partition_date
+    schedule_enabled: false
+    poke_interval: 60
+    timeout: 900
+
+  - task_id: STG_SA_Creative_ingest
+    pattern: STG_SA_Creative.*[cC][sS][vV]
+    validator: STG_SA_Creative_validator.yaml
+    delimiter: "^"
+    table: STG_SA_Creative
+    partitionedBy: partition_date
+    schedule_enabled: true
+    poke_interval: 60
+    timeout: 900  
+    
+
+  - task_id: STG_SA_Tech_Order_ingest
+    pattern: STG_SA_Tech_Order.*[cC][sS][vV]
+    validator: STG_SA_Tech_Order_validator.yaml
+    delimiter: "|"
+    table: STG_SA_Tech_Order
+    partitionedBy: partition_date
+    schedule_enabled: true
+    poke_interval: 60
+    timeout: 900
+
+  - task_id: STG_SA_Industry_Benchmark_ingest
+    pattern: STG_SA_Industry_Benchmark.*[cC][sS][vV]
+    validator: STG_SA_Industry_Benchmark_validator.yaml
+    delimiter: ","
+    table: STG_SA_Industry_Benchmark
+    partitionedBy: partition_date
+    schedule_enabled: true
+    poke_interval: 60
+    timeout: 900
+    
+
+  - task_id: STG_TO_Recommendation_ingest
+    pattern: STG_TO_Recommendation.*[cC][sS][vV]
+    validator: STG_TO_Recommendation_validator.yaml
+    delimiter: "^"
+    table: STG_TO_Recommendation
+    partitionedBy: partition_date
+    schedule_enabled: true
+    poke_interval: 60
+    timeout: 900  
+    
+
+  - task_id: STG_TL_Recommendation_ingest
+    pattern: STG_TL_Recommendation.*[cC][sS][vV]
+    validator: STG_TL_Recommendation_validator.yaml
+    delimiter: "^"
+    table: STG_TL_Recommendation
+    partitionedBy: partition_date
+    schedule_enabled: true
+    poke_interval: 60
+    timeout: 900
+
+  - task_id: SO_Inventory_ingest
+    pattern: SO_Inventory.*[cC][sS][vV]
+    validator: SO_Inventory_validator.yaml
+    delimiter: "|"
+    table: SO_Inventory
+    partitionedBy: partition_date
+    schedule_enabled: false
+    poke_interval: 60
+    timeout: 900
+
+  - task_id: STG_SA_Tech_Line_Details_ingest
+    pattern: STG_SA_Tech_Line_Details.*[cC][sS][vV]
+    validator: STG_SA_Tech_Line_Details_validator.yaml
+    delimiter: "|"
+    table: STG_SA_Tech_Line_Details
+    partitionedBy: partition_date
+    schedule_enabled: true
+    poke_interval: 60
+    timeout: 900
+
+  - task_id: STG_SA_Past_Campaign_Performances_ingest
+    pattern: STG_SA_Past_Campaign_Performances.*[cC][sS][vV]
+    validator: STG_SA_Past_Campaign_Performances_validator.yaml
+    delimiter: "|"
+    table: STG_SA_Past_Campaign_Performances
+    partitionedBy: partition_date
+    schedule_enabled: true
+    poke_interval: 60
+    timeout: 900
+
+
+# descoped
+
+
+#
+#  - task_id: STG_SA_Pricing_Index_Item_ingest
+#    pattern: STG_SA_Pricing_Index_Item.*[cC][sS][vV]
+#    validator: STG_SA_Pricing_Index_Item_validator.yaml
+#    delimiter: "|"
+#    table: STG_SA_Pricing_Index_Item
+#    partitionedBy: partition_date
+#    schedule_enabled: false
+#    poke_interval: 60
+#    timeout: 900
+#
+#  - task_id: STG_SA_Record_Type_ingest
+#    pattern: STG_SA_Record_Type.*[cC][sS][vV]
+#    validator: STG_SA_Record_Type_validator.yaml
+#    delimiter: "|"
+#    table: STG_SA_Record_Type
+#    partitionedBy: partition_date
+#    schedule_enabled: false
+#    poke_interval: 60
+#    timeout: 900
+#
+  - task_id: STG_SA_Brand_ingest
+    pattern: STG_SA_Brand.*[cC][sS][vV]
+    validator: STG_SA_Brand_validator.yaml
+    delimiter: "|"
+    table: STG_SA_Brand
+    partitionedBy: partition_date
+    schedule_enabled: true
+    poke_interval: 60
+    timeout: 900
+
+
+  - task_id: STG_Date
+    pattern: STG_Date.*[cC][sS][vV]
+    validator: STG_Date_validator.yaml
+    delimiter: "|"
+    table: STG_Date
+    partitionedBy: 
+
+  - task_id: STG_NC_GADS_Metric_ingest
+    pattern: STG_NC_GADS_Metric.*[cC][sS][vV]
+    validator: STG_NC_GADS_Metric_validator.yaml
+    delimiter: ","
+    table: STG_NC_GADS_Metric
+    partitionedBy: partition_date
+    schedule_enabled: false
+    poke_interval: 60
+    timeout: 900
+    
+  - task_id: STG_GAM_Future_Campaign_Performances_ingest
+    pattern: STG_GAM_Future_Campaign_Performances.*[cC][sS][vV]
+    validator: STG_GAM_Future_Campaign_Performances_validator.yaml
+    delimiter: ","
+    table: STG_GAM_Future_Campaign_Performances
+    partitionedBy: partition_date
+    schedule_enabled: true
+    poke_interval: 60
+    timeout: 900
+
+  - task_id: STG_SA_Market_Targeting_ingest
+    pattern: STG_SA_Market_Targeting.*[cC][sS][vV]
+    validator: STG_SA_Market_Targeting_validator.yaml
+    delimiter: "^"
+    table: STG_SA_Market_Targeting
+    partitionedBy: partition_date
+    schedule_enabled: true
+    poke_interval: 60
+    timeout: 900
+
+  - task_id: STG_SA_Tech_Line_Targeting_ingest
+    pattern: STG_SA_Tech_Line_Targeting.*[cC][sS][vV]
+    validator: STG_SA_Tech_Line_Targeting_validator.yaml
+    delimiter: "^"
+    table: STG_SA_Tech_Line_Targeting
+    partitionedBy: partition_date
+    schedule_enabled: true
+    poke_interval: 60
+    timeout: 900
+
+  - task_id: STG_taxonomy_ingest
+    pattern: STG_taxonomy.*[cC][sS][vV]
+    validator: STG_taxonomy_validator.yaml
+    delimiter: "|"
+    table: STG_taxonomy
+    partitionedBy: partition_date
+    schedule_enabled: false
+    poke_interval: 60
+    timeout: 900
+
+  - task_id: STG_target_anagraphic_ingest
+    pattern: STG_target_anagraphic.*[cC][sS][vV]
+    validator: STG_target_anagraphic_validator.yaml
+    delimiter: "|"
+    table: STG_target_anagraphic
+    partitionedBy: partition_date
+    schedule_enabled: false
+    poke_interval: 60
+    timeout: 900
+
+  - task_id: STG_audience_anagraphic_ingest
+    pattern: STG_audience_anagraphic.*[cC][sS][vV]
+    validator: STG_audience_anagraphic_validator.yaml
+    delimiter: "|"
+    table: STG_audience_anagraphic
+    partitionedBy: partition_date
+    schedule_enabled: false
+    poke_interval: 60
+    timeout: 900
+
+  - task_id: STG_CDP_attribute_ingest
+    pattern: STG_CDP_attribute.*[cC][sS][vV]
+    validator: STG_CDP_attribute_validator.yaml
+    delimiter: ","
+    table: STG_CDP_attribute
+    partitionedBy: partition_date
+    schedule_enabled: false
+    poke_interval: 60
+    timeout: 900
+
+  - task_id: STG_GADS_Future_Campaign_Performances_ingest
+    pattern: STG_GADS_Future_Campaign_Performances.*[cC][sS][vV]
+    validator: STG_GADS_Future_Campaign_Performances_validator.yaml
+    delimiter: ","
+    table: STG_GADS_Future_Campaign_Performances
+    partitionedBy: partition_date
+    schedule_enabled: true
+    poke_interval: 60
+    timeout: 900
+#  EOF

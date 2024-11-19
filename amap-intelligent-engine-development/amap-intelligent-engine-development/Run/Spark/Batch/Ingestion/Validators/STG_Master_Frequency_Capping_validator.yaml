@@ -1,0 +1,33 @@
+config:
+  remove_duplicates: true
+  check_mandatory: true
+
+# StringType, BinaryType, BooleanType, DecimalType, FloatType, DoubleType, ByteType, ShortType, IntegerType, LongType, DateType, TimestampType, NullType
+fields:
+  - name: adserver_adslot_id
+    type: StringType()
+    mandatory: true
+  - name: aserver_adslot_name
+    type: StringType()
+    mandatory: false
+  - name: time_unit
+    type: StringType()
+    mandatory: true
+  - name: num_time_units
+    type: IntegerType()
+    mandatory: true
+  - name: max_impressions
+    type: IntegerType()
+    mandatory: false
+  - name: factor
+    type: DoubleType()
+    mandatory: false
+
+# column order from list above
+outputOrder:
+  - adserver_adslot_id
+  - aserver_adslot_name
+  - time_unit
+  - num_time_units
+  - max_impressions
+  - factor

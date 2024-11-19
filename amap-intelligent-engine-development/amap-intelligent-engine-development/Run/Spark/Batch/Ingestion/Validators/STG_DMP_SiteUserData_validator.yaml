@@ -1,0 +1,55 @@
+config:
+  remove_duplicates: true
+  check_mandatory: true
+
+
+fields:
+  - name: timestamp
+    type: LongType()
+    mandatory: true
+  - name: day
+    type: DateType()
+    mandatory: true
+  - name: kruxuserid
+    type: StringType()
+    mandatory: true
+  - name: ipaddress
+    type: StringType()
+    mandatory: true
+  - name: browser
+    type: StringType()
+    mandatory: true
+  - name: device
+    type: StringType()
+    mandatory: true
+  - name: operatingsystem
+    type: StringType()
+    mandatory: true
+  - name: url
+    type: StringType()
+    mandatory: true
+  - name: sitedata
+    type: StringType()
+    mandatory: true
+  - name: geodatadisplay
+    type: StringType()
+    mandatory: true
+
+
+outputOrder:
+  - timestamp
+  - day
+  - kruxuserid
+  - ipaddress
+  - browser
+  - device
+  - operatingsystem
+  - url
+  - sitedata
+  - geodatadisplay
+
+
+
+
+
+

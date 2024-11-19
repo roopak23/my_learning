@@ -1,0 +1,295 @@
+Name: Inventory_Management_Initial_Load
+
+Tags:
+    - Inventory_Management
+    - Suggested_For_You
+
+Steps_Order:
+    - Start >> [Create_Cluster, Wait_For_Files]
+    - Create_Cluster >> [Preparation, Creation] >> Ingestion
+    - Wait_For_Files >> Ingestion
+    - Ingestion >> Aggregation >> Mark_Completed >> End
+
+Steps:
+    Create_Cluster: []
+    Wait_For_Files: []
+    Preparation: []
+    Creation:
+        Files:
+            - AdServer_STG_InvFuture.sql
+            - AdServer_STG_InvHistorical.sql
+            - AdServer_STG_NetworkImpressions.sql
+            - AdServer_STG_NetworkBackfillImpressions.sql
+            - AdServer_STG_AudienceFactoring.sql
+            - AdServer_TRF_InvHistorical.sql
+            - SA_STG_Ad_Slot.sql                                                # Creation in Common Pipeline
+            - TRF_SA_Ad_Slot.sql
+            - SA_STG_AFSAdSlot.sql                                              # Creation in Common Pipeline
+            - SA_STG_AdFormatSpec.sql                                           # Creation in Common Pipeline
+            - SA_STG_CatalogItem.sql                                            # Creation in Common Pipeline
+            - SA_STG_Price_Item.sql                                             # Creation in Common Pipeline
+            - TRF_AdUnitSegmentUsage.sql
+            - TRF_InvFuture_Commercials.sql
+            - TRF_DTF_Additional_Dimensions_Pre.sql
+            - TRF_DTF_Additional_Dimensions.sql
+            - ML_InvForecastingInput.sql
+            - ML_InvForecastingOutputSegment.sql
+            - ML_InvForecastingModelKPI.sql
+            - ML_InvForecastingOutputSegmentDistributed.sql
+            - Master_STG_City.sql
+            - SA_STG_Adslot_Hierarchy.sql
+            - TRF_Adslot_Hierarchy.sql
+            - Master_Platform_Factor.sql
+            - TRF_Frequency_Capping.sql
+            - Master_STG_Frequency_Capping.sql
+            - Master_STG_Events.sql
+            - Master_STG_AdSlotRemap.sql
+            - Master_STG_AdSlotSkip.sql
+            - Master_TRF_AdSlotSkip.sql
+
+    Ingestion:
+        Tasks:
+            - task_id: STG_AdServer_InvFuture_ingest
+              pattern: STG_AdServer_InvFuture.*[cC][sS][vV]
+              validator: STG_AdServer_InvFuture_validator.yaml
+              delimiter: ","
+              table: STG_AdServer_InvFuture
+              partitionedBy: partition_date
+              schedule_enabled: true
+              poke_interval: 60
+              timeout: 601
+
+            - task_id: STG_SA_Ad_Slot_ingest
+              pattern: STG_SA_Ad_Slot.*[cC][sS][vV]
+              validator: STG_SA_Ad_Slot_validator.yaml
+              delimiter: "^"
+              table: STG_SA_Ad_Slot
+              partitionedBy: partition_date
+              schedule_enabled: true
+              poke_interval: 60
+              timeout: 900
+
+            - task_id: STG_SA_AdFormatSpec_ingest
+              pattern: STG_SA_AdFormatSpec.*[cC][sS][vV]
+              validator: STG_SA_AdFormatSpec_validator.yaml
+              delimiter: "^"
+              table: STG_SA_AdFormatSpec
+              partitionedBy: partition_date
+              schedule_enabled: true
+              poke_interval: 60
+              timeout: 900
+
+            - task_id: STG_SA_AFSAdSlot_ingest
+              pattern: STG_SA_AFSAdSlot.*[cC][sS][vV]
+              validator: STG_SA_AFSAdSlot_validator.yaml
+              delimiter: "|"
+              table: STG_SA_AFSAdSlot
+              partitionedBy: partition_date
+              schedule_enabled: true
+              poke_interval: 60
+              timeout: 900
+            
+            - task_id: STG_SA_CatalogItem_ingest
+              pattern: STG_SA_CatalogItem.*[cC][sS][vV]
+              validator: STG_SA_CatalogItem_validator.yaml
+              delimiter: "|"
+              table: STG_SA_CatalogItem
+              partitionedBy: partition_date
+              schedule_enabled: true
+              poke_interval: 60
+              timeout: 900            
+              
+            - task_id: STG_SA_Price_Item_ingest
+              pattern: STG_SA_Price_Item.*[cC][sS][vV]
+              validator: STG_SA_Price_Item_validator.yaml
+              delimiter: "|"
+              table: STG_SA_Price_Item
+              partitionedBy: partition_date
+              schedule_enabled: true
+              poke_interval: 60
+              timeout: 900
+              
+            - task_id: STG_AdServer_InvHistorical_ingest
+              pattern: STG_AdServer_InvHistorical.*[cC][sS][vV]
+              validator: STG_AdServer_InvHistorical_validator.yaml
+              delimiter: ","
+              table: STG_AdServer_InvHistorical
+              partitionedBy: partition_date
+              schedule_enabled: true
+              poke_interval: 60
+              timeout: 601
+
+            - task_id: STG_AdServer_NetworkImpressions_ingest
+              pattern: STG_AdServer_NetworkImpressions.*[cC][sS][vV]
+              validator: STG_AdServer_NetworkImpressions_validator.yaml
+              delimiter: ","
+              table: STG_AdServer_NetworkImpressions
+              partitionedBy: partition_date
+              schedule_enabled: true
+              poke_interval: 60
+              timeout: 601
+              
+            - task_id: STG_AdServer_NetworkBackfillImpressions_ingest
+              pattern: STG_AdServer_NetworkBackfillImpressions.*[cC][sS][vV]
+              validator: STG_AdServer_NetworkBackfillImpressions_validator.yaml
+              delimiter: ","
+              table: STG_AdServer_NetworkBackfillImpressions
+              partitionedBy: partition_date
+              schedule_enabled: true
+              poke_interval: 60
+              timeout: 601
+              
+            - task_id: STG_AdServer_AudienceFactoring_ingest
+              pattern: STG_AdServer_AudienceFactoring.*[cC][sS][vV]
+              validator: STG_AdServer_AudienceFactoring_validator.yaml
+              delimiter: ","
+              table: STG_AdServer_AudienceFactoring
+              partitionedBy: partition_date
+              schedule_enabled: true
+              poke_interval: 60
+              timeout: 601
+
+            - task_id: STG_Master_City_ingest
+              pattern: master_city.*[cC][sS][vV]
+              validator: STG_Master_City_validator.yaml
+              delimiter: "^"
+              table: STG_Master_City
+              partitionedBy: []
+              schedule_enabled: true
+              poke_interval: 60
+              timeout: 601
+
+            - task_id: STG_SA_Tech_Line_Details
+              pattern: STG_SA_Tech_Line_Details.*[cC][sS][vV]
+              validator: STG_SA_Tech_Line_Details_validator.yaml
+              delimiter: "|"
+              table: stg_sa_tech_line_details
+              partitionedBy: partition_date
+              schedule_enabled: true
+              poke_interval: 60
+              timeout: 601
+            
+            - task_id: STG_SA_Adslot_Hierarchy_ingest
+              pattern: STG_SA_Adslot_Hierarchy.*[cC][sS][vV]
+              validator: STG_SA_Adslot_Hierarchy_validator.yaml
+              delimiter: "|"
+              table: STG_SA_Adslot_Hierarchy
+              partitionedBy: partition_date
+              schedule_enabled: true
+              poke_interval: 60
+              timeout: 900
+              
+            - task_id: PlatformFactor_Master_ingest
+              pattern: platform_factor.*[cC][sS][vV]
+              validator: STG_Master_Platform_Factor_validator.yaml
+              delimiter: "^"
+              table: STG_AdServer_Platform_Factor
+              partitionedBy: []
+              schedule_enabled: true
+              poke_interval: 60
+              timeout: 601
+              
+            - task_id: STG_Frequency_Capping_ingest
+              pattern: frequency_capping.*[cC][sS][vV]
+              validator: STG_Master_Frequency_Capping_validator.yaml
+              delimiter: ","
+              table: STG_Frequency_Capping
+              partitionedBy: partition_date
+              schedule_enabled: true
+              poke_interval: 60
+              timeout: 601
+              
+            - task_id: STG_Master_Event_ingest
+              pattern: master_event.*[cC][sS][vV]
+              validator: STG_Master_Events_validator.yaml
+              delimiter: ","
+              table: STG_Master_Event
+              partitionedBy: []
+              schedule_enabled: true
+              poke_interval: 60
+              timeout: 601
+              
+    Aggregation:
+        Tasks:
+
+            - taskid: TRF_SA_Ad_Slot
+              active: true
+              dependencies_task:
+                - TRF_Master_AdSlotSkip
+              task_type: aggregation
+              options: [ ]
+              file_name: agg_TRF_SA_Ad_Slot.hql
+
+            - taskid: ML_InvForcastingInput
+              active: true
+              dependencies_task:
+                - TRF_DTF_Additional_Dimensions
+                - TRF_AdServer_InvHistorical
+              task_type: aggregation
+              options: [ ]
+              file_name: agg_ML_InvForcastingInput.hql
+              
+              
+            - taskid: TRF_DTF_Additional_Dimensions_Pre
+              active: true
+              dependencies_task: [ ]
+              task_type: aggregation
+              options: [ ]
+              file_name: agg_TRF_DTF_Additional_Dimensions_Pre.hql
+            
+
+            - taskid: TRF_DTF_Additional_Dimensions
+              active: true
+              dependencies_task: 
+                - TRF_DTF_Additional_Dimensions_Pre
+                - TRF_Master_AdSlotSkip
+              task_type: aggregation
+              options: [ ]
+              file_name: agg_TRF_DTF_Additional_Dimensions.hql
+              
+              
+            - taskid: TRF_InvFuture_Commercials
+              active: true
+              dependencies_task: [ ]
+                # STG_AdServer_InvFuture_ingest                                   # Ingestion
+                # STG_SA_AFSAdSlot_ingest                                         # Ingestion in Common pipeline
+                # STG_SA_AdFormatSpec_ingest                                      # Ingestion in Common pipeline
+              task_type: aggregation
+              options: [ ]
+              file_name: agg_TRF_InvFuture_Commercials.hql
+              
+            
+            - taskid: TRF_Adslot_Hierarchy
+              active: true
+              dependencies_task:
+                - TRF_SA_Ad_Slot
+              task_type: pyspark
+              options: [ ]
+              file_name: agg_trf_adslot_hierarchy.py
+              
+            - taskid: TRF_Frequency_Capping
+              active: true
+              dependencies_task:
+                - TRF_SA_Ad_Slot
+              task_type: aggregation
+              options: [ ]
+              file_name: agg_TRF_Frequency_Capping.hql
+
+            - taskid: TRF_AdServer_InvHistorical
+              active: true
+              dependencies_task: 
+               - TRF_Master_AdSlotSkip
+              task_type: aggregation
+              options: [ ]
+              file_name: agg_TRF_AdServer_InvHistorical.hql
+
+            - taskid: TRF_Master_AdSlotSkip
+              active: true
+              dependencies_task: [ ]
+              task_type: aggregation
+              options: [ ]
+              file_name: TRF_Master_AdSlotSkip.hql
+            
+    Mark_Completed: []
+
+# E.O.F.

@@ -1,0 +1,83 @@
+apiVersion: apps/v1
+kind: Deployment
+
+metadata:
+  name: {{ .Values.@componentID@.name }}
+  labels:
+    app: {{ .Values.@componentID@.id }}
+  labels:
+    app: {{ .Release.Name }}
+    chart: {{ .Chart.Name }}
+    release: {{ .Chart.Version }}
+    component: @componentID@
+
+spec:
+  replicas: 1
+
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 0
+
+  selector:
+    matchLabels:
+      app: {{ .Release.Name }}
+      release: {{ .Chart.Version }}
+      component: @componentID@
+
+  template:
+    metadata:
+      annotations:
+        checksum/configmap-db: {{ include (print $.Template.BasePath "/config/configmap-db.yaml") . | sha256sum }}
+        checksum/configmap-ms-cookies: {{ include (print $.Template.BasePath "/config/configmap-ms-cookies.yaml") . | sha256sum }}
+        checksum/configmap-settings-container: {{ include (print $.Template.BasePath "/config/configmap-settings-container.yaml") . | sha256sum }}
+        checksum/configmap-settings-local: {{ include (print $.Template.BasePath "/config/configmap-settings-local.yaml") . | sha256sum }}
+        checksum/configmap-settings: {{ include (print $.Template.BasePath "/config/configmap-settings.yaml") . | sha256sum }}
+        checksum/configmap-@componentID@: {{ include (print $.Template.BasePath "/@project.artifactId@/@project.artifactId@-configmap.yaml") . | sha256sum }}
+
+
+      labels:
+        app: {{ .Release.Name }}
+        release: {{ .Chart.Version }}
+        component: @componentID@
+
+    spec:
+      restartPolicy: Always
+      serviceAccountName: {{ .Values.@componentID@.name }}-serviceaccount
+
+      {{- if .Values.@componentID@.nodeSelector }}
+      nodeSelector:
+        {{- toYaml .Values.@componentID@.nodeSelector | nindent 8 }}
+      {{- end }}
+      {{- if .Values.@componentID@.affinity }}
+      affinity:
+        {{- toYaml .Values.@componentID@.affinity | nindent 8 }}
+      {{- end }}
+      {{- if .Values.@componentID@.tolerations }}
+      tolerations:
+        {{- toYaml .Values.@componentID@.tolerations | nindent 8 }}
+      {{- end }}
+
+      containers:
+        - name: {{ .Values.@componentID@.name }}
+          image: {{ .Values.@componentID@.image.repository }}:{{ .Values.@componentID@.image.tag }}
+          imagePullPolicy: {{ .Values.@componentID@.image.imagePullPolicy }}
+
+          ports:
+            - name: {{ .Values.@componentID@.id }}
+              containerPort: {{ .Values.@componentID@.service.port }}
+              protocol: TCP
+
+          env:
+            {{- if .Values.@componentID@.deployment.extraEnv }}
+              {{ toYaml .Values.@componentID@.deployment.extraEnv | indent 12 }}
+            {{- end }}
+            - name: "APP_PORT"
+              value: "{{ .Values.@componentID@.service.port }}"
+            - name: "APP_NAMESPACE"
+              value: "{{ .Release.Namespace }}"
+
+          resources:
+            {{- toYaml .Values.@componentID@.deployment.resources | nindent 12 }}
+

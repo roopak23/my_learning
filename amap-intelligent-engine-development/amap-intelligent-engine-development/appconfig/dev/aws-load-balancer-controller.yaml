@@ -1,0 +1,27 @@
+params:
+
+  - name: PARAMS.AWS_REGION
+    value: ap-southeast-2
+    descirption: AWS region where applications will be deployed
+
+  - name: PARAMS.EKS_CLUSTER_NAME
+    value: foxtel-hawkeye-dev-eks
+    descirption: Cluster Name where applications will be deployed
+
+  - name: PARAMS.CERT_ARN
+    value: arn:aws:acm:ap-southeast-2:787189406110:certificate/551a5a7d-740d-4956-ae7e-63170dac7675
+    descirption: Arn of certifiacate to be applied to load balancer
+
+  - name: PARAMS.ENV
+    value: dev
+    descirption: Types of environments eg dev, sit, uat, prod, to be used for the tag
+
+  - name: PARAMS.PUBLIC_HOST
+    value: pub.devamapie.foxtel.com.au
+    descirption: Host name to use for ingress(public access)
+
+  - name: PARAMS.API_CIDRS
+    value: 10.109.128.0/19,54.79.66.174/32,52.64.118.134/32,54.66.197.109/32,52.57.124.69/32,18.198.21.255/32,18.153.118.107/32,3.120.117.94/32,52.57.104.220/32
+    descirption: CIRDs allowed for API access (first one is VPC CIDR,the 3 IPS of the nat gateway creted on VPN , than mulsoft IL IP),Integration Layer  DEV - Mulesoft
+
+  

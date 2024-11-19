@@ -1,0 +1,18 @@
+application:
+  config:
+    host: config
+    port: 8888
+    path: config
+    protocol: http
+    user: config_client
+    pass: client_pass_123
+
+server:
+  port: ${APP_PORT}
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://registry:8761/eureka/
+
+EUREKA_HOST: registry

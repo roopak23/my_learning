@@ -1,0 +1,29 @@
+config:
+  remove_duplicates: true
+  check_mandatory: true
+
+fields:
+  - name: Id
+    type: StringType()
+    mandatory: true
+  - name: Ad_Format__c
+    type: StringType()
+    mandatory: true
+  - name: CatalogItem__c
+    type: StringType()
+    mandatory: true
+  - name: Breadcrumb__c
+    type: StringType()
+    mandatory: false
+
+
+outputOrder:
+  - Id
+  - Ad_Format__c
+  - CatalogItem__c
+  - Breadcrumb__c
+
+
+
+
+

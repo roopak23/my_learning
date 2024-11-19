@@ -1,0 +1,53 @@
+config:
+  remove_duplicates: true
+  check_mandatory: true
+
+
+fields:
+  - name: dp_userid
+    type: StringType()
+    mandatory: true
+  - name: url
+    type: StringType()
+    mandatory: true
+  - name: ipaddress
+    type: StringType()
+    mandatory: true
+  - name: browser
+    type: StringType()
+    mandatory: true
+  - name: device
+    type: StringType()
+    mandatory: true
+  - name: operatingsystem
+    type: StringType()
+    mandatory: true
+  - name: geodatadisplay
+    type: StringType()
+    mandatory: true
+  - name: start_date
+    type: TimestampType()
+    mandatory: true
+  - name: end_date
+    type: TimestampType()
+    mandatory: true
+  - name: category
+    type: StringType()
+    mandatory: true
+  - name: sub_category
+    type: StringType()
+    mandatory: true
+
+
+outputOrder:
+  - dp_userid
+  - url
+  - ipaddress
+  - browser
+  - device
+  - operatingsystem
+  - geodatadisplay
+  - start_date
+  - end_date
+  - category
+  - sub_category

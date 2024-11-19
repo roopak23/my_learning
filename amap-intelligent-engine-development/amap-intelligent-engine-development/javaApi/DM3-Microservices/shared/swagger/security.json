@@ -1,0 +1,10 @@
+{
+  "Oauth2": {
+    "type": "oauth2",
+    "flow": "password",
+    "tokenUrl": "@keycloak-url-for-swagger@/oauth/token",
+    "scopes": {
+    	"ADMIN": "admin"
+    }
+  }
+}

@@ -1,0 +1,55 @@
+config:
+  remove_duplicates: true
+  check_mandatory: true
+
+fields:
+  - name: customer_id
+    type: StringType()
+    mandatory: true
+  - name: account_id
+    type: StringType()
+    mandatory: true
+  - name: adgroup_id
+    type: StringType()
+    mandatory: true
+  - name: keywordplan_id
+    type: StringType()
+    mandatory: true
+  - name: keywordplan_campaign_id
+    type: StringType()
+    mandatory: true
+  - name: keywordplan_adgroup_id
+    type: StringType()
+    mandatory: true
+  - name: keywordplan_adgroup_keywords_id
+    type: StringType()
+    mandatory: true
+  - name: impressions
+    type: DoubleType()
+    mandatory: false
+  - name: ctr
+    type: DoubleType()
+    mandatory: false
+  - name: average_cpc
+    type: IntegerType()
+    mandatory: false
+  - name: clicks
+    type: DoubleType()
+    mandatory: false
+  - name: cost_micros
+    type: IntegerType()
+    mandatory: false
+
+outputOrder:
+  - customer_id
+  - account_id
+  - adgroup_id
+  - keywordplan_id
+  - keywordplan_campaign_id
+  - keywordplan_adgroup_id
+  - keywordplan_adgroup_keywords_id
+  - impressions
+  - ctr
+  - average_cpc
+  - clicks
+  - cost_micros

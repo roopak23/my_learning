@@ -1,0 +1,63 @@
+config:
+  remove_duplicates: true
+  check_mandatory: true
+
+fields:
+  - name: Id
+    type: StringType()
+    mandatory: true
+  - name: Name
+    type: StringType()
+    mandatory: true
+  - name: Parent_Catalog_Item__c
+    type: StringType()
+    mandatory: false
+  - name: Catalog_Display_Name__c
+    type: StringType()
+    mandatory: false
+  - name: Media_Types__c
+    type: StringType()
+    mandatory: true
+  - name: Catalog_Item_Level__c
+    type: DoubleType()
+    mandatory: true
+  - name: RecordTypeId
+    type: StringType()
+    mandatory: false
+  - name: Audience_Segment__c
+    type: StringType()
+    mandatory: false
+  - name: Age__c
+    type: StringType()
+    mandatory: false
+  - name: Gender__c
+    type: StringType()
+    mandatory: false
+  - name: Interest__c
+    type: StringType()
+    mandatory: false
+  - name: MARKET_FUNNEL__c
+    type: StringType()
+    mandatory: false
+  - name: Ad_Ops_System__c
+    type: StringType()
+    mandatory: true
+  - name: FMH_Catalog_Full_Path__c
+    type: StringType()
+    mandatory: true
+    
+outputOrder:
+  - Id
+  - Name
+  - Parent_Catalog_Item__c
+  - Catalog_Display_Name__c
+  - Media_Types__c
+  - Catalog_Item_Level__c
+  - RecordTypeId
+  - Audience_Segment__c
+  - Age__c
+  - Gender__c
+  - Interest__c
+  - MARKET_FUNNEL__c
+  - Ad_Ops_System__c
+  - FMH_Catalog_Full_Path__c

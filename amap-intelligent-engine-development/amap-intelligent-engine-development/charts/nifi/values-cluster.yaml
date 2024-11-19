@@ -1,0 +1,404 @@
+---
+# Number of nifi nodes
+replicaCount: 2
+
+## Set default image, imageTag, and imagePullPolicy.
+## ref: https://hub.docker.com/r/apache/nifi/
+##
+image:
+  repository: "PARAMS.ECR_REPO/nifi"
+  tag: "PARAMS.TAG"
+  #repository: apache/nifi
+  #tag: "1.12.1"
+  pullPolicy: IfNotPresent
+
+  ## Optionally specify an imagePullSecret.
+  ## Secret must be manually created in the namespace.
+  ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
+  ##
+  # pullSecret: myRegistrKeySecretName
+
+securityContext:
+  runAsUser: 1000
+  fsGroup: 1000
+
+sts:
+  # Parallel podManagementPolicy for faster bootstrap and teardown. Default is OrderedReady.
+  podManagementPolicy: OrderedReady
+  AntiAffinity: soft
+  hostPort: null
+  pod:
+    annotations:
+      security.alpha.kubernetes.io/sysctls: net.ipv4.ip_local_port_range=10000 65000
+      #prometheus.io/scrape: "true"
+
+## Useful if using any custom secrets
+## Pass in some secrets to use (if required)
+secrets: []
+#  - name: sales-automation-key
+#    keys:
+#      - SALESFORCE_CLIENT_ID
+#      - SALESFORCE_CLIENT_SECRET
+#      - SALESFORCE_PASSWORD
+#      - SALESFORCE_USERNAME
+#    mountPath: /run/secrets
+
+## Useful if using any custom configmaps
+## Pass in some configmaps to use (if required)
+# configmaps:
+#   - name: myNifiConf
+#     keys:
+#       - myconf.conf
+#     mountPath: /opt/nifi/custom-config
+
+
+properties:
+  sensitiveKey: twelveChars0
+  sensitiveKeyPrior: twelveChars0
+  algorithm: NIFI_PBKDF2_AES_GCM_256
+  # use externalSecure for when inbound SSL is provided by nginx-ingress or other external mechanism
+  externalSecure: true
+  isNode: true
+  httpPort: 8080
+  httpsPort: 8443
+  clusterPort: 6007
+  clusterSecure: true
+  needClientAuth: true
+  provenanceStorage: "8 GB"
+  webProxyHost: "PARAMS.PRIVATE_HOST"
+  siteToSite:
+    # secure: false
+    port: 10000
+  authorizer: managed-authorizer
+  # use properties.safetyValve to pass explicit 'key: value' pairs that overwrite other configuration
+  safetyValve:
+    #nifi.variable.registry.properties: "${NIFI_HOME}/example1.properties, ${NIFI_HOME}/example2.properties"
+    nifi.web.http.network.interface.default: eth0
+    # listen to loopback interface so "kubectl port-forward ..." works
+    # nifi.web.http.network.interface.lo: lo
+    # nifi.web.proxy.context.path: /demo, /demo/nifi
+
+  ## Include aditional processors
+  # customLibPath: "/opt/configuration_resources/custom_lib"
+## Include additional libraries in the Nifi containers by using the postStart handler
+## ref: https://kubernetes.io/docs/tasks/configure-pod-container/attach-handler-lifecycle-event/
+# postStart: /opt/nifi/psql; wget -P /opt/nifi/psql https://jdbc.postgresql.org/download/postgresql-42.2.6.jar
+
+# Nifi User Authentication
+auth:
+  # Automaticaly disabled if OIDC or LDAP enabled
+  #singleUser:
+  #  username: nifiuser
+  #  password: nifiuser123! # Must to have at least 12 characters
+  #  admin: CN=localhost, OU=NIFI
+  SSL:
+    keystorePasswd: wpJRZU8CzVCKueJDEBIGCxYxaec2R/YMNoJiL/P3aRk
+    truststorePasswd: 8FNd0n7TTEpfHRy/UoPgLzauIbtfo664/J9bBjuUXsQ
+  ldap:
+    enabled: false
+  oidc:
+    enabled: true
+    discoveryUrl: https://PARAMS.KEYCLOAK_URL/auth/realms/DM3/.well-known/openid-configuration
+
+    clientId: nifi_client
+    ## TODO: update by creating a new secrte in Keycloak once set up
+    clientSecret: PARAMS.KEYCLOAK_SECRET
+    claimIdentifyingUser: preferred_username
+    admin: nifiuser
+    #additionalScopes:
+
+## Expose the nifi service to be accessed from outside the cluster (LoadBalancer service).
+## or access it from within the cluster (ClusterIP service). Set the service type and the port to serve it.
+## ref: http://kubernetes.io/docs/user-guide/services/
+##
+
+# headless service
+headless:
+  type: ClusterIP
+  annotations:
+    service.alpha.kubernetes.io/tolerate-unready-endpoints: "true"
+
+# ui service
+service:
+  type: ClusterIP
+  # httpPort: 8080
+  httpsPort: 9443
+  # nodePort: 31246
+  annotations: {}
+  # loadBalancerIP:
+  ## Load Balancer sources
+  ## https://kubernetes.io/docs/tasks/access-application-cluster/configure-cloud-provider-firewall/#restrict-access-for-loadbalancer-service
+  ##
+  # loadBalancerSourceRanges:
+  # - 10.10.10.0/24
+  ## OIDC authentication requires "sticky" session on the LoadBalancer for JWT to work properly...but AWS doesn't like it on creation
+  sessionAffinity: ClientIP
+  sessionAffinityConfig:
+    clientIP:
+      timeoutSeconds: 10800
+  # Enables additional port/ports to nifi service for internal processors
+  processors:
+    enabled: false
+    ports:
+      - name: processor01
+        port: 7001
+        targetPort: 7001
+        #nodePort: 30701
+      - name: processor02
+        port: 7002
+        targetPort: 7002
+        #nodePort: 30702
+
+## Configure Ingress based on the documentation here: https://kubernetes.io/docs/concepts/services-networking/ingress/
+##
+ingress:
+  enabled: true
+  annotations:
+    kubernetes.io/ingress.class: alb
+    alb.ingress.kubernetes.io/listen-ports: '[{"HTTPS":443}]'
+    alb.ingress.kubernetes.io/scheme: internal
+    alb.ingress.kubernetes.io/target-type: ip
+    alb.ingress.kubernetes.io/healthcheck-protocol: HTTPS
+    alb.ingress.kubernetes.io/backend-protocol: HTTPS
+    alb.ingress.kubernetes.io/target-group-attributes: 'stickiness.enabled=true'
+    alb.ingress.kubernetes.io/healthcheck-path: /
+    alb.ingress.kubernetes.io/healthcheck-port: https
+    alb.ingress.kubernetes.io/healthcheck-interval-seconds: '15'
+    alb.ingress.kubernetes.io/healthcheck-timeout-seconds: '5'
+    alb.ingress.kubernetes.io/success-codes: '200'
+    alb.ingress.kubernetes.io/healthy-threshold-count: '2'
+    alb.ingress.kubernetes.io/unhealthy-threshold-count: '2'
+    alb.ingress.kubernetes.io/group.name: 'PARAMS.EKS_CLUSTER_NAME'
+    alb.ingress.kubernetes.io/certificate-arn: 'PARAMS.CERT_ARN'
+    # alb.ingress.kubernetes.io/load-balancer-name: "nifi21"
+    alb.ingress.kubernetes.io/inbound-cidrs: PARAMS.VPC_CIDR_BLOCK, PARAMS.VPN_CIDR_BLOCK
+  #hosts:
+  #  - host: PARAMS.PRIVATE_HOST
+  #    paths: ["/nifi"]
+
+  # tls:
+  #   - hosts:
+  #     - datamonetization.amap.accenture.com
+  hosts:
+    - PARAMS.PRIVATE_HOST
+  path: /
+  # If you want to change the default path, see this issue https://github.com/cetic/helm-nifi/issues/22
+
+# Amount of memory to give the NiFi java heap
+jvmMemory: 6g
+
+# Separate image for tailing each log separately and checking zookeeper connectivity
+sidecar:
+  image: busybox
+  tag: "1.36.0"
+
+## Enable persistence using Persistent Volume Claims
+## ref: http://kubernetes.io/docs/user-guide/persistent-volumes/
+##
+persistence:
+  enabled: true
+
+  # When creating persistent storage, the NiFi helm chart can either reference an already-defined
+  # storage class by name, such as "standard" or can define a custom storage class by specifying
+  # customStorageClass: true and providing the "storageClass", "storageProvisioner" and "storageType".
+  # For example, to use SSD storage on Google Compute Engine see values-gcp.yaml
+  #
+  # To use a storage class that already exists on the Kubernetes cluster, we can simply reference it by name.
+  # For example:
+  # storageClass: standard
+  #
+  # The default storage class is used if this variable is not set.
+
+  storageClass: gp2-enc
+  accessModes:  [ReadWriteOnce]
+  ## Storage Capacities for persistent volumes
+  configStorage:
+    size: 100Mi
+  authconfStorage:
+    size: 100Mi
+  # Storage capacity for the 'data' directory, which is used to hold things such as the flow.xml.gz, configuration, state, etc.
+  dataStorage:
+    size: 1Gi
+  # Storage capacity for the FlowFile repository
+  flowfileRepoStorage:
+    size: 2Gi
+  # Storage capacity for the Content repository
+  contentRepoStorage:
+    size: 2Gi
+  # Storage capacity for the Provenance repository. When changing this, one should also change the properties.provenanceStorage value above, also.
+  provenanceRepoStorage:
+    size: 8Gi
+  # Storage capacity for nifi logs
+  logStorage:
+    size: 1Gi
+
+## Configure resource requests and limits
+## ref: http://kubernetes.io/docs/user-guide/compute-resources/
+##
+resources:
+  # We usually recommend not to specify default resources and to leave this as a conscious
+  # choice for the user. This also increases chances charts run on environments with little
+  # resources, such as Minikube. If you do want to specify resources, uncomment the following
+  # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
+  requests:
+    cpu: 1000m
+    memory: 1000Mi
+  limits:
+    cpu: 3000m
+    memory: 6000Mi
+
+logresources:
+  limits:
+   cpu: 100m
+   memory: 128Mi
+  requests:
+   cpu: 100m
+   memory: 128Mi
+
+nodeSelector:
+  group: foundation
+
+tolerations: []
+
+extraVolumes:
+  - name: dm3volume
+    emptyDir: {}
+ ## - name: authvolume
+ ##   emptyDir: {}
+
+extraVolumeMounts:
+  - name: dm3volume
+    mountPath: /opt/nifi/nifi-current/development
+##  - name: authvolume
+##    mountPath: /opt/nifi/nifi-current/auth-conf
+
+initContainers:
+  s3-init:
+    image: amazon/aws-cli:latest
+    imagePullPolicy: "IfNotPresent"
+    # env:
+    # - name: AWS_ACCESS_KEY_ID
+    #   valueFrom:
+    #     secretKeyRef:
+    #       name: aws-s3-key
+    #       key: aws-access-key-id
+    # - name: AWS_SECRET_ACCESS_KEY
+    #   valueFrom:
+    #     secretKeyRef:
+    #       name: aws-s3-key
+    #       key: aws-secret-access-key
+    command:
+    - /bin/bash
+    - -c
+    - |
+      set -e
+      sleep 60
+      aws s3 sync --no-progress s3://PARAMS.S3_APP_BUCKET_NAME/app/NiFi/development /dmdev
+      find /dmdev -type f -name "*.py" -exec chmod +x {} \;
+      echo "S3 Data syncronized"
+    volumeMounts:
+        - name: dm3volume
+          mountPath: /dmdev
+
+## Extra containers
+extraContainers: []
+    # Container to sync with S3 the DATA folder
+    #- name: s3-sync
+    #  image: amazon/aws-cli:latest
+      # env:
+      # - name: AWS_ACCESS_KEY_ID
+      #   valueFrom:
+      #     secretKeyRef:
+      #       name: aws-s3-key
+      #       key: aws-access-key-id
+      # - name: AWS_SECRET_ACCESS_KEY
+      #   valueFrom:
+      #     secretKeyRef:
+      #       name: aws-s3-key
+      #       key: aws-secret-access-key
+    #  command:
+    #  - /bin/bash
+    #  - -c
+    #  - |
+    #    while true; do
+    #      aws s3 sync --no-progress --exclude "archive/*" --exclude "state/*" /data s3://PARAMS.S3_APP_BUCKET_NAME/app/NiFi21/data
+    #      aws s3 sync --no-progress /auth s3://PARAMS.S3_APP_BUCKET_NAME/app/NiFi21/auth
+    #      sleep 60
+    #    done
+    #  volumeMounts:
+    #      - name: data
+    #        mountPath: /data
+    #      - name: auth-conf
+    #        mountPath: /auth
+
+terminationGracePeriodSeconds: 60
+
+## Extra environment variables that will be pass onto deployment pods
+env: []
+
+# ca server details
+# Setting this true would create a nifi-toolkit based ca server
+# The ca server will be used to generate self-signed certificates required setting up secured cluster
+ca:
+  ## If true, enable the nifi-toolkit certificate authority
+  enabled: false
+  persistence:
+    enabled: false
+  server: ""
+  service:
+    port: 9090
+  token: sixteenCharacters
+  admin:
+    cn: admin
+
+# cert-manager support
+# Setting this true will have cert-manager create a private CA for the cluster
+# as well as the certificates for each cluster node.
+certManager:
+  enabled: true
+  clusterDomain: cluster.local
+  keystorePasswd: 0Hk4j5aovBGhwcHo8B8La7Wrrd4EiSeL
+  truststorePasswd: spA7gmEbcP95lRyOsBk5mb7TZ2qu2E8a
+  replaceDefaultTrustStore: false
+  additionalDnsNames:
+    - PARAMS.PRIVATE_HOST
+  refreshSeconds: 300
+  resources:
+    requests:
+      cpu: 100m
+      memory: 128Mi
+    limits:
+      cpu: 100m
+      memory: 128Mi
+  # cert-manager takes care of rotating the node certificates, so default
+  # their lifetime to 90 days.  But when the CA expires you may need to
+  # 'helm delete' the cluster, delete all the node certificates and secrets,
+  # and then 'helm install' the NiFi cluster again.  If a site-to-site trusted
+  # CA or a NiFi Registry CA certificate expires, you'll need to restart all
+  # pods to pick up the new version of the CA certificate.  So default the CA
+  # lifetime to 10 years to avoid that happening very often.
+  # c.f. https://github.com/cert-manager/cert-manager/issues/2478#issuecomment-1095545529
+  certDuration: 2160h
+  caDuration: 87660h
+
+# ------------------------------------------------------------------------------
+# Zookeeper:
+# ------------------------------------------------------------------------------
+zookeeper:
+  ## If true, install the Zookeeper chart
+  ## ref: https://github.com/kubernetes/charts/tree/master/incubator/zookeeper
+  enabled: false
+  ## If the Zookeeper Chart is disabled a URL and port are required to connect
+  url: "zookeeper-dm"
+  port: 2181
+
+# ------------------------------------------------------------------------------
+# Nifi registry:
+# ------------------------------------------------------------------------------
+registry:
+  ## If true, install the Nifi registry
+  enabled: false
+  url: ""
+  port: 80
+  ## Add values for the nifi-registry here
+  ## ref: https://github.com/dysnix/charts/blob/master/nifi-registry/values.yaml

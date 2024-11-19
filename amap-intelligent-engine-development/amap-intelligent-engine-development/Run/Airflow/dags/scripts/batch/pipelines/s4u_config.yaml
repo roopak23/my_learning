@@ -1,0 +1,255 @@
+Name: Suggested_For_You
+
+Tags:
+    - Suggested_For_You
+
+Steps_Order:
+    - Start >> Create_Cluster
+    - Create_Cluster >> [Preparation, Creation] >> Aggregation
+    - Aggregation >> Execute_Models >> Migration >> Execution >> Mark_Completed >> End
+
+Steps:
+    Create_Cluster: []
+    Preparation: []
+    Creation:
+        Files:
+            # SA_STG_AMAP_Account_Ad_Ops_Syst.sql                       # Creation in Common pipeline
+            # SA_STG_Market_Order.sql                                   # Creation in Common pipeline
+            # SA_STG_Market_Order_Line_Details.sql                      # Creation in Common pipeline
+            # AdServer_STG_InvFuture.sql                                # Creation in Inventory_Management pipeline
+            # SA_STG_Targeting.sql                                      # Creation in Common pipeline
+            # SA_STG_Ad_Slot.sql                                        # Creation in Common pipeline
+            # SA_STG_AFSAdSlot.sql                                      # Creation in Common pipeline
+            # SA_STG_AdFormatSpec.sql                                   # Creation in Common pipeline
+            # SA_STG_CatalogItem.sql                                    # Creation in Common pipeline
+            # SA_STG_Price_Item.sql                                     # Creation in Common pipeline
+            - SO_Buying_Profile_Media_KPI.sql
+            - SO_Buying_Profile_Total_KPI.sql
+            # SO_Inventory.sql                                          # Creation in Inventory_Management pipeline
+            # TRF_Advertiser.sql                                        # Creation in Common pipeline
+            - TRF_Advertiser_Audience.sql
+            - TRF_Advertiser_Budget.sql
+            - TRF_Advertiser_Metric.sql
+            - TRF_Budget_Media.sql
+            - TRF_Days_Line.sql
+            - TRF_Days_Line_Avg.sql
+            - TRF_Days_Order.sql
+            - TRF_Days_Order_Avg.sql
+            # TRF_Inventory_Check.sql                                   # Creation in Inventory_Management pipeline
+            # TRF_InvFuture_Commercials.sql                             # Creation in Inventory_Management pipeline
+            - TRF_Line_Count.sql
+            - TRF_Market_Order_Line_Details.sql
+
+    #Ingestion:
+        #Tasks:
+            # task_id: STG_SA_AMAP_Account_Ad_Ops_Syst_ingest           # Ingestion in Common pipeline
+            # task_id: STG_SA_Market_Order                              # Ingestion in Common pipeline
+            # task_id: STG_SA_Market_Order_Line_Details                 # Ingestion in Common pipeline
+            # task_id: STG_AdServer_InvFuture_ingest                    # Ingestion in Inventory_Management pipeline
+            # task_id: STG_SA_Targeting_ingest                          # Ingestion in Common pipeline
+            # task_id: STG_SA_Ad_Slot_ingest                            # Ingestion in Common pipeline
+            # task_id: STG_SA_AFSAdSlot_ingest                          # Ingestion in Common pipeline
+            # task_id: STG_SA_AdFormatSpec_ingest                       # Ingestion in Common pipeline
+            # task_id: STG_SA_CatalogItem_ingest                        # Ingestion in Common pipeline
+            # task_id: STG_SA_Price_Item_ingest                         # Ingestion in Common pipeline
+            # task_id: STG_SA_Account_ingest                            # Ingestion in Common pipeline
+            # task_id: STG_SA_Ad_Ops_System_ingest                      # Ingestion in Common pipeline
+            # task_id: SO_Inventory_ingest                              # Ingestion in Inventory_Management pipeline
+
+    Aggregation:
+        Tasks:
+            # taskid: TRF_Advertiser                                    # Aggregation in Common pipeline
+
+            - taskid: TRF_Advertiser_Audience
+              active: true
+              dependencies_task: [ ]
+                # TRF_Advertiser                                        # Aggregation in Common pipeline
+                # STG_SA_Market_Order_ingest                            # Ingestion in Common pipeline
+              task_type: aggregation
+              options: [ ]
+              file_name: agg_TRF_Advertiser_Audience.hql
+
+            # taskid: TRF_InvFuture_Commercials                         # Aggregation in Inventory_Management pipeline
+
+            - taskid: TRF_Market_Order_Line_Details
+              active: true
+              dependencies_task: [ ]
+                # TRF_Advertiser                                        # Aggregation in Common pipeline
+                # STG_SA_Market_Order_ingest                            # Ingestion in Common pipeline
+                # STG_SA_Market_Order_Line_Details_ingest               # Ingestion in Common pipeline
+              task_type: aggregation
+              options: [ ]
+              file_name: agg_TRF_Market_Order_Line_Details.hql
+
+            - taskid: TRF_Days_Order
+              active: true
+              dependencies_task: [ ]
+                # TRF_Advertiser                                        # Aggregation in Common pipeline
+                # STG_SA_Market_Order_ingest                            # Ingestion in Common pipeline
+              task_type: aggregation
+              options: [ ]
+              file_name: agg_TRF_Days_Order.hql
+
+            - taskid: TRF_Line_Count
+              active: true
+              dependencies_task:
+                - TRF_Market_Order_Line_Details
+                # TRF_Advertiser                                        # Aggregation in Common pipeline
+                # STG_SA_Market_Order_ingest                            # Ingestion in Common pipeline
+              task_type: aggregation
+              options: [ ]
+              file_name: agg_TRF_Line_Count.hql
+
+            - taskid: TRF_Days_Order_Avg
+              active: true
+              dependencies_task:
+                - TRF_Days_Order
+              task_type: aggregation
+              options: [ ]
+              file_name: agg_TRF_Days_Order_Avg.hql
+
+            - taskid: TRF_Days_Line
+              active: true
+              dependencies_task:
+                - TRF_Market_Order_Line_Details
+                # TRF_Advertiser                                        # Aggregation in Common pipeline
+                # STG_SA_Market_Order_ingest                            # Ingestion in Common pipeline
+                # STG_SA_CatalogItem_ingest                             # Ingestion in Common pipeline
+              task_type: aggregation
+              options: [ ]
+              file_name: agg_TRF_Days_Line.hql
+
+            - taskid: TRF_Days_Line_Avg
+              active: true
+              dependencies_task:
+                - TRF_Days_Line
+              task_type: aggregation
+              options: [ ]
+              file_name: agg_TRF_Days_Line_Avg.hql
+
+            - taskid: TRF_Advertiser_Metric
+              active: true
+              dependencies_task:
+                - TRF_Market_Order_Line_Details
+                # TRF_Advertiser                                        # Aggregation in Common pipeline
+                # STG_SA_Market_Order_ingest                            # Ingestion in Common pipeline
+                # STG_SA_CatalogItem_ingest                             # Ingestion in Common pipeline
+              task_type: aggregation
+              options: [ ]
+              file_name: agg_TRF_Advertiser_Metric.hql
+
+            - taskid: TRF_Budget_Media
+              active: true
+              dependencies_task:
+                - TRF_Days_Line_Avg
+                - TRF_Advertiser_Metric
+                - TRF_Line_Count
+                - TRF_Market_Order_Line_Details
+              task_type: aggregation
+              options: [ ]
+              file_name: agg_TRF_Budget_Media.hql
+
+            - taskid: Buying_Profile_Media_KPI
+              active: true
+              dependencies_task:
+                - TRF_Budget_Media
+              task_type: aggregation
+              options: []
+              file_name: agg_Buying_Profile_Media_KPI.hql
+
+            - taskid: Buying_Profile_Total_KPI
+              active: true
+              dependencies_task:
+                - TRF_Advertiser_Audience
+                - Buying_Profile_Media_KPI
+              task_type: aggregation
+              options: [ ]
+              file_name: agg_Buying_Profile_Total_KPI.hql
+
+            #  taskid: TRF_Inventory_Check                              # Aggregation in Inventory_Management pipeline
+
+    Execute_Models: DM_Model_Purchase_Behaviour
+
+    Migration:
+        Tasks:
+            - taskid: Migrate_Buying_Profile_Media_KPI
+              active: true
+              dependencies_task: [ ]
+              task_type: migration
+              options: [ ]
+              file_name: MIG_Buying_Profile_Media_KPI.sql
+
+            - taskid: Migrate_Buying_Profile_Total_KPI
+              active: true
+              dependencies_task: [ ]
+              task_type: migration
+              options: [ ]
+              file_name: MIG_Buying_Profile_Total_KPI.sql
+
+            # taskid: Migrate_trf_invfuture_commercials                 # Migration in Inventory_Management pipeline
+            # taskid: Migrate_STG_SA_Ad_Slot                            # Migration in Common pipeline
+            # taskid: Migrate_STG_SA_AdFormatSpec                       # Migration in Common pipeline
+            # taskid: Migrate_STG_SA_AFSAdSlot                          # Migration in Common pipeline
+            # taskid: Migrate_STG_SA_CatalogItem                        # Migration in Common pipeline
+            # taskid: Migrate_STG_SA_Price_Item                         # Migration in Common pipeline
+            # taskid: Migrate_STG_SA_Targeting                          # Migration in Common pipeline
+
+    Execution:
+        Tasks:
+            # taskid: Mysql_Inventory_Update                            # Execution in Inventory_Management pipeline
+            # taskid: Mysql_API_Inventorycheck_Update                   # Execution in Inventory_Management pipeline
+            # taskid: Mysql_so_inventory_Insert                         # Execution in Inventory_Management pipeline
+
+            - taskid: Suggested_Proposal_Insert
+              active: true
+              dependencies_task: [ ]
+                # ML_product_recommendation                             # MySQL table
+                # Suggested_Proposal                                    # MySQL table
+              task_type: mysql_execution
+              options: [ ]
+              file_name: Insert_Suggested_Proposal.sql
+
+            - taskid: Suggested_Product_Insert
+              active: true
+              dependencies_task:
+                - Suggested_Proposal_Insert
+                # Mysql_so_inventory_Insert                             # Execution in Inventory_Management pipeline
+                # Suggested_Product                                     # MySQL table
+              task_type: mysql_execution
+              options: [ ]
+              file_name: Insert_Suggested_Product.sql
+
+    Mark_Completed: []
+
+MySQL_Creation:
+    Tables:
+        - Mysql_Buying_Profile_Media_KPI.sql
+        - Mysql_Buying_Profile_Total_KPI.sql
+        - Mysql_Suggested_Product.sql
+        - Mysql_Suggested_Product_STG_Push.sql
+        - Mysql_Suggested_Proposal.sql
+        - Mysql_Suggested_Proposal_STG_Push.sql
+        - Mysql_ML_product_recommendation.sql
+
+    Views: []
+
+Data_Retention:
+    Retention_Groups:
+        - Group_id: 1
+          Tables:
+            - SO_Buying_Profile_Media_KPI
+            - SO_Buying_Profile_Total_KPI
+            - TRF_Advertiser_Audience
+            - TRF_Advertiser_Budget
+            - TRF_Advertiser_Metric
+            - TRF_Budget_Media
+            - TRF_Days_Line
+            - TRF_Days_Line_Avg
+            - TRF_Days_Order
+            - TRF_Days_Order_Avg
+            - TRF_Line_Count
+            - TRF_Market_Order_Line_Details
+          Retention_period: 90
+
+
+# E.O.F.

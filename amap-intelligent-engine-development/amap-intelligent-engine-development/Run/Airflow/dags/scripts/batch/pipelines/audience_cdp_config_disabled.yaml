@@ -1,0 +1,146 @@
+Name: Audience_CDP
+
+Tags:
+    - Audience_CDP
+
+Steps_Order:
+    - Start >> [Create_Cluster, Wait_For_Files]
+    - Create_Cluster >> [Preparation, Creation] >> Ingestion
+    - Wait_For_Files >> Ingestion
+    - Ingestion >> Aggregation >> Execute_Models >> Trigger_Pipelines >> Mark_Completed >> End
+
+Steps:
+    Create_Cluster: []
+    Wait_For_Files: []
+    Preparation: []
+    Creation:
+        Files:
+            - STG_DP_Useranagraphic.sql
+            - STG_DP_Siteuserdata.sql
+            - STG_DP_Purchase_Userdata.sql
+            - STG_DP_Product_Attribute.sql
+            - STG_DP_Adserver_Segment_Mapping.sql
+            - DP_Car_Sociodemo_Enriched.sql
+            - TRF_Am_Lookalike_Model_Features.sql
+            - TRF_DP_Siteuserdata.sql
+            - TRF_DP_Product_Attribute.sql
+            - TRF_Am_Lookalike_Historical_Logic.sql
+
+    Ingestion:
+        Tasks:
+            - task_id: STG_DP_Useranagraphic_ingest
+              pattern: STG_DP_Useranagraphic.*[cC][sS][vV]
+              validator: STG_DP_Useranagraphic_validator.yaml
+              delimiter: "|"
+              table: STG_DP_Useranagraphic
+              partitionedBy: partition_date
+              schedule_enabled: true
+              poke_interval: 60
+              timeout: 900
+
+            - task_id: STG_DP_Siteuserdata_ingest
+              pattern: STG_DP_Siteuserdata.*[cC][sS][vV]
+              validator: STG_DP_Siteuserdata_validator.yaml
+              delimiter: "|"
+              table: STG_DP_Siteuserdata
+              partitionedBy: partition_date
+              schedule_enabled: true
+              poke_interval: 60
+              timeout: 900    
+
+            - task_id: STG_DP_Purchase_Userdata_ingest
+              pattern: STG_DP_Purchase_Userdata.*[cC][sS][vV]
+              validator: STG_DP_Purchase_Userdata_validator.yaml
+              delimiter: "|"
+              table: STG_DP_Purchase_Userdata
+              partitionedBy: partition_date
+              schedule_enabled: true
+              poke_interval: 60
+              timeout: 900
+
+            - task_id: STG_DP_Product_Attribute_ingest
+              pattern: STG_DP_Product_Attribute.*[cC][sS][vV]
+              validator: STG_DP_Product_Attribute_validator.yaml
+              delimiter: "|"
+              table: STG_DP_Product_Attribute
+              partitionedBy: partition_date
+              schedule_enabled: true
+              poke_interval: 60
+              timeout: 900
+
+    Aggregation:
+        Tasks:
+            - taskid: trf_DP_Car_Sociodemo
+              active: true
+              dependencies_task: [ ]
+              task_type: pyspark
+              options: [ ]
+              file_name: trf_DP_Car_Sociodemo.py
+
+            - taskid: TRF_DP_Siteuserdata
+              active: true
+              dependencies_task: [ ]
+              task_type: aggregation
+              options: [ ]
+              file_name: agg_TRF_DP_Siteuserdata.hql
+
+            - taskid: TRF_DP_Product_Attribute
+              active: true
+              dependencies_task: [ ]
+              task_type: aggregation
+              options: [ ]
+              file_name: agg_TRF_DP_Product_Attribute.hql
+
+            - taskid: TRF_Am_Lookalike_Historical_Logic
+              active: true
+              dependencies_task:
+                - TRF_DP_Siteuserdata
+              task_type: pyspark
+              options: [ ]
+              file_name: trf_Am_Lookalike_Historical_Logic.py
+
+            - taskid: dp_car_user_behaviour
+              active: true
+              dependencies_task:
+                - TRF_DP_Siteuserdata
+                - TRF_DP_Product_Attribute
+              task_type: pyspark
+              options: [ ]
+              file_name: dp_car_user_behaviour.py
+
+    Execute_Models: DM_Model_Audience_Lookalike
+
+    Trigger_Pipelines:
+        Name: Calculate_Segments
+        Poke_Interval: 5
+        Tasks:
+          - DM_Segtool_Audience_API_Call
+
+    Mark_Completed: []
+
+MySQL_Creation:
+    Tables:
+        - Mysql_STG_DP_Adserver_Segment_Mapping.sql
+    Views:
+        - View_commercial_audiance.sql
+        - View_segments.sql
+        - View_segments_population.sql
+        - View_TRF_segments.sql
+
+Data_Retention:
+    Retention_Groups:
+        - Group_id: 1
+          Tables:
+            - STG_DP_Useranagraphic
+            - STG_DP_Siteuserdata
+            - STG_DP_Purchase_Userdata
+            - STG_DP_Product_Attribute
+            - STG_DP_Adserver_Segment_Mapping
+            - DP_Car_Sociodemo_Enriched
+            #- TRF_Am_Lookalike_Model_Features    no partition_date
+            - TRF_DP_Siteuserdata
+            - TRF_DP_Product_Attribute
+            - TRF_Am_Lookalike_Historical_Logic
+          Retention_period: 90
+
+# E.O.F.

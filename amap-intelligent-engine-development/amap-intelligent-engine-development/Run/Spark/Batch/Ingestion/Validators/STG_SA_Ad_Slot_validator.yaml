@@ -1,0 +1,52 @@
+config:
+  remove_duplicates: true
+  check_mandatory: true
+
+fields:
+  - name: Id
+    type: StringType()
+    mandatory: true
+  - name: Name
+    type: StringType()
+    mandatory: false
+  - name: Status__c
+    type: StringType()
+    mandatory: false
+  - name: Size__c
+    type: StringType()
+    mandatory: false
+  - name: Type__c
+    type: StringType()
+    mandatory: false
+  - name: Remote_Id__c
+    type: StringType()
+    mandatory: True
+  - name: Ad_Ops_System_Name__c
+    type: StringType()
+    mandatory: false
+  - name: Publisher_Platform__c
+    type: StringType()
+    mandatory: false
+  - name: Remote_Name__c
+    type: StringType()
+    mandatory: false
+  - name: Device_Platform__c
+    type: StringType()
+    mandatory: false
+  - name: ParentPath__c
+    type: StringType()
+    mandatory: false
+  
+    
+outputOrder:
+  - Id
+  - Name
+  - Status__c
+  - Size__c
+  - Type__c
+  - Remote_Id__c
+  - Ad_Ops_System_Name__c
+  - Publisher_Platform__c
+  - Remote_Name__c
+  - Device_Platform__c
+  - ParentPath__c

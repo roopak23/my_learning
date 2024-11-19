@@ -1,0 +1,19 @@
+config:
+  remove_duplicates: true
+  check_mandatory: true
+
+fields:
+  - name: Id
+    type: StringType()
+    mandatory: true
+  - name: Name
+    type: StringType()
+    mandatory: false
+  - name: Type__c
+    type: StringType()
+    mandatory: false
+    
+outputOrder:
+  - Id
+  - Name
+  - Type__c

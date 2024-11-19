@@ -1,0 +1,499 @@
+dependencies:
+  - taskid: TRF_Market_Order_Line_Details
+    active: true
+    dependencies_task: 
+      - TRF_advertiser
+    task_type: aggregation
+    options: []
+    file_name: agg_TRF_Market_Order_Line_Details.hql
+    
+  - taskid: TRF_adslot_available
+    active: false
+    dependencies_task: 
+      - TRF_Market_Order_Line_Details
+    task_type: aggregation
+    options: []
+    file_name: agg_TRF_Adslot_Available.hql
+    
+  - taskid: TRF_advertiser
+    active: true
+    dependencies_task: []
+    task_type: aggregation
+    options: []
+    file_name: agg_TRF_Advertiser.hql
+
+  - taskid: TRF_advertiser_audience
+    active: true
+    dependencies_task:
+      - TRF_advertiser
+    task_type: aggregation
+    options: []
+    file_name: agg_TRF_Advertiser_Audience.hql
+
+  - taskid: TRF_Advertiser_Metric
+    active: true
+    dependencies_task:
+      - TRF_advertiser
+      - TRF_Market_Order_Line_Details
+    task_type: aggregation
+    options: []
+    file_name: agg_TRF_Advertiser_Metric.hql
+
+  - taskid: TRF_Advertiser_Spec
+    active: false
+    dependencies_task:
+      - TRF_advertiser
+      - TRF_Market_Order_Line_Details
+    task_type: pyspark
+    options: []
+    file_name: trf_advertiser_spec.py
+
+  - taskid: TRF_advertiser_budget
+    active: false
+    dependencies_task:
+      - TRF_Advertiser_Spec
+    task_type: aggregation
+    options: []
+    file_name: agg_TRF_Advertiser_Budget.hql
+
+  - taskid: TRF_Advertiser_Spec_Total
+    active: false
+    dependencies_task:
+      - TRF_Advertiser_Spec
+      - TRF_advertiser_budget
+    task_type: aggregation
+    options: []
+    file_name: agg_TRF_Advertiser_Spec_Total.hql
+  
+  - taskid: TRF_Budget_Media
+    active: true
+    dependencies_task:
+      - TRF_Days_Line_Avg
+      - TRF_Advertiser_Metric
+      - TRF_line_count
+      - TRF_Market_Order_Line_Details
+    task_type: aggregation
+    options: []
+    file_name: agg_TRF_Budget_Media.hql
+
+  - taskid: TRF_Days_Line
+    active: true
+    dependencies_task:
+      - TRF_advertiser
+      - TRF_Market_Order_Line_Details
+    task_type: aggregation
+    options: []
+    file_name: agg_TRF_Days_Line.hql
+
+  - taskid: TRF_Days_Line_Avg
+    active: true
+    dependencies_task:
+      - TRF_Days_Line
+    task_type: aggregation
+    options: []
+    file_name: agg_TRF_Days_Line_Avg.hql
+
+  - taskid: TRF_Days_Order
+    active: true
+    dependencies_task:
+      - TRF_advertiser
+    task_type: aggregation
+    options: []
+    file_name: agg_TRF_Days_Order.hql
+
+  - taskid: TRF_Days_Order_Avg
+    active: true
+    dependencies_task:
+      - TRF_Days_Order
+    task_type: aggregation
+    options: []
+    file_name: agg_TRF_Days_Order_Avg.hql
+
+  - taskid: TRF_line_count
+    active: true
+    dependencies_task:
+      - TRF_advertiser
+      - TRF_Market_Order_Line_Details
+    task_type: aggregation
+    options: []
+    file_name: agg_TRF_Line_Count.hql
+  
+  - taskid: Buying_Profile_Media_KPI
+    active: true
+    dependencies_task:
+      - TRF_Budget_Media
+    task_type: aggregation
+    options: []
+    file_name: agg_Buying_Profile_Media_KPI.hql
+  
+  - taskid: Buying_Profile_Product_KPI
+    active: false
+    dependencies_task:
+      - TRF_Advertiser_Spec_Total
+    task_type: aggregation
+    options: []
+    file_name: agg_Buying_Profile_Product_KPI.hql
+  
+  - taskid: Buying_Profile_Total_KPI
+    active: true
+    dependencies_task:
+      - TRF_advertiser_audience
+      - Buying_Profile_Media_KPI
+    task_type: aggregation
+    options: []
+    file_name: agg_Buying_Profile_Total_KPI.hql
+  
+  - taskid: TRF_AdUnitSegmentUsage
+    active: true
+    dependencies_task:
+      - stg_sa_targeting_insert
+    task_type: aggregation
+    options: []
+    file_name: agg_TRF_AdUnitSegmentUsage.hql
+  
+  - taskid: TRF_InvFutureSegment
+    active: true
+    dependencies_task:
+      - TRF_AdUnitSegmentUsage
+    task_type: aggregation
+    options: []
+    file_name: agg_TRF_InvFutureSegment.hql
+  
+  - taskid: ML_InvForcastingInput
+    active: true
+    dependencies_task:
+      - TRF_Historical_capacity
+      - TRF_AdUnitSegmentUsage
+    task_type: aggregation
+    options: []
+    file_name: agg_ML_InvForcastingInput.hql
+  
+  - taskid: Inventory
+    active: false
+    dependencies_task:
+      - TRF_InvFutureSegment
+    task_type: aggregation
+    options: []
+    file_name: agg_Inventory.hql
+  
+  - taskid: TRF_SiteHierarchy
+    active: true
+    dependencies_task:
+      - TRF_DMP_AudienceSegmentMapNormalize
+    task_type: aggregation
+    options: []
+    file_name: agg_TRF_SiteHierarchy.hql
+  
+  - taskid: TRF_DMP_AudienceSegmentMapNormalize
+    active: true
+    dependencies_task: []
+    task_type: aggregation
+    options: []
+    file_name: agg_TRF_DMP_AudienceSegmentMapNormalize.hql
+  
+  - taskid: TRF_SAR_Segments
+    active: true
+    dependencies_task:
+      - TRF_SiteHierarchy
+    task_type: aggregation
+    options: []
+    file_name: agg_TRF_Segments.hql
+  
+  - taskid: TRF_UserData
+    active: true
+    dependencies_task:
+      - AUD_STG_UserMatching
+    task_type: aggregation
+    options: []
+    file_name: agg_TRF_UserData.hql
+  
+  - taskid: TRF_SAR_Views
+    active: true
+    dependencies_task:
+      - TRF_SiteHierarchy
+      - CFG_ContentType
+    task_type: aggregation
+    options: []
+    file_name: agg_TRF_SAR_Views.hql
+  
+  - taskid: CAR_SocioDemo
+    active: true
+    dependencies_task:
+      - TRF_SiteHierarchy
+      - AUD_STG_UserMatching
+    task_type: aggregation
+    options: []
+    file_name: agg_CAR_SocioDemo.hql
+  
+  - taskid: CAR_Geo
+    active: true
+    dependencies_task:
+      - TRF_UserData
+      - AUD_STG_UserMatching
+    task_type: aggregation
+    options: []
+    file_name: agg_CAR_Geo.hql
+  
+  - taskid: CAR_Interest
+    active: true
+    dependencies_task:
+      - TRF_SiteHierarchy
+      - CFG_ContentType
+      - AUD_STG_UserMatching
+    task_type: aggregation
+    options: []
+    file_name: agg_CAR_Interest.hql
+    
+  - taskid: CFG_ContentType
+    active: true
+    dependencies_task:
+      - TRF_SiteHierarchy
+    task_type: aggregation
+    options: []
+    file_name: agg_CFG_ContentType.hql
+
+  - taskid: AUD_STG_UserMatching
+    active: true
+    dependencies_task: []
+    task_type: aggregation
+    options: []
+    file_name: agg_AUD_STG_UserMatching.hql
+
+  - taskid: stg_adserver_audiencesegment_insert
+    active: true
+    dependencies_task: []
+    task_type: aggregation
+    options: []
+    file_name: stg_adserver_audiencesegment_insert.hql
+
+  - taskid: stg_sa_targeting_insert
+    active: true
+    dependencies_task: []
+    task_type: aggregation
+    options: []
+    file_name: stg_sa_targeting_insert.hql
+    
+  - taskid: TRF_perf_gathering_metric
+    active: true
+    dependencies_task: []
+    task_type: aggregation
+    options: []
+    file_name: agg_TRF_perf_gathering_metric.hql
+    
+  - taskid: TRF_percentage_vs_all
+    active: true
+    dependencies_task:
+      - TRF_perf_gathering_metric
+    task_type: aggregation
+    options: []
+    file_name: agg_TRF_percentage_vs_all.hql
+    
+  - taskid: TRF_Historical_capacity
+    active: true
+    dependencies_task:
+      - TRF_perf_gathering_metric
+      - TRF_percentage_vs_all
+    task_type: aggregation
+    options: []
+    file_name: agg_TRF_Historical_capacity.hql
+    
+
+  - taskid: TRF_anagraphic_taxonomy
+    active: true
+    dependencies_task: []
+    task_type: aggregation
+    options: []
+    file_name: agg_TRF_anagraphic_taxonomy.hql
+    
+  - taskid: TRF_anagraphic_segment_enhanced
+    active: true
+    dependencies_task: []
+    task_type: aggregation
+    options: []
+    file_name: agg_TRF_anagraphic_segment_enhanced.hql
+
+  - taskid: api_segment_reach
+    active: true
+    dependencies_task: []
+    task_type: aggregation
+    options: []
+    file_name: agg_api_segment_reach.hql
+
+  - taskid: trf_targeting_update
+    active: true
+    dependencies_task: []
+    task_type: aggregation
+    options: []
+    file_name: agg_trf_targeting_update.hql
+
+  - taskid: TRF_TO_Recommendation
+    active: true
+    dependencies_task: []
+    task_type: aggregation
+    options: []
+    file_name: agg_TRF_TO_Recommendation.hql
+
+  - taskid: TO_Recommendation
+    active: true
+    dependencies_task: 
+      - TRF_TO_Recommendation
+    task_type: aggregation
+    options: []
+    file_name: agg_TO_Recommendation.hql
+    
+  - taskid: TRF_TL_Recommendation
+    active: true
+    dependencies_task: []
+    task_type: aggregation
+    options: []
+    file_name: agg_TRF_TL_Recommendation.hql
+
+  - taskid: TL_Recommendation
+    active: true
+    dependencies_task: 
+      - TRF_TL_Recommendation
+      - TRF_Fact_Input
+      - TRF_Adserver_Forecast_Output
+    task_type: aggregation
+    options: []
+    file_name: agg_TL_Recommendation.hql
+    
+  - taskid: TRF_Monitoring_Insights
+    active: true
+    dependencies_task: 
+      - TRF_Fact_Input
+      - TRF_advertiser
+      - TRF_Past_Campaign_Performances
+      - TRF_Pacing
+    task_type: aggregation
+    options: []
+    file_name: agg_TRF_Monitoring_Insights.hql
+
+  - taskid: TRF_Product
+    active: true
+    dependencies_task: []
+    task_type: aggregation
+    options: []
+    file_name: agg_TRF_Product.hql
+
+  - taskid: TRF_Inventory_Check
+    active: true
+    dependencies_task: []
+    task_type: aggregation
+    options: []
+    file_name: agg_TRF_Inventory_Check.hql
+
+  - taskid: TRF_Campaign
+    active: true
+    dependencies_task: []
+    task_type: aggregation
+    options: []
+    file_name: agg_TRF_Campaign.hql
+
+  - taskid: TRF_Fact_Input
+    active: true
+    dependencies_task: 
+      - TRF_Campaign
+      - STG_SA_Past_Campaign_Performances_update
+      - TRF_Past_Campaign_Performances
+      - TRF_Pacing
+      - TRF_GADS_Tech_Line_Forecasting
+    task_type: aggregation
+    options: []
+    file_name: agg_TRF_Fact_Input.hql
+
+  - taskid: TRF_Adserver_Forecast_Output
+    active: true
+    dependencies_task: 
+      - TRF_Onnet_Model_Output
+    task_type: aggregation
+    options: []
+    file_name: agg_TRF_Adserver_Forecast_Output.hql
+
+  - taskid: TRF_InvFuture_Commercials
+    active: true
+    dependencies_task: []
+    task_type: aggregation
+    options: []
+    file_name: agg_TRF_InvFuture_Commercials.hql
+
+#  - taskid: TRF_Industry_Audience
+#    active: true
+#    dependencies_task: []
+#    task_type: aggregation
+#    options: []
+#    file_name: agg_TRF_Industry_Audience.hql
+#     
+#  - taskid: Industry_Audience
+#    active: true
+#    dependencies_task: 
+#      - TRF_Industry_Audience
+#    task_type: aggregation
+#    options: []
+#    file_name: agg_Industry_Audience.hql
+#    
+#  - taskid: TRF_Industry_Insights
+#    active: true
+#    dependencies_task: 
+#      - TRF_Past_Campaign_Performances
+#    task_type: aggregation
+#    options: []
+#    file_name: agg_TRF_Industry_Insights.hql
+
+  - taskid: STG_SA_Past_Campaign_Performances_update
+    active: true
+    dependencies_task: []
+    task_type: aggregation
+    options: []
+    file_name: STG_Past_Campaign_Performances_Update.hql
+
+  - taskid: TRF_Past_Campaign_Performances
+    active: true
+    dependencies_task: 
+      - STG_SA_Past_Campaign_Performances_update
+    task_type: aggregation
+    options: []
+    file_name: agg_TRF_Past_Campaign_Performances.hql
+
+  - taskid: TRF_Pacing
+    active: true
+    dependencies_task: 
+      - TRF_Past_Campaign_Performances
+    task_type: aggregation
+    options: []
+    file_name: agg_TRF_Pacing.hql
+
+  - taskid: TRF_Campaign_Daily_View
+    active: true
+    dependencies_task: 
+      - TRF_Fact_Input
+      - TRF_advertiser
+      - STG_SA_Past_Campaign_Performances_update
+      - TRF_Pacing
+    task_type: aggregation
+    options: []
+    file_name: agg_TRF_Campaign_Daily_View.hql
+
+  - taskid: TRF_GADS_Tech_Line_Forecasting
+    active: true
+    dependencies_task: 
+      - TRF_Campaign
+    task_type: aggregation
+    options: []
+    file_name: agg_TRF_GADS_Tech_Line_Forecasting.hql
+
+  - taskid: TL_Recommendation_Update
+    active: true
+    dependencies_task: TL_Recommendation
+    task_type: aggregation
+    options: []
+    file_name: TL_Recommendation_Update.hql
+
+  - taskid: TRF_Adserver_Forecast_Input
+    active: true
+    dependencies_task: 
+      - TRF_Onnet_Model_Output
+      - TRF_Campaign
+    task_type: aggregation
+    options: []
+    file_name: agg_TRF_Adserver_Forecast_Input.hql

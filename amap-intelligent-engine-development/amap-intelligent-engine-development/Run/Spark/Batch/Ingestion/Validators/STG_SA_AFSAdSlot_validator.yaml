@@ -1,0 +1,20 @@
+config:
+  remove_duplicates: true
+  check_mandatory: true
+
+fields:
+  - name: Id
+    type: StringType()
+    mandatory: true
+  - name: AFS__c
+    type: StringType()
+    mandatory: true
+  - name: Ad_Slot__c
+    type: StringType()
+    mandatory: true
+
+
+outputOrder:
+  - Id
+  - AFS__c
+  - Ad_Slot__c

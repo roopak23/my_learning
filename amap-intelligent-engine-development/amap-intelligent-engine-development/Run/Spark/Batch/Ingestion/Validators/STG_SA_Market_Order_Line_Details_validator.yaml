@@ -1,0 +1,180 @@
+config:
+  remove_duplicates: true
+  check_mandatory: true
+  multiline: "true"
+
+fields:
+  - name: Id
+    type: StringType()
+    mandatory: true
+  - name: Name
+    type: StringType()
+    mandatory: true
+  - name: Ad_Server_Name__c
+    type: StringType()
+    mandatory: false
+  - name: Breadcrumb__c
+    type: StringType()
+    mandatory: false
+  - name: Campaign_Objective__c
+    type: StringType()
+    mandatory: false
+  - name: Commercial_Audience__c
+    type: StringType()
+    mandatory: false
+  - name: DayPart__c
+    type: StringType()
+    mandatory: false
+  - name: Disc__c
+    type: DoubleType()
+    mandatory: false
+  - name: Discount__c
+    type: DoubleType()
+    mandatory: false
+  - name: End_Date__c
+    type: LongType()
+    mandatory: true
+  - name: Format__c
+    type: StringType()
+    mandatory: false
+  - name: Format_Name__c
+    type: StringType()
+    mandatory: false
+  - name: Length__c
+    type: StringType()
+    mandatory: false
+  - name: Market_Order_Id__c
+    type: StringType()
+    mandatory: true
+  - name: Market_Order_Line__c
+    type: StringType()
+    mandatory: false
+  - name: market_product_type__c
+    type: StringType()
+    mandatory: true
+  - name: MediaType__c
+    type: StringType()
+    mandatory: false
+  - name: PriceItem__c
+    type: StringType()
+    mandatory: false
+  - name: Quantity__c
+    type: DoubleType()
+    mandatory: false
+  - name: Start_Date__c
+    type: LongType()
+    mandatory: true
+  - name: Unit_Net_Price__c
+    type: DoubleType()
+    mandatory: false
+  - name: Unit_Price__c
+    type: DoubleType()
+    mandatory: false
+  - name: Total_Net_Price__c
+    type: DoubleType()
+    mandatory: false
+  - name: Unit_Of_Measure__c
+    type: StringType()
+    mandatory: false
+  - name: Frequency_Capping__c
+    type: StringType()
+    mandatory: false
+  - name: Frequency_Capping_Quantity__c
+    type: DoubleType()
+    mandatory: false
+  - name: Status__c
+    type: StringType()
+    mandatory: true
+  - name: Total_Price__c
+    type: DoubleType()
+    mandatory: false
+  - name: Carrier_Targeting__c
+    type: StringType()
+    mandatory: false
+  - name: Custom_Targeting__c
+    type: StringType()
+    mandatory: false
+  - name: Daypart_Targeting__c
+    type: StringType()
+    mandatory: false
+  - name: Device_Targeting__c
+    type: StringType()
+    mandatory: false
+  - name: Geo_Targeting__c
+    type: StringType()
+    mandatory: false
+  - name: Os_Targeting__c
+    type: StringType()
+    mandatory: false
+  - name: Time_Slot_Targeting__c
+    type: StringType()
+    mandatory: false
+  - name: Weekpart_Targeting__c
+    type: StringType()
+    mandatory: false
+  - name: LastViewedDate
+    type: LongType()
+    mandatory: false
+  - name: LastModifiedDate
+    type: LongType()
+    mandatory: false
+  - name: BiddingStrategy__c
+    type: StringType()
+    mandatory: false
+  - name: Ad_Ops_System_Type__c
+    type: StringType()
+    mandatory: false
+  - name: Audience__c
+    type: StringType()
+    mandatory: false
+  - name: Section_Name__c
+    type: StringType()
+    mandatory: false
+  - name: Frequency_Cap__c
+    type: StringType()
+    mandatory: false
+
+outputOrder:
+  - Id
+  - Name
+  - Ad_Server_Name__c
+  - Breadcrumb__c
+  - Campaign_Objective__c
+  - Commercial_Audience__c
+  - DayPart__c
+  - Disc__c
+  - Discount__c
+  - End_Date__c
+  - Format__c
+  - Format_Name__c
+  - Length__c
+  - Market_Order_Id__c
+  - Market_Order_Line__c
+  - market_product_type__c
+  - MediaType__c
+  - PriceItem__c
+  - Quantity__c
+  - Start_Date__c
+  - Unit_Net_Price__c
+  - Unit_Price__c
+  - Total_Net_Price__c
+  - Unit_Of_Measure__c
+  - Frequency_Capping__c
+  - Frequency_Capping_Quantity__c
+  - Status__c
+  - Total_Price__c
+  - Carrier_Targeting__c
+  - Custom_Targeting__c
+  - Daypart_Targeting__c
+  - Device_Targeting__c
+  - Geo_Targeting__c
+  - Os_Targeting__c
+  - Time_Slot_Targeting__c
+  - Weekpart_Targeting__c
+  - LastViewedDate
+  - LastModifiedDate
+  - BiddingStrategy__c
+  - Ad_Ops_System_Type__c
+  - Audience__c
+  - Section_Name__c
+  - Frequency_Cap__c

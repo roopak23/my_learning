@@ -1,0 +1,27 @@
+config:
+  remove_duplicates: true
+  check_mandatory: true
+
+fields:
+  - name: commercial_audience_name__c
+    type: StringType()
+    mandatory: true
+  - name: Ad_Ops_System__c
+    type: StringType()
+    mandatory: true
+  - name: Reach__c
+    type: DoubleType()
+    mandatory: true
+  - name: Impression__c
+    type: DoubleType()
+    mandatory: false
+  - name: Spend__c
+    type: DoubleType()
+    mandatory: false
+
+outputOrder:
+  - commercial_audience_name__c
+  - Ad_Ops_System__c
+  - Reach__c
+  - Impression__c
+  - Spend__c

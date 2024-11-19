@@ -1,0 +1,23 @@
+params:
+  - name: PARAMS.AWS_REGION
+    value: ap-southeast-2
+    descirption: AWS region where applications will be deployed
+
+  - name: PARAMS.EKS_CLUSTER_NAME
+    value: foxtel-hawkeye-prod-eks
+    descirption: Cluster Name where applications will be deployed
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

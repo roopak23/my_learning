@@ -1,0 +1,121 @@
+
+# General configuration of the DAG
+DAG:
+  TEMP_FOLDER: '/tmp/batch-pipeline'
+  ENV: AWS
+  model_manager: False
+  FILE_PATH: '/opt/airflow/dags/Spark/Batch/Models'
+  MLModels: 'data/ml_models'
+  MODELS_REDUCTION: 1
+
+Tables:
+  ENDDATE: (pendulum.now(tz='Australia/Sydney')- timedelta(1)).strftime('%Y%m%d')
+
+# Environment configuration
+Connection: my_modelmanager
+
+Endpoints:
+  RUN: '/v1/run'
+  WAIT: '/v1/run/{run_id}'
+
+# IDs of the Pipelines to be executed
+Pipelines:
+  - forecast_digital:
+      pipeline_id: "596e049c7a7811096cb4c6e6"
+      version_id: "1"
+  - forecast_linear: 
+      pipeline_id: "596e049c7a7811232342c6e6"
+      version_id: "1"
+
+#  Direct path
+Direct:
+  inventory:
+    active: true
+    engine: pyspark
+    weight: 5
+    #Data table
+    inv_input_table: ml_invforecastinginput
+    inv_segment_table: trf_invfuturesegment
+    output_table: ML_InvForecastingOutputSegmentInterim
+    output_KPI_table: ML_InvForecastingModelKPI
+    reserved_table : api_inventorycheck
+    final_output_table : ML_InvForecastingOutputSegment
+    #Execution conditions
+    days: 120
+    metrics: 'IMPRESSION'
+    historical_ratio: 1
+    #Model init parameters
+    information_criterion: "bic"
+    max_p: 7
+    max_q: 3
+    max_d: 3
+    max_P: 3
+    max_Q: 3
+    max_D: 2
+    start_p: 1
+    start_q: 1
+    start_d: 1
+    start_P: 1
+    start_Q: 1
+    start_D: 1
+    stationary: False
+    error_action: "ignore"
+    suppress_warnings: True
+    train: 0.7 #must be a decimal
+    test_stationarity: False
+    trained: false
+
+
+  audience:
+    active: true
+    engine: pyspark
+    weight: 3
+    car_table: CAR_SocioDemo
+    user_table: TRF_UserData
+    matching_table: AUD_STG_UserMatching
+    output_table: LAL_SocioDemo
+    features: '["userid", "browser", "device", "operatingsystem", "url", "sitedata"]'
+    Age_Ranges: '["18-25","26-35","36-45","46-55","56-65","66-75","76-85"]'
+    Gender_Ranges: '["Male", "Female"]'
+    threshold_gender: 0.6
+    threshold_age: 0.6
+    trained: false
+  
+
+  inventoryoptimization:
+    active: false
+    engine: python
+    weight: 1
+    run_integration_test: 0
+    mysqldatabase: "data_activation"
+    trained: false
+
+
+  purchasebehaviour:
+    active: true
+    engine: python
+    weight: 1
+    run_integration_test: 0
+    mysqldatabase: "data_activation"
+    trained: true
+
+  campaignoptimization:
+    active: true
+    engine: pyspark
+    weight: 1
+    trained: false
+
+  audiencelookalike:
+    active: true
+    engine: pyspark
+    weight: 1
+    BUCKET_NAME: PARAMS.S3_DATA_BUCKET_NAME
+    train_model: '["age","gender"]'
+    execution_model: '["age","gender"]'
+    age_bucket: '["16-25","26-35","36-45","46-55","56-65","66-100"]'
+    mysqldatabase: "data_activation"
+    step: "training"
+    trained: true
+
+
+# EOF

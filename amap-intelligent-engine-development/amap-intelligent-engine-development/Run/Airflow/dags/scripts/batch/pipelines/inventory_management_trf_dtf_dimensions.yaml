@@ -1,0 +1,73 @@
+Name: Inventory_Management_TRF_DTF_Load
+
+Tags:
+    - Inventory_Management
+
+Steps_Order:
+    - Start >> Create_Cluster >> Preparation
+    - Preparation >> Aggregation
+    - Aggregation >> Mark_Completed >> End
+    
+Steps:
+    Create_Cluster: []
+    Preparation: []
+    # Creation:
+    #     Files:
+    #         - TRF_DTF_Additional_Dimensions_V2.sql
+    #         - ML_InvForecastingInput_V2.sql
+
+    Aggregation:
+        Tasks:
+
+            # - taskid: ML_InvForcastingInput
+            #   active: true
+            #   dependencies_task:
+            #     - TRF_DTF_Additional_Dimensions
+            #   task_type: aggregation
+            #   options: [ ]
+            #   file_name: agg_ML_InvForcastingInput.hql
+              
+            - taskid: TRF_AdServer_InvHistorical
+              active: true
+              dependencies_task:
+                - TRF_Master_AdSlotSkip
+              task_type: aggregation
+              options: [ ]
+              file_name: agg_TRF_AdServer_InvHistorical.hql
+
+            - taskid: TRF_DTF_Additional_Dimensions_Pre
+              active: true
+              dependencies_task: [ ]
+              task_type: aggregation
+              options: [ ]
+              file_name: agg_TRF_DTF_Additional_Dimensions_Pre.hql
+
+            - taskid: TRF_DTF_Additional_Dimensions
+              active: true
+              dependencies_task: 
+                - TRF_DTF_Additional_Dimensions_Pre
+                - TRF_Master_AdSlotSkip
+              task_type: aggregation
+              options: [ ]
+              file_name: agg_TRF_DTF_Additional_Dimensions.hql
+
+            - taskid: ML_InvForcastingInputs.hql
+              active: true
+              dependencies_task:
+                - TRF_DTF_Additional_Dimensions
+                - TRF_AdServer_InvHistorical
+              task_type: aggregation
+              options: [ ]
+              file_name: agg_ML_InvForcastingInput.hql
+
+            - taskid: TRF_Master_AdSlotSkip
+              active: true
+              dependencies_task: [ ]
+              task_type: aggregation
+              options: [ ]
+              file_name: TRF_Master_AdSlotSkip.hql
+              
+     
+    Mark_Completed: []
+
+# E.O.F.

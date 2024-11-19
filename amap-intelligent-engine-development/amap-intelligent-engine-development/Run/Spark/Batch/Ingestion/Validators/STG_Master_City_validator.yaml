@@ -1,0 +1,21 @@
+config:
+  remove_duplicates: true
+  check_mandatory: true
+
+# StringType, BinaryType, BooleanType, DecimalType, FloatType, DoubleType, ByteType, ShortType, IntegerType, LongType, DateType, TimestampType, NullType
+fields:
+  - name: Geography
+    type: StringType()
+    mandatory: true
+  - name: State
+    type: StringType()
+    mandatory: true
+  - name: City
+    type: StringType()
+    mandatory: true
+
+# column order from list above
+outputOrder:
+  - Geography
+  - State
+  - City

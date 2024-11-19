@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	
+	<parent>
+		<groupId>com.acn.dm</groupId>
+		<artifactId>data-monetization</artifactId>
+		<version>0.0.1-SNAPSHOT</version>
+		<relativePath />
+	</parent>
+	
+	<artifactId>config-server</artifactId>
+	<name>Config Server</name>
+
+	<properties>
+		<java.version>17</java.version>
+		<prod>false</prod>
+		<maven.compiler.target>17</maven.compiler.target>
+		<maven.compiler.source>17</maven.compiler.source>
+		<spring.profiles.include>native,basic-auth</spring.profiles.include>
+		<skip-process-docs>false</skip-process-docs>
+		<spring.application.name>${project.artifactId}</spring.application.name>
+		<spring.profiles.active>local</spring.profiles.active>
+		<deploy-with>docker</deploy-with>
+	</properties>
+
+	<dependencies>
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-config-server</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-bootstrap</artifactId>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<defaultGoal>spring-boot:run</defaultGoal>
+		<resources>
+			<resource>
+				<directory>src/main/resources</directory>
+				<filtering>true</filtering>
+				<excludes>
+					<exclude>*.sample</exclude>
+				</excludes>
+			</resource>
+			<resource>
+				<targetPath>${project.build.directory}</targetPath>
+				<directory>../shared/deploy/script/docker</directory>
+				<filtering>true</filtering>
+				<excludes>
+					<exclude>docker-compose.yml</exclude>
+				</excludes>
+			</resource>
+			<resource>
+				<targetPath>${project.build.directory}</targetPath>
+				<directory>../shared/deploy/script</directory>
+				<filtering>true</filtering>
+				<excludes>
+					<exclude>docker/**</exclude>
+				</excludes>
+				<includes>
+					<include>${deploy-with}/**/*.*</include>
+				</includes>
+			</resource>
+		</resources>
+		<plugins>
+			<plugin>
+				<groupId>ch.acanda.maven</groupId>
+				<artifactId>spring-banner-plugin</artifactId>
+			</plugin>
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+			</plugin>
+		</plugins>
+	</build>
+	
+	<profiles>
+		<profile>
+	      <id>prod</id>
+	      <activation>
+		      <property>
+			      <name>prod</name>
+			      <value>true</value>
+		      </property>
+	      </activation>
+	      <properties>
+	      <spring.profiles.active>prod</spring.profiles.active>
+	      </properties>
+	    </profile>
+	</profiles>
+
+</project>

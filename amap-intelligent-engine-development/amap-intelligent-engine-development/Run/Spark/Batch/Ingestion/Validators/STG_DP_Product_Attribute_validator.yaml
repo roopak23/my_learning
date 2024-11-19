@@ -1,0 +1,20 @@
+config:
+  remove_duplicates: true
+  check_mandatory: true
+
+fields:
+  - name: product_id
+    type: StringType()
+    mandatory: true
+  - name: attribute_name
+    type: StringType()
+    mandatory: true
+  - name: attribute_value
+    type: StringType()
+    mandatory: true
+
+
+outputOrder:
+  - product_id
+  - attribute_name
+  - attribute_value

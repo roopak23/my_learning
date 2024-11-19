@@ -1,0 +1,43 @@
+config:
+  remove_duplicates: true
+  check_mandatory: true
+
+fields:
+  - name: dp_userid
+    type: StringType()
+    mandatory: true
+  - name: purchase_date
+    type: TimestampType()
+    mandatory: true
+  - name: purchase_channel
+    type: StringType()
+    mandatory: false
+  - name: purchase_amount
+    type: StringType()
+    mandatory: false
+  - name: purchase_discount
+    type: DoubleType()
+    mandatory: false
+  - name: purchase_channel_name
+    type: StringType()
+    mandatory: false
+  - name: purchase_channel_location
+    type: StringType()
+    mandatory: false
+  - name: purchase_channel_url
+    type: StringType()
+    mandatory: false
+  - name: product_id
+    type: StringType()
+    mandatory: true
+
+outputOrder:
+  - dp_userid
+  - purchase_date
+  - purchase_channel
+  - purchase_amount
+  - purchase_discount
+  - purchase_channel_name
+  - purchase_channel_location
+  - purchase_channel_url
+  - product_id

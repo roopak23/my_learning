@@ -1,0 +1,39 @@
+config:
+  remove_duplicates: true
+  check_mandatory: true
+
+fields:
+  - name: target_id
+    type: StringType()
+    mandatory: true
+  - name: target_name
+    type: StringType()
+    mandatory: true
+  - name: target_type
+    type: StringType()
+    mandatory: true
+  - name: adserver_target_type
+    type: StringType()
+    mandatory: true
+  - name: adserver_target_remote_id
+    type: StringType()
+    mandatory: true
+  - name: adserver_target_remote_name
+    type: StringType()
+    mandatory: true
+  - name: size
+    type: IntegerType()
+    mandatory: true
+  - name: adserver_id
+    type: StringType()
+    mandatory: true
+
+outputOrder:
+  - target_id
+  - target_name
+  - target_type
+  - adserver_target_type
+  - adserver_target_remote_id
+  - adserver_target_remote_name
+  - size
+  - adserver_id

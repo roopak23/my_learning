@@ -1,0 +1,84 @@
+apiVersion: apps/v1
+kind: Deployment
+
+metadata:
+  name: {{ .Values.inventoryManagement.name }}
+  labels:
+    app: {{ .Values.inventoryManagement.id }}
+  labels:
+    app: {{ .Release.Name }}
+    chart: {{ .Chart.Name }}
+    release: {{ .Chart.Version }}
+    component: inventoryManagement
+
+spec:
+  replicas: 1
+
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 0
+
+  selector:
+    matchLabels:
+      app: {{ .Release.Name }}
+      release: {{ .Chart.Version }}
+      component: inventoryManagement
+
+  template:
+    metadata:
+      annotations:
+        checksum/configmap-db: {{ include (print $.Template.BasePath "/config/configmap-db.yaml") . | sha256sum }}
+        checksum/configmap-ms-cookies: {{ include (print $.Template.BasePath "/config/configmap-ms-cookies.yaml") . | sha256sum }}
+        checksum/configmap-settings-container: {{ include (print $.Template.BasePath "/config/configmap-settings-container.yaml") . | sha256sum }}
+        checksum/configmap-settings-local: {{ include (print $.Template.BasePath "/config/configmap-settings-local.yaml") . | sha256sum }}
+        checksum/configmap-settings: {{ include (print $.Template.BasePath "/config/configmap-settings.yaml") . | sha256sum }}
+        checksum/configmap-inventoryManagement: {{ include (print $.Template.BasePath "/inventory-management/configmap-inventory-management.yaml") . | sha256sum }}
+        checksum/configmap-feign: {{ include (print $.Template.BasePath "/config/configmap-feign.yaml") . | sha256sum }}
+
+
+      labels:
+        app: {{ .Release.Name }}
+        release: {{ .Chart.Version }}
+        component: inventoryManagement
+
+    spec:
+      restartPolicy: Always
+      serviceAccountName: {{ .Values.inventoryManagement.name }}-serviceaccount
+
+      {{- if .Values.inventoryManagement.nodeSelector }}
+      nodeSelector:
+        {{- toYaml .Values.inventoryManagement.nodeSelector | nindent 8 }}
+      {{- end }}
+      {{- if .Values.inventoryManagement.affinity }}
+      affinity:
+        {{- toYaml .Values.inventoryManagement.affinity | nindent 8 }}
+      {{- end }}
+      {{- if .Values.inventoryManagement.tolerations }}
+      tolerations:
+        {{- toYaml .Values.inventoryManagement.tolerations | nindent 8 }}
+      {{- end }}
+
+      containers:
+        - name: {{ .Values.inventoryManagement.name }}
+          image: {{ .Values.inventoryManagement.image.repository }}:{{ .Values.inventoryManagement.image.tag }}
+          imagePullPolicy: {{ .Values.inventoryManagement.image.imagePullPolicy }}
+
+          ports:
+            - name: {{ .Values.inventoryManagement.id }}
+              containerPort: {{ .Values.inventoryManagement.service.port }}
+              protocol: TCP
+
+          env:
+            {{- if .Values.inventoryManagement.deployment.extraEnv }}
+              {{ toYaml .Values.inventoryManagement.deployment.extraEnv | indent 12 }}
+            {{- end }}
+            - name: "APP_PORT"
+              value: "{{ .Values.inventoryManagement.service.port }}"
+            - name: "APP_NAMESPACE"
+              value: "{{ .Release.Namespace }}"
+
+          resources:
+            {{- toYaml .Values.inventoryManagement.deployment.resources | nindent 12 }}
+

@@ -1,0 +1,27 @@
+config:
+  remove_duplicates: true
+  check_mandatory: true
+
+fields:
+  - name: adset_id
+    type: StringType()
+    mandatory: true
+  - name: spend
+    type: DoubleType()
+    mandatory: true
+  - name: reach
+    type: DoubleType()
+    mandatory: true
+  - name: impressions
+    type: DoubleType()
+    mandatory: true
+  - name: actions
+    type: DoubleType()
+    mandatory: true
+
+outputOrder:
+  - adset_id
+  - spend
+  - reach
+  - impressions
+  - actions

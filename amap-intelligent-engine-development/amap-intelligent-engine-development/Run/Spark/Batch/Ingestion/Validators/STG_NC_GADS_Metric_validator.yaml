@@ -1,0 +1,22 @@
+config:
+  remove_duplicates: true
+
+fields:
+  - name: gads_id
+    type: StringType()
+    mandatory: true
+  - name: gads_name
+    type: StringType()
+    mandatory: true
+  - name: gatds_total_ubs
+    type: StringType()
+    mandatory: true
+  - name: adserver_id
+    type: StringType()
+    mandatory: true
+    
+outputOrder:
+  - gads_id
+  - gads_name
+  - gatds_total_ubs
+  - adserver_id

@@ -1,0 +1,33 @@
+config:
+  remove_duplicates: true
+  check_mandatory: true
+
+fields:
+  - name: Id
+    type: StringType()
+    mandatory: true
+  - name: Name
+    type: StringType()
+    mandatory: false
+  - name: AccountType__c
+    type: StringType()
+    mandatory: true
+  - name: RecordTypeId
+    type: StringType()
+    mandatory: false
+  - name: Industry
+    type: StringType()
+    mandatory: false
+
+    
+outputOrder:
+  - Id
+  - Name
+  - AccountType__c
+  - RecordTypeId
+  - Industry
+
+
+    
+    
+

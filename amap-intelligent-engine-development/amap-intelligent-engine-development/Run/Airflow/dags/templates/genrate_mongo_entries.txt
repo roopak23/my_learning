@@ -1,0 +1,19 @@
+{
+"Account Name":"{{template_final[0][0]['Account Name']}}",
+"values":[
+{% for items in template_final%}
+{
+"Media":"{{items[0]['Media']}}",
+"forcasting":[
+{% for i in items %}
+{
+"Budget":"{{i['Budget']}}",
+"Date":"{{i['Date']}}",
+"Quantity":"{{i['Quantity']}}"
+},
+{% endfor %}
+],
+},
+{% endfor %}
+]
+}

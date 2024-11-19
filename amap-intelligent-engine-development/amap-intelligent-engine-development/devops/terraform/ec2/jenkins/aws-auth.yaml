@@ -1,0 +1,34 @@
+apiVersion: v1
+data:
+  mapAccounts: |
+    - "ACCOUNT_NUM_TO_REPLACE"
+  mapRoles: |
+    - "groups":
+      - "system:bootstrappers"
+      - "system:nodes"
+      "rolearn": "arn:aws:iam::ACCOUNT_NUM_TO_REPLACE:role/amap-eks-prod-0120220713080900896100000009"
+      "username": "system:node:{{EC2PrivateDNSName}}"
+    - "groups":
+      - "system:masters"
+      "rolearn": "arn:aws:sts::ACCOUNT_NUM_TO_REPLACE:assumed-role/ROLE_NAME_TO_REPLACE"
+      "username": "ROLE_NAME_TO_REPLACE"
+    - "groups":
+      - "system:masters"
+      - "eks-console-dashboard-full-access-group"
+      "rolearn": "arn:aws:iam::ACCOUNT_NUM_TO_REPLACE:role/amap-ec2-role-prod-01"
+      "username": "amap-ec2-role-prod-01"
+  mapUsers: |
+    - "groups":
+      - "system:masters"
+      "userarn": "arn:aws:iam::ACCOUNT_NUM_TO_REPLACE:role/ndm-amap-sysadmin"
+      "username": "ROLE_NAME_TO_REPLACE"
+kind: ConfigMap
+metadata:
+  creationTimestamp: "2022-07-13T08:09:05Z"
+  labels:
+    app.kubernetes.io/managed-by: Terraform
+    terraform.io/module: terraform-aws-modules.eks.aws
+  name: aws-auth
+  namespace: kube-system
+  resourceVersion: "907"
+  uid: b391fb9e-2a93-4174-a059-7a74e74fb3a7

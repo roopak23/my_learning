@@ -1,0 +1,27 @@
+apiVersion: v1
+kind: Service
+
+metadata:
+  name: {{ .Values.inventoryManagement.id }}
+  labels:
+    app: {{ .Release.Name }}
+    chart: {{ .Chart.Name }}
+    release: {{ .Chart.Version }}
+    component: inventoryManagement
+  annotations:
+    {{- if .Values.inventoryManagement.service.annotations }}
+      {{ toYaml .Values.inventoryManagement.service.annotations | indent 2 }}
+    {{- end }}
+
+spec:
+  selector:
+    app: {{ .Release.Name }}
+    release: {{ .Chart.Version }}
+    component: inventoryManagement
+
+
+  ports:
+    - name: {{ .Values.inventoryManagement.id }}
+      protocol: TCP
+      port: {{ .Values.inventoryManagement.service.port | default 8080 }}
+      targetPort: {{ .Values.inventoryManagement.service.port }}

@@ -1,0 +1,350 @@
+config:
+  remove_duplicates: true
+  check_mandatory: true
+  
+fields:
+  - name: Start_Datetime__c
+    type: LongType()
+    mandatory: true
+  - name: Performance_Datetime__c
+    type: LongType()
+    mandatory: true
+  - name: Ad_Ops_System_Name__c
+    type: StringType()
+    mandatory: true
+  - name: Tech_order__c
+    type: StringType()
+    mandatory: false
+  - name: Tech_line__c
+    type: StringType()
+    mandatory: true
+  - name: Remote_id__c
+    type: StringType()
+    mandatory: true
+  - name: Report_id__c
+    type: StringType()
+    mandatory: false
+  - name: Device__c
+    type: StringType()
+    mandatory: false
+  - name: Time_Of_Day__c
+    type: StringType()
+    mandatory: false
+  - name: Day_Of_Week__c
+    type: StringType()
+    mandatory: false
+  - name: Time_Range__c
+    type: StringType()
+    mandatory: false
+  - name: Gender__c
+    type: StringType()
+    mandatory: false
+  - name: Age__c
+    type: StringType()
+    mandatory: false
+  - name: Family_status__c
+    type: StringType()
+    mandatory: false
+  - name: First_Party_Data__c
+    type: StringType()
+    mandatory: false
+  - name: Second_Party_Data__c
+    type: StringType()
+    mandatory: false
+  - name: Third_Party_Data__c
+    type: StringType()
+    mandatory: false
+  - name: Income__c
+    type: StringType()
+    mandatory: false
+  - name: Keyword_Match_Type__c
+    type: StringType()
+    mandatory: false
+  - name: Keyword__c
+    type: StringType()
+    mandatory: false
+  - name: Creative_Display_Format__c
+    type: StringType()
+    mandatory: false
+  - name: Ad_Copy__c
+    type: StringType()
+    mandatory: false
+  - name: Social_Placement__c
+    type: StringType()
+    mandatory: false
+  - name: Creative_Name__c
+    type: StringType()
+    mandatory: false
+  - name: Placement__c
+    type: StringType()
+    mandatory: false
+  - name: Network_Type__c
+    type: StringType()
+    mandatory: false
+  - name: Country__c
+    type: StringType()
+    mandatory: false
+  - name: State__c
+    type: StringType()
+    mandatory: false
+  - name: Region__c
+    type: StringType()
+    mandatory: false
+  - name: City__c
+    type: StringType()
+    mandatory: false
+  - name: Inventory_Ad_Slot__c
+    type: StringType()
+    mandatory: false
+  - name: Number_of_Clicks__c
+    type: DoubleType()
+    mandatory: false
+  - name: Number_of_Impressions__c
+    type: DoubleType()
+    mandatory: false
+  - name: Spend__c
+    type: DoubleType()
+    mandatory: false
+  - name: SpendGADS__c
+    type: DoubleType()
+    mandatory: false
+  - name: Reach__c
+    type: DoubleType()
+    mandatory: false
+  - name: Crt_formula__c
+    type: DoubleType()
+    mandatory: false
+  - name: Conversions__c
+    type: DoubleType()
+    mandatory: false
+  - name: Cprm__c
+    type: DoubleType()
+    mandatory: false
+  - name: Cpcv__c
+    type: DoubleType()
+    mandatory: false
+  - name: Inline_Post_Engagement__c
+    type: DoubleType()
+    mandatory: false
+  - name: Player_100__c
+    type: DoubleType()
+    mandatory: false
+  - name: Search_Impression_Share__c
+    type: DoubleType()
+    mandatory: false
+  - name: Display_Impression_Share__c
+    type: DoubleType()
+    mandatory: false
+  - name: Cpm__c
+    type: DoubleType()
+    mandatory: false
+  - name: Cpa__c
+    type: DoubleType()
+    mandatory: false
+  - name: Cpc__c
+    type: DoubleType()
+    mandatory: false
+  - name: Cpv__c
+    type: DoubleType()
+    mandatory: false
+  - name: Player_25__c
+    type: DoubleType()
+    mandatory: false
+  - name: Player_50__c
+    type: DoubleType()
+    mandatory: false
+  - name: Player_75__c
+    type: DoubleType()
+    mandatory: false
+  - name: Frequency_Capping__c
+    type: StringType()
+    mandatory: false
+  - name: Frequency_Capping_Quantity__c
+    type: DoubleType()
+    mandatory: false
+  - name: View__c
+    type: DoubleType()
+    mandatory: false
+  - name: View_Rate__c
+    type: DoubleType()
+    mandatory: false
+  - name: Actions_post_reaction__c
+    type: DoubleType()
+    mandatory: false
+  - name: Actions_comment__c
+    type: DoubleType()
+    mandatory: false
+  - name: Actions_onsite_conversion_post_save__c
+    type: DoubleType()
+    mandatory: false
+  - name: Actions_link_click__c
+    type: DoubleType()
+    mandatory: false
+  - name: Actions_like__c
+    type: DoubleType()
+    mandatory: false
+  - name: Ad_Quality_Ranking__c
+    type: StringType()
+    mandatory: false
+  - name: Player_Mute__c
+    type: DoubleType()
+    mandatory: false
+  - name: Player_Unmute__c
+    type: DoubleType()
+    mandatory: false
+  - name: Player_Engaged_Views__c
+    type: DoubleType()
+    mandatory: false
+  - name: Player_Starts__c
+    type: DoubleType()
+    mandatory: false
+  - name: Player_Skip__c
+    type: DoubleType()
+    mandatory: false
+  - name: Sampled_Viewed_Impressions__c
+    type: DoubleType()
+    mandatory: false
+  - name: Sampled_Tracked_Impressions__c
+    type: DoubleType()
+    mandatory: false
+  - name: Sampled_In_view_Rate__c
+    type: DoubleType()
+    mandatory: false
+  - name: Companion_Impressions__c
+    type: DoubleType()
+    mandatory: false
+  - name: Companion_Clicks__c
+    type: DoubleType()
+    mandatory: false
+  - name: Unique_Ids__c
+    type: DoubleType()
+    mandatory: false
+  - name: Frequency_Per_Unique_ID__c
+    type: DoubleType()
+    mandatory: false
+  - name: Data_Cost__c
+    type: DoubleType()
+    mandatory: false
+  - name: Deal_Id__c
+    type: StringType()
+    mandatory: false
+  - name: Site_List_Name__c
+    type: StringType()
+    mandatory: false
+  - name: Bids__c
+    type: DoubleType()
+    mandatory: false
+  - name: Win_Rate__c
+    type: DoubleType()
+    mandatory: false
+  - name: Email_Total_Sent__c
+    type: DoubleType()
+    mandatory: false
+  - name: Unique_Open_Rate__c
+    type: DoubleType()
+    mandatory: false
+  - name: Unique_Click_Rate__c
+    type: DoubleType()
+    mandatory: false
+  - name: SMS_Total_Sent__c
+    type: DoubleType()
+    mandatory: false
+  - name: Email_Opened
+    type: DoubleType()
+    mandatory: false
+  - name: Email_Clicked
+    type: DoubleType()
+    mandatory: false
+  - name: Ad_Unit_Id__c
+    type: StringType()
+    mandatory: false
+  - name: Ad_Unit_Name__c
+    type: StringType()
+    mandatory: false
+outputOrder:
+  - Start_Datetime__c
+  - Performance_Datetime__c
+  - Ad_Ops_System_Name__c
+  - Tech_order__c
+  - Tech_line__c
+  - Remote_id__c
+  - Report_id__c
+  - Device__c
+  - Time_Of_Day__c
+  - Day_Of_Week__c
+  - Time_Range__c
+  - Gender__c
+  - Age__c
+  - Family_status__c
+  - First_Party_Data__c
+  - Second_Party_Data__c
+  - Third_Party_Data__c
+  - Income__c
+  - Keyword_Match_Type__c
+  - Keyword__c
+  - Creative_Display_Format__c
+  - Ad_Copy__c
+  - Social_Placement__c
+  - Creative_Name__c
+  - Placement__c
+  - Network_Type__c
+  - Country__c
+  - State__c
+  - Region__c
+  - City__c
+  - Inventory_Ad_Slot__c
+  - Number_of_Clicks__c
+  - Number_of_Impressions__c
+  - Spend__c
+  - SpendGADS__c
+  - Reach__c
+  - Crt_formula__c
+  - Conversions__c
+  - Cprm__c
+  - Cpcv__c
+  - Inline_Post_Engagement__c
+  - Player_100__c
+  - Search_Impression_Share__c
+  - Display_Impression_Share__c
+  - Cpm__c
+  - Cpa__c
+  - Cpc__c
+  - Cpv__c
+  - Player_25__c
+  - Player_50__c
+  - Player_75__c
+  - Frequency_Capping__c
+  - Frequency_Capping_Quantity__c
+  - View__c
+  - View_Rate__c
+  - Actions_post_reaction__c
+  - Actions_comment__c
+  - Actions_onsite_conversion_post_save__c
+  - Actions_link_click__c
+  - Actions_like__c
+  - Ad_Quality_Ranking__c
+  - Player_Mute__c
+  - Player_Unmute__c
+  - Player_Engaged_Views__c
+  - Player_Starts__c
+  - Player_Skip__c
+  - Sampled_Viewed_Impressions__c
+  - Sampled_Tracked_Impressions__c
+  - Sampled_In_view_Rate__c
+  - Companion_Impressions__c
+  - Companion_Clicks__c
+  - Unique_Ids__c
+  - Frequency_Per_Unique_ID__c
+  - Data_Cost__c
+  - Deal_Id__c
+  - Site_List_Name__c
+  - Bids__c
+  - Win_Rate__c
+  - Email_Total_Sent__c
+  - Unique_Open_Rate__c
+  - Unique_Click_Rate__c
+  - SMS_Total_Sent__c
+  - Email_Opened
+  - Email_Clicked
+  - Ad_Unit_Id__c
+  - Ad_Unit_Name__c

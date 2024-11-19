@@ -1,0 +1,45 @@
+params:
+
+  - name: PARAMS.AWS_REGION
+    value: ap-southeast-2
+    descirption: AWS region where applications will be deployed
+
+  - name: PARAMS.EKS_CLUSTER_NAME
+    value: foxtel-hawkeye-uat-eks
+    descirption: Cluster Name where applications will be deployed
+
+  - name: PARAMS.PRIVATE_HOST
+    value: priv.uatamapie.foxtel.com.au
+    descirption: Host name to use for ingress for internal connections from corporate network
+
+  # - name: PARAMS.VAULT_HOST
+  #   value: vaultdev.
+  #   descirption: Host name to vault application
+
+  - name: PARAMS.DB_HOST
+    value: foxtel-hawkeye-uat-rds.cdz6ph7gogn8.ap-southeast-2.rds.amazonaws.com
+    descirption: RDS database endpoint
+  
+  - name: PARAMS.DB_PORT
+    value: 3306
+    descirption: Database port
+
+  - name: PARAMS.KEYCLOAK_DB_NAME
+    value: keycloakx
+    descirption: Name of keycloak database
+
+  - name: PARAMS.KEYCLOAK_DB_USER
+    value: keycloakx 
+    descirption: DB username for keycloak
+    
+  - name: XPARAMS.KEYCLOAK_DB_PASSWORD
+    value: keycloak_db_password_uat
+    descirption: DB password for keycloak - stored in external provider
+
+  - name: PARAMS.KEYCLOAK_APP_ADMIN_USER
+    value: dm3admin 
+    descirption: Default keycloak user
+
+  - name: XPARAMS.KEYCLOAK_APP_ADMIN_PASSWORD
+    value: keycloak_app_admin_user_password_uat
+    descirption: Default keycloak user password - stored in external provider

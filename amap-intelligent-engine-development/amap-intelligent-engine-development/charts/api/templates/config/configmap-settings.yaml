@@ -1,0 +1,27 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Release.Name }}-settings
+  labels:
+    app: {{ .Release.Name }}
+    chart: {{ .Chart.Name }}
+    release: {{ .Chart.Version }}
+
+data:
+  spring.jackson.serialization.fail-on-empty-beans: "false"
+  spring.jackson.serialization.write_dates_as_timestamps: "false"
+  spring.resources.chain.cache: "true"
+  spring.cloud.config.fail-fast: "true"
+  management.security.enabled: "false"
+  management.endpoints.web.exposure.include: "*"
+  management.endpoints.health.show-details: "ALWAYS"
+  logging.file.path: "/dev/log"
+  logging.file.name: "${spring.application.name}-${spring.profiles.active:default}.log"
+  logging.file.max-history: "15"
+  logging.level.ROOT: "ALL"
+  logging.level.com.acn: "ALL"
+  security.basic.enabled: "false"
+  security.oauth.client.app.resourceIds: "oauth2-resource"
+  security.oauth.resource.jwt.keyValue: "123"
+  eureka.instance.metadata-map.management.context-path: "${server.servlet.context-path:}/actuator"
+  application.normalization.qty.value: "30"

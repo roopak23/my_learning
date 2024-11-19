@@ -1,0 +1,13 @@
+[
+ 
+        {% for i in get_data_dict%} 
+      {
+        "Account Name":"{{i[0]}} - {{i[1]}}",
+        "Media":"{{i[2]}}",
+        "Budget":"{{i[3]}}",
+        "Date":"{{i[4]}}",
+        "Quantity":"{{i[5]}}",
+        },
+            {% endfor %}
+			
+]

@@ -1,0 +1,45 @@
+# AUTHOR: Saverio "Kaspar" Ferrara
+# DESCRIPTION: Basic Airflow container with Hive connectors and additional pip packages
+# BUILD: read the README.md file
+
+#FROM apache/airflow:2.0.0-python3.8
+FROM apache/airflow:PARAMS.AIRFLOW_VERSION
+
+USER 0
+
+# Install build tools
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends \
+           build-essential \
+           gcc \
+           procps \
+           libsasl2-2 \
+           libsasl2-dev \
+           libsasl2-modules \
+           libssl-dev \
+           sasl2-bin \
+           wget \
+           openjdk-11-jre-headless \
+           vim \
+    && apt-get autoremove -yqq --purge \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
+
+# Install Hive, Hadoop and Java for Beeline
+RUN wget -q https://dlcdn.apache.org/hive/hive-3.1.3/apache-hive-3.1.3-bin.tar.gz \
+    && wget -q https://dlcdn.apache.org/hadoop/core/hadoop-3.3.6/hadoop-3.3.6.tar.gz \
+    && tar xzf apache-hive-3.1.3-bin.tar.gz && rm -rf apache-hive-3.1.3-bin.tar.gz && mv apache-hive-3.1.3-bin /usr/local/hive \
+    && tar xzf hadoop-3.3.6.tar.gz && rm -rf hadoop-3.3.6.tar.gz && mv hadoop-3.3.6 /usr/local/hadoop
+
+ENV HIVE_HOME=/usr/local/hive
+ENV HADOOP_HOME=/usr/local/hadoop
+ENV JAVA_HOME=/usr
+ENV PATH="${HIVE_HOME}/bin:${PATH}"
+
+# Switch to Airflow user
+USER 50000
+
+# Install python packages
+RUN python3 -m pip install --user apache-airflow-providers-apache-hive==6.0.0 \
+    apache-airflow-providers-apache-livy==3.2.0 \
+    apache-airflow-providers-http==4.0.0

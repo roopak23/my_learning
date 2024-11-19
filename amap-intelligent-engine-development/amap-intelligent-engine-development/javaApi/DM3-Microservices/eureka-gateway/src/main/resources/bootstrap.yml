@@ -1,0 +1,25 @@
+eureka:
+  client:
+    fetch-registry: false
+    register-with-eureka: false
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+server:
+  port: 8761
+
+spring:
+  application:
+    name: "@spring.application.name@"
+  profiles:
+    active: "@spring.profiles.active@"
+    include: "@spring.profiles.include@"
+  security:
+    user:
+      name: eureka_client
+      password: '{noop}client_pass_123'
+      roles:
+        - EUREKA_CLIENT

@@ -1,0 +1,29 @@
+{{- if .Values.additionalUser.enabled -}}
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: {{ .Values.additionalUser.name }}
+  namespace: {{ .Values.additionalUser.namespace }}
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: {{ .Values.additionalUser.name }}
+subjects:
+- kind: ServiceAccount
+  name: {{ .Values.additionalUser.name }}
+  namespace: {{ .Values.additionalUser.namespace }}
+roleRef:
+  kind: ClusterRole
+  name: {{ .Values.additionalUser.existingRole }}
+  apiGroup: rbac.authorization.k8s.io
+---
+apiVersion: v1
+kind: Secret
+type: kubernetes.io/service-account-token
+metadata:
+  name: {{ .Values.additionalUser.name }}-token
+  namespace: {{ .Values.additionalUser.namespace }}
+  annotations:
+    kubernetes.io/service-account.name: {{ .Values.additionalUser.name }}
+{{- end -}}

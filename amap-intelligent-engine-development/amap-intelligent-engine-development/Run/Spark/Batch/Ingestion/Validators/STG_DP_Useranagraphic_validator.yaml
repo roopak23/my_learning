@@ -1,0 +1,21 @@
+config:
+  remove_duplicates: true
+  check_mandatory: true
+
+fields:
+  - name: dp_userid
+    type: StringType()
+    mandatory: true
+    pk: true
+  - name: attribute_name
+    type: StringType()
+    mandatory: true
+    pk: true
+  - name: attribute_value
+    type: StringType()
+    mandatory: false
+
+outputOrder:
+  - dp_userid
+  - attribute_name
+  - attribute_value

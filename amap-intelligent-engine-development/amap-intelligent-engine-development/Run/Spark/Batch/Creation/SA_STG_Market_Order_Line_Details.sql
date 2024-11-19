@@ -1,0 +1,55 @@
+CREATE TABLE IF NOT EXISTS `STG_SA_Market_Order_Line_Details` (
+`sys_datasource` STRING,
+`sys_load_id` BIGINT,
+`sys_created_on` TIMESTAMP,
+`market_order_line_details_id` STRING,
+`name` STRING,
+`ad_server_name` STRING,
+`breadcrumb` STRING,
+`campaign_objective` STRING,
+`commercial_audience` STRING,
+`day_part` STRING,
+`discount_ds` DOUBLE,
+`discount_ssp` DOUBLE,
+`end_date` BIGINT,
+`format` STRING,
+`format_name` STRING,
+`length` STRING,
+`market_order_id` STRING,
+`market_order_line` STRING,
+`market_product_type` STRING,
+`mediatype` STRING,
+`priceitem` STRING,
+`quantity` DOUBLE,
+`start_date` BIGINT,
+`unit_net_price` DOUBLE,
+`unit_price` DOUBLE,
+`total_net_price` DOUBLE,
+`unit_of_measure` STRING,
+`frequency_capping` STRING,
+`frequency_capping_quantity` INT,
+`status` STRING,
+`total_price` DOUBLE,
+`carrier_targeting` STRING,
+`custom_targeting` STRING,
+`daypart_targeting` STRING,
+`device_targeting` STRING,
+`geo_targeting` STRING,
+`os_targeting` STRING,
+`time_slot_targeting` STRING,
+`weekpart_targeting` STRING,
+`recent_view` BIGINT,
+`recent_change` BIGINT,
+`gads_bidding_strategy` STRING,
+`ad_server_type` STRING,
+`audience_name` STRING,
+`section_name` STRING,
+`frequency_cap` STRING
+)
+PARTITIONED BY (partition_date INT)
+--CLUSTERED BY (mediatype) INTO 5 BUCKETS --> TBD
+STORED AS ORC
+LOCATION '{{ params.TABLEHOST }}://{{ params.ROOTPATH }}/{{ params.HIVE_DATA_PATH }}/STG_SA_Market_Order_Line_Details'
+TBLPROPERTIES("transactional"="true");
+
+MSCK REPAIR TABLE `STG_SA_Market_Order_Line_Details`;

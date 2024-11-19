@@ -1,0 +1,25 @@
+config:
+  remove_duplicates: true
+  check_mandatory: true
+
+# StringType, BinaryType, BooleanType, DecimalType, FloatType, DoubleType, ByteType, ShortType, IntegerType, LongType, DateType, TimestampType, NullType
+fields:
+  - name: Tech_Line__c
+    type: StringType()
+    mandatory: true
+  - name: Id
+    type: StringType()
+    mandatory: true
+  - name: Name
+    type: StringType()
+    mandatory: true
+  - name: TagValue__c
+    type: StringType()
+    mandatory: true
+
+# column order from list above
+outputOrder:
+  - Tech_Line__c
+  - Id 
+  - Name 
+  - TagValue__c

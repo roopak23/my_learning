@@ -1,0 +1,315 @@
+Name: Common
+
+Tags:
+    - Common
+    - Campaign_Monitoring
+    - Inventory_Management
+    - Suggested_For_You
+    - Audience_CDP
+
+Steps_Order:
+    - Start >> [Create_Cluster, Wait_For_Files]
+    - Create_Cluster >> [Preparation, Creation] >> Ingestion
+    - Wait_For_Files >> Ingestion
+    - Ingestion >> Aggregation >> Migration >> Mark_Completed >> End
+
+Steps:
+    Create_Cluster: []
+    Wait_For_Files: []
+    Preparation: []
+    Creation:
+        Files:
+            - CNT_ingestion_metadata.sql
+            - CNT_DQ_metatabl.sql
+            - SA_STG_Account.sql
+            - SA_STG_Ad_Ops_System.sql
+            - SA_STG_Ad_Slot.sql
+            - TRF_SA_Ad_Slot.sql
+            - SA_STG_AdFormatSpec.sql
+            - SA_STG_AFSAdSlot.sql
+            - SA_STG_AMAP_Account_Ad_Ops_Syst.sql
+            - SA_STG_Brand.sql
+            - SA_STG_CatalogItem.sql
+            - SA_STG_Market_Order.sql
+            - SA_STG_Market_Order_Line_Details.sql
+            - SA_STG_Price_Item.sql
+            - SA_STG_Targeting.sql
+            - SA_STG_Tech_Line_Details.sql
+            - SA_STG_Tech_Order.sql
+            - TRF_Advertiser.sql
+            - SO_Inventory.sql
+
+    Ingestion:
+        Tasks:
+            - task_id: STG_SA_Account_ingest
+              pattern: STG_SA_Account.*[cC][sS][vV]
+              validator: STG_SA_Account_validator.yaml
+              delimiter: "|"
+              table: STG_SA_Account
+              partitionedBy: partition_date
+              schedule_enabled: true
+              poke_interval: 60
+              timeout: 900
+
+            - task_id: STG_SA_Ad_Ops_System_ingest
+              pattern: STG_SA_Ad_Ops_System.*[cC][sS][vV]
+              validator: STG_SA_Ad_Ops_System_validator.yaml
+              delimiter: "|"
+              table: STG_SA_Ad_Ops_System
+              partitionedBy: partition_date
+              schedule_enabled: true
+              poke_interval: 60
+              timeout: 900
+
+            - task_id: STG_SA_Ad_Slot_ingest
+              pattern: STG_SA_Ad_Slot.*[cC][sS][vV]
+              validator: STG_SA_Ad_Slot_validator.yaml
+              delimiter: "^"
+              table: STG_SA_Ad_Slot
+              partitionedBy: partition_date
+              schedule_enabled: true
+              poke_interval: 60
+              timeout: 900
+
+            - task_id: STG_SA_AdFormatSpec_ingest
+              pattern: STG_SA_AdFormatSpec.*[cC][sS][vV]
+              validator: STG_SA_AdFormatSpec_validator.yaml
+              delimiter: "^"
+              table: STG_SA_AdFormatSpec
+              partitionedBy: partition_date
+              schedule_enabled: true
+              poke_interval: 60
+              timeout: 900
+
+            - task_id: STG_SA_AFSAdSlot_ingest
+              pattern: STG_SA_AFSAdSlot.*[cC][sS][vV]
+              validator: STG_SA_AFSAdSlot_validator.yaml
+              delimiter: "|"
+              table: STG_SA_AFSAdSlot
+              partitionedBy: partition_date
+              schedule_enabled: true
+              poke_interval: 60
+              timeout: 900
+
+            - task_id: STG_SA_AMAP_Account_Ad_Ops_Syst_ingest
+              pattern: STG_SA_AMAP_Account_Ad_Ops_Syst.*[cC][sS][vV]
+              validator: STG_SA_AMAP_Account_Ad_Ops_Syst_validator.yaml
+              delimiter: "|"
+              table: STG_SA_AMAP_Account_Ad_Ops_Syst
+              partitionedBy: partition_date
+              schedule_enabled: true
+              poke_interval: 60
+              timeout: 900
+
+            - task_id: STG_SA_Brand_ingest
+              pattern: STG_SA_Brand.*[cC][sS][vV]
+              validator: STG_SA_Brand_validator.yaml
+              delimiter: "|"
+              table: STG_SA_Brand
+              partitionedBy: partition_date
+              schedule_enabled: true
+              poke_interval: 60
+              timeout: 900
+
+            - task_id: STG_SA_CatalogItem_ingest
+              pattern: STG_SA_CatalogItem.*[cC][sS][vV]
+              validator: STG_SA_CatalogItem_validator.yaml
+              delimiter: "^"
+              table: STG_SA_CatalogItem
+              partitionedBy: partition_date
+              schedule_enabled: true
+              poke_interval: 60
+              timeout: 900
+
+            - task_id: STG_SA_Market_Order
+              pattern: STG_SA_Market_Order_[0-9].*[cC][sS][vV]
+              validator: STG_SA_Market_Order_validator.yaml
+              delimiter: "|"
+              table: STG_SA_Market_Order
+              partitionedBy: partition_date
+              schedule_enabled: false
+              poke_interval: 60
+              timeout: 900
+
+            - task_id: STG_SA_Market_Order_Line_Details
+              pattern: STG_SA_Market_Order_Line_Details.*[cC][sS][vV]
+              validator: STG_SA_Market_Order_Line_Details_validator.yaml
+              delimiter: "^"
+              table: STG_SA_Market_Order_Line_Details
+              partitionedBy: partition_date
+              schedule_enabled: true
+              poke_interval: 60
+              timeout: 900
+
+            - task_id: STG_SA_Price_Item_ingest
+              pattern: STG_SA_Price_Item.*[cC][sS][vV]
+              validator: STG_SA_Price_Item_validator.yaml
+              delimiter: "|"
+              table: STG_SA_Price_Item
+              partitionedBy: partition_date
+              schedule_enabled: true
+              poke_interval: 60
+              timeout: 900
+
+            - task_id: STG_SA_Targeting_ingest
+              pattern: STG_SA_Targeting.*[cC][sS][vV]
+              validator: STG_SA_Targeting_validator.yaml
+              delimiter: "|"
+              table: STG_SA_Targeting
+              partitionedBy: partition_date
+              schedule_enabled: true
+              poke_interval: 60
+              timeout: 900
+
+            - task_id: STG_SA_Tech_Line_Details_ingest
+              pattern: STG_SA_Tech_Line_Details.*[cC][sS][vV]
+              validator: STG_SA_Tech_Line_Details_validator.yaml
+              delimiter: "|"
+              table: STG_SA_Tech_Line_Details
+              partitionedBy: partition_date
+              schedule_enabled: true
+              poke_interval: 60
+              timeout: 900
+
+            - task_id: STG_SA_Tech_Order_ingest
+              pattern: STG_SA_Tech_Order.*[cC][sS][vV]
+              validator: STG_SA_Tech_Order_validator.yaml
+              delimiter: "|"
+              table: STG_SA_Tech_Order
+              partitionedBy: partition_date
+              schedule_enabled: true
+              poke_interval: 60
+              timeout: 900
+
+            - task_id: SO_Inventory_ingest
+              pattern: SO_Inventory.*[cC][sS][vV]
+              validator: SO_Inventory_validator.yaml
+              delimiter: "|"
+              table: SO_Inventory
+              partitionedBy: partition_date
+              schedule_enabled: false
+              poke_interval: 60
+              timeout: 601
+
+    Aggregation:
+        Tasks:
+
+            - taskid: TRF_SA_Ad_Slot
+              active: true
+              dependencies_task: [ ]
+              task_type: aggregation
+              options: [ ]
+              file_name: agg_TRF_SA_Ad_Slot.hql
+              
+            - taskid: STG_SA_Targeting_insert
+              active: true
+              dependencies_task: [ ]
+              task_type: aggregation
+              options: [ ]
+              file_name: stg_sa_targeting_insert.hql
+
+            - taskid: TRF_Advertiser
+              active: true
+              dependencies_task: [ ]
+              task_type: aggregation
+              options: [ ]
+              file_name: agg_TRF_Advertiser.hql
+
+    Migration:
+        Tasks:
+            - taskid: Migrate_TRF_Advertiser
+              active: true
+              dependencies_task: [ ]
+              task_type: migration
+              options: [ ]
+              file_name: MIG_TRF_Advertiser.sql
+
+            - taskid: Migrate_STG_SA_ad_ops_system
+              active: true
+              dependencies_task: [ ]
+              task_type: migration
+              options: [ ]
+              file_name: MIG_stg_sa_ad_ops_system.sql
+
+            - taskid: Migrate_STG_SA_Ad_Slot
+              active: true
+              dependencies_task: [ ]
+              task_type: migration
+              options: [ ]
+              file_name: MIG_STG_SA_Ad_Slot.sql
+
+            - taskid: Migrate_STG_SA_AdFormatSpec
+              active: true
+              dependencies_task: [ ]
+              task_type: migration
+              options: [ ]
+              file_name: MIG_STG_SA_AdFormatSpec.sql
+
+            - taskid: Migrate_STG_SA_AFSAdSlot
+              active: true
+              dependencies_task: [ ]
+              task_type: migration
+              options: [ ]
+              file_name: MIG_STG_SA_AFSAdSlot.sql
+
+            - taskid: Migrate_STG_SA_CatalogItem
+              active: true
+              dependencies_task: [ ]
+              task_type: migration
+              options: [ ]
+              file_name: MIG_STG_SA_CatalogItem.sql
+
+            - taskid: Migrate_STG_SA_Price_Item
+              active: true
+              dependencies_task: [ ]
+              task_type: migration
+              options: [ ]
+              file_name: MIG_STG_SA_Price_Item.sql
+
+            - taskid: Migrate_STG_SA_Targeting
+              active: true
+              dependencies_task: [ ]
+              task_type: migration
+              options: [ ]
+              file_name: MIG_STG_SA_Targeting.sql
+
+    Mark_Completed: []
+
+MySQL_Creation:
+    Tables:
+        - Mysql_etl_traffic_lights.sql
+        - Mysql_Ingestion_metadata.sql
+        - Mysql_STG_SA_AdFormatSpec.sql
+        - Mysql_stg_sa_ad_ops_system.sql
+        - Mysql_STG_SA_Ad_Slot.sql
+        - Mysql_STG_SA_AFSAdSlot.sql
+        - Mysql_STG_SA_CatalogItem.sql
+        - Mysql_STG_SA_Price_Item.sql
+        - Mysql_STG_SA_Targeting.sql
+        - Mysql_trf_advertiser.sql
+
+Data_Retention:
+    Retention_Groups:
+        - Group_id: 1
+          Tables:
+            - CNT_ingestion_metadata
+            - CNT_DQ_metatabl
+            - STG_SA_Account
+            - STG_SA_Ad_Ops_System
+            - STG_SA_Ad_Slot
+            - STG_SA_AdFormatSpec
+            - STG_SA_AFSAdSlot
+            - STG_SA_AMAP_Account_Ad_Ops_Syst
+            - STG_SA_Brand
+            - STG_SA_CatalogItem
+            - STG_SA_Market_Order
+            - STG_SA_Market_Order_Line_Details
+            - STG_SA_Price_Item
+            - STG_SA_Targeting
+            - STG_SA_Tech_Line_Details
+            - STG_SA_Tech_Order
+            - TRF_Advertiser
+            - SO_Inventory
+          Retention_period: 90
+
+# E.O.F.

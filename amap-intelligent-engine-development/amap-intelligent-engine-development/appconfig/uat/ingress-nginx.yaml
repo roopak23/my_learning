@@ -1,0 +1,38 @@
+params:
+
+  - name: PARAMS.AWS_ACCOUNT_NUM
+    value: 904458240716
+    descirption: AWS account id where applications will be deployed
+
+  - name: PARAMS.AWS_REGION
+    value: ap-southeast-2
+    descirption: AWS region where applications will be deployed
+
+  - name: PARAMS.EKS_CLUSTER_NAME
+    value: foxtel-hawkeye-uat-eks
+    descirption: Cluster Name where applications will be deployed
+
+  - name: PARAMS.VPC_CDIR_BLOCK
+    value: 10.109.192.0/19
+    descirption: VPC CDIR
+  
+  - name: PARAMS.ENV
+    value: uat
+    descirption: Types of environments eg dev, sit, uat, prod, to be used for the tag
+
+  - name: PARAMS.CERT_ARN
+    value: arn:aws:acm:ap-southeast-2:904458240716:certificate/9668d075-d0d1-4b51-a4f8-4dbe10df12ed
+    descirption: Arn of certifiacate to be applied to load balancer
+
+  - name: PARAMS.TAGS
+    value: Name=nlb-internal-uat-01
+    descirption: Tags to add to the internal NLB
+  
+  - name: PARAMS.SUBNETS
+    value: subnet-001c482731652adc4,subnet-07df65956c5087f76,subnet-0345dc89216e84db9
+    descirption: Private subnets to apply the nlb to
+
+
+  - name: PARAMS.PUBLIC_SUBNETS
+    value: subnet-0db1c2cff343c7414,subnet-0a8af69c8ae96d404,subnet-0d1eab577ae47a609
+    descirption: Public subnets to apply the lb to

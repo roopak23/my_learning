@@ -1,0 +1,768 @@
+Name: Inventory_Management
+
+Tags:
+    - Inventory_Management
+    - Suggested_For_You
+
+Steps_Order:
+    - Start >> [Create_Cluster, Wait_For_Files]
+    - Create_Cluster >> [Preparation, Creation] >> Ingestion
+    - Wait_For_Files >> Ingestion
+    - Ingestion >> Aggregation >> Execute_Models >> Migration >> Post_Aggregation >> Execution >> Mark_Completed >> End
+
+Steps:
+    Create_Cluster: []
+    Wait_For_Files: []
+    Preparation: []
+    Creation:
+        Files:
+            - AdServer_STG_InvFuture.sql
+            - AdServer_STG_InvFuture_Next_3_Months.sql
+            - AdServer_STG_InvFuture_Next_12_Months.sql
+            - AdServer_STG_InvHistorical.sql
+            - AdServer_STG_NetworkImpressions.sql
+            - AdServer_STG_NetworkBackfillImpressions.sql
+            - AdServer_STG_AudienceFactoring.sql
+            - AdServer_TRF_InvHistorical.sql
+            - SA_STG_Ad_Slot.sql                                                # Creation in Common Pipeline
+            - TRF_SA_Ad_Slot.sql
+            - SA_STG_AFSAdSlot.sql                                              # Creation in Common Pipeline
+            - SA_STG_AdFormatSpec.sql                                           # Creation in Common Pipeline
+            - SA_STG_CatalogItem.sql                                            # Creation in Common Pipeline
+            - SA_STG_Price_Item.sql                                             # Creation in Common Pipeline
+            - SA_STG_Tech_Line_Details.sql
+            - TRF_AdUnitSegmentUsage.sql
+            - TRF_InvFuture_Commercials.sql
+            - TRF_DTF_Additional_Dimensions_Pre.sql
+            - TRF_DTF_Additional_Dimensions.sql
+            - ML_InvForecastingInput.sql
+            - ML_InvForecastingOutputSegment.sql
+            - ML_InvForecastingModelKPI.sql
+            - ML_InvForecastingOutputSegmentDistributed.sql
+            - Master_STG_City.sql
+            - SA_STG_Adslot_Hierarchy.sql
+            - TRF_Adslot_Hierarchy.sql
+            - Master_Platform_Factor.sql
+            - TRF_Frequency_Capping.sql
+            - Master_STG_Frequency_Capping.sql
+            - Master_STG_Events.sql
+            - SA_STG_CP_CSA_AdUnitMapping.sql
+            - AdServer_TRF_InvFuture.sql
+            - TRF_Inventory.sql
+            - MIG_api_inventory_check.sql
+            - Master_STG_AdSlotRemap.sql
+            - Master_STG_AdSlotSkip.sql
+            - Master_TRF_AdSlotSkip.sql
+
+    Ingestion:
+        Tasks:
+            - task_id: STG_AdServer_InvFuture_ingest
+              pattern: STG_AdServer_InvFuture.*[cC][sS][vV]
+              validator: STG_AdServer_InvFuture_validator.yaml
+              delimiter: ","
+              table: STG_AdServer_InvFuture
+              partitionedBy: partition_date
+              schedule_enabled: true
+              poke_interval: 60
+              timeout: 601
+
+            - task_id: STG_AdServer_InvFuture_Next_12_Months_ingest
+              pattern: STG_AdServer_Booking_Next_12_Months.*[cC][sS][vV]
+              validator: STG_AdServer_InvFuture_Next_12_Months_ingest_validator.yaml
+              delimiter: ","
+              table: STG_AdServer_InvFuture_Next_12_Months
+              partitionedBy: partition_date
+              schedule_enabled: true
+              poke_interval: 60
+              timeout: 601
+
+            - task_id: STG_AdServer_InvFuture_Next_3_Months_ingest
+              pattern: STG_AdServer_Booking_Next_3_Months.*[cC][sS][vV]
+              validator: STG_AdServer_InvFuture_Next_3_Months_ingest_validator.yaml
+              delimiter: ","
+              table: STG_AdServer_InvFuture_Next_3_Months
+              partitionedBy: partition_date
+              schedule_enabled: true
+              poke_interval: 60
+              timeout: 601
+
+            - task_id: STG_SA_Ad_Slot_ingest
+              pattern: STG_SA_Ad_Slot.*[cC][sS][vV]
+              validator: STG_SA_Ad_Slot_validator.yaml
+              delimiter: "^"
+              table: STG_SA_Ad_Slot
+              partitionedBy: partition_date
+              schedule_enabled: true
+              poke_interval: 60
+              timeout: 900
+
+            - task_id: STG_SA_AdFormatSpec_ingest
+              pattern: STG_SA_AdFormatSpec.*[cC][sS][vV]
+              validator: STG_SA_AdFormatSpec_validator.yaml
+              delimiter: "^"
+              table: STG_SA_AdFormatSpec
+              partitionedBy: partition_date
+              schedule_enabled: true
+              poke_interval: 60
+              timeout: 900
+
+            - task_id: STG_SA_AFSAdSlot_ingest
+              pattern: STG_SA_AFSAdSlot.*[cC][sS][vV]
+              validator: STG_SA_AFSAdSlot_validator.yaml
+              delimiter: "|"
+              table: STG_SA_AFSAdSlot
+              partitionedBy: partition_date
+              schedule_enabled: true
+              poke_interval: 60
+              timeout: 900
+            
+            - task_id: STG_SA_CatalogItem_ingest
+              pattern: STG_SA_CatalogItem.*[cC][sS][vV]
+              validator: STG_SA_CatalogItem_validator.yaml
+              delimiter: "|"
+              table: STG_SA_CatalogItem
+              partitionedBy: partition_date
+              schedule_enabled: true
+              poke_interval: 60
+              timeout: 900            
+              
+            - task_id: STG_SA_Price_Item_ingest
+              pattern: STG_SA_Price_Item.*[cC][sS][vV]
+              validator: STG_SA_Price_Item_validator.yaml
+              delimiter: "|"
+              table: STG_SA_Price_Item
+              partitionedBy: partition_date
+              schedule_enabled: true
+              poke_interval: 60
+              timeout: 900
+              
+            - task_id: STG_AdServer_InvHistorical_ingest
+              pattern: STG_AdServer_InvHistorical.*[cC][sS][vV]
+              validator: STG_AdServer_InvHistorical_validator.yaml
+              delimiter: ","
+              table: STG_AdServer_InvHistorical
+              partitionedBy: partition_date
+              schedule_enabled: true
+              poke_interval: 60
+              timeout: 601
+
+            - task_id: STG_AdServer_NetworkImpressions_ingest
+              pattern: STG_AdServer_NetworkImpressions.*[cC][sS][vV]
+              validator: STG_AdServer_NetworkImpressions_validator.yaml
+              delimiter: ","
+              table: STG_AdServer_NetworkImpressions
+              partitionedBy: partition_date
+              schedule_enabled: true
+              poke_interval: 60
+              timeout: 601
+              
+            - task_id: STG_AdServer_NetworkBackfillImpressions_ingest
+              pattern: STG_AdServer_NetworkBackfillImpressions.*[cC][sS][vV]
+              validator: STG_AdServer_NetworkBackfillImpressions_validator.yaml
+              delimiter: ","
+              table: STG_AdServer_NetworkBackfillImpressions
+              partitionedBy: partition_date
+              schedule_enabled: true
+              poke_interval: 60
+              timeout: 601
+              
+            - task_id: STG_AdServer_AudienceFactoring_ingest
+              pattern: STG_AdServer_AudienceFactoring.*[cC][sS][vV]
+              validator: STG_AdServer_AudienceFactoring_validator.yaml
+              delimiter: ","
+              table: STG_AdServer_AudienceFactoring
+              partitionedBy: partition_date
+              schedule_enabled: true
+              poke_interval: 60
+              timeout: 601
+
+            - task_id: STG_Master_City_ingest
+              pattern: master_city.*[cC][sS][vV]
+              validator: STG_Master_City_validator.yaml
+              delimiter: "^"
+              table: STG_Master_City
+              partitionedBy: []
+              schedule_enabled: true
+              poke_interval: 60
+              timeout: 601
+
+            - task_id: STG_SA_Tech_Line_Details
+              pattern: STG_SA_Tech_Line_Details.*[cC][sS][vV]
+              validator: STG_SA_Tech_Line_Details_validator.yaml
+              delimiter: "|"
+              table: stg_sa_tech_line_details
+              partitionedBy: partition_date
+              schedule_enabled: true
+              poke_interval: 60
+              timeout: 601
+            
+            - task_id: STG_SA_Adslot_Hierarchy_ingest
+              pattern: STG_SA_Adslot_Hierarchy.*[cC][sS][vV]
+              validator: STG_SA_Adslot_Hierarchy_validator.yaml
+              delimiter: "|"
+              table: STG_SA_Adslot_Hierarchy
+              partitionedBy: partition_date
+              schedule_enabled: true
+              poke_interval: 60
+              timeout: 900
+              
+            - task_id: PlatformFactor_Master_ingest
+              pattern: platform_factor.*[cC][sS][vV]
+              validator: STG_Master_Platform_Factor_validator.yaml
+              delimiter: ","
+              table: STG_AdServer_Platform_Factor
+              partitionedBy: []
+              schedule_enabled: true
+              poke_interval: 60
+              timeout: 601
+              
+            - task_id: STG_Frequency_Capping_ingest
+              pattern: frequency_capping.*[cC][sS][vV]
+              validator: STG_Master_Frequency_Capping_validator.yaml
+              delimiter: ","
+              table: STG_Frequency_Capping
+              partitionedBy: partition_date
+              schedule_enabled: true
+              poke_interval: 60
+              timeout: 601
+              
+            - task_id: STG_Master_Event_ingest
+              pattern: master_event.*[cC][sS][vV]
+              validator: STG_Master_Events_validator.yaml
+              delimiter: ","
+              table: STG_Master_Event
+              partitionedBy: []
+              schedule_enabled: true
+              poke_interval: 60
+              timeout: 601
+            
+            - task_id: STG_SA_CP_CSA_AdUnitMapping_ingest
+              pattern: STG_SA_CP_CSA_AdUnitMapping.*[cC][sS][vV]
+              validator: STG_SA_CP_CSA_AdUnitMapping_validator.yaml
+              delimiter: "|"
+              table: STG_SA_CP_CSA_AdUnitMapping
+              partitionedBy: partition_date
+              schedule_enabled: true
+              poke_interval: 60
+              timeout: 900 
+
+            - task_id: STG_Master_AdSlotRemap_ingest
+              pattern: master_AdSlotReamap.*[cC][sS][vV]
+              validator: STG_Master_AdSlotRemap_validator.yaml
+              delimiter: ","
+              table: STG_Master_AdSlotRemap
+              partitionedBy: []
+              schedule_enabled: false
+              poke_interval: 60
+              timeout: 601
+
+            - task_id: STG_Master_AdSlotSkip_ingest
+              pattern: master_AdSlotSkip.*[cC][sS][vV]
+              validator: STG_Master_AdSlotSkip_validator.yaml
+              delimiter: ","
+              table: STG_Master_AdSlotSkip
+              partitionedBy: []
+              schedule_enabled: false
+              poke_interval: 60
+              timeout: 601
+              
+    Aggregation:
+        Tasks:
+
+
+            - taskid: TRF_SA_Ad_Slot
+              active: true
+              dependencies_task:
+              - TRF_Master_AdSlotSkip
+              task_type: aggregation
+              options: [ ]
+              file_name: agg_TRF_SA_Ad_Slot.hql
+
+        
+            - taskid: ML_InvForcastingInput
+              active: true
+              dependencies_task:
+                - TRF_DTF_Additional_Dimensions
+                - TRF_AdServer_InvHistorical
+              task_type: aggregation
+              options: [ ]
+              file_name: agg_ML_InvForcastingInput.hql
+
+
+            - taskid: TRF_DTF_Additional_Dimensions_Pre
+              active: true
+              dependencies_task: [ ]
+              task_type: aggregation
+              options: [ ]
+              file_name: agg_TRF_DTF_Additional_Dimensions_Pre.hql
+              
+        
+            - taskid: TRF_DTF_Additional_Dimensions
+              active: true
+              dependencies_task: 
+                 - TRF_DTF_Additional_Dimensions_Pre
+                 - TRF_Master_AdSlotSkip
+              task_type: aggregation
+              options: [ ]
+              file_name: agg_TRF_DTF_Additional_Dimensions.hql
+              
+              
+            - taskid: TRF_InvFuture_Commercials
+              active: true
+              dependencies_task: [ ]
+                # STG_AdServer_InvFuture_ingest                                   # Ingestion
+                # STG_SA_AFSAdSlot_ingest                                         # Ingestion in Common pipeline
+                # STG_SA_AdFormatSpec_ingest                                      # Ingestion in Common pipeline
+              task_type: aggregation
+              options: [ ]
+              file_name: agg_TRF_InvFuture_Commercials.hql
+              
+            
+            - taskid: TRF_Adslot_Hierarchy
+              active: true
+              dependencies_task:
+                - TRF_SA_Ad_Slot
+              task_type: pyspark
+              options: [ ]
+              file_name: agg_trf_adslot_hierarchy.py
+              
+            - taskid: TRF_Frequency_Capping
+              active: true
+              dependencies_task: 
+                - TRF_SA_Ad_Slot
+              task_type: aggregation
+              options: [ ]
+              file_name: agg_TRF_Frequency_Capping.hql
+  
+            - taskid: agg_TRF_Invfuture
+              active: true
+              dependencies_task:
+                - TRF_Master_AdSlotSkip
+              task_type: aggregation
+              options: [ ]
+              file_name: agg_TRF_Invfuture.hql
+
+            - taskid: TRF_AdServer_InvHistorical
+              active: true
+              dependencies_task:
+                - TRF_Master_AdSlotSkip
+              task_type: aggregation
+              options: [ ]
+              file_name: agg_TRF_AdServer_InvHistorical.hql
+
+            - taskid: TRF_Master_AdSlotSkip
+              active: true
+              dependencies_task: [ ]
+              task_type: aggregation
+              options: [ ]
+              file_name: TRF_Master_AdSlotSkip.hql
+
+    Execute_Models: DM_Model_Inventory_Management
+    
+    Post_Aggregation:
+        Tasks:
+        
+            - taskid: TRF_Add_Dimension_Distribution
+              active: true
+              dependencies_task: [ ]
+              task_type: pyspark
+              options: [ ]
+              file_name: agg_TRF_Add_Dimension_Distribution.py
+
+            - taskid: TRF_Copy_Api_InvCheck
+              active: true
+              dependencies_task: [ ]
+              task_type: pyspark
+              options: [ ]
+              file_name: agg_TRF_Copy_Api_InvCheck.py
+          
+            - taskid: TRF_Inventory
+              active: true
+              dependencies_task:
+                - TRF_Add_Dimension_Distribution
+              task_type: aggregation
+              options: [ ]
+              file_name: agg_TRF_Inventory.hql
+
+            - taskid: agg_TRF_Invetory_Upd_Prepare
+              active: true
+              dependencies_task:
+                - TRF_Inventory
+                - TRF_Copy_Api_InvCheck
+              task_type: pyspark
+              options: [ ]
+              file_name: agg_TRF_Invetory_Upd_Prepare.py
+
+    Migration:
+        Tasks:
+            - taskid: Migrate_TRF_InvFuture_Commercials
+              active: true
+              dependencies_task: [ ]
+              task_type: migration
+              options: [ ]
+              file_name: MIG_trf_invfuture_commercials.sql
+
+            - taskid: Migrate_STG_Adserver_InvFuture
+              active: true
+              dependencies_task: [ ]
+              task_type: migration
+              options: [ ]
+              file_name: MIG_STG_Adserver_InvFuture.sql
+
+            - taskid: Migrate_DataMart_inventory_taxonomy
+              active: true
+              dependencies_task: [ ]
+              task_type: migration
+              options: [ ]
+              file_name: MIG_DataMart_inventory_taxonomy.sql
+
+            - taskid: Migrate_STG_SA_Ad_Slot
+              active: true
+              dependencies_task: [ ]
+              task_type: migration
+              options: [ ]
+              file_name: MIG_STG_SA_Ad_Slot.sql
+
+            - taskid: Migrate_STG_SA_AdFormatSpec
+              active: true
+              dependencies_task: [ ]
+              task_type: migration
+              options: [ ]
+              file_name: MIG_STG_SA_AdFormatSpec.sql
+
+            - taskid: Migrate_STG_SA_AFSAdSlot
+              active: true
+              dependencies_task: [ ]
+              task_type: migration
+              options: [ ]
+              file_name: MIG_STG_SA_AFSAdSlot.sql
+
+            - taskid: Migrate_STG_SA_CatalogItem
+              active: true
+              dependencies_task: [ ]
+              task_type: migration
+              options: [ ]
+              file_name: MIG_STG_SA_CatalogItem.sql
+
+            - taskid: Migrate_STG_SA_Price_Item
+              active: true
+              dependencies_task: [ ]
+              task_type: migration
+              options: [ ]
+              file_name: MIG_STG_SA_Price_Item.sql
+
+            - taskid: Migrate_MIG_STG_Adserver_Audiencefactoring
+              active: true
+              dependencies_task: [ ]
+              task_type: migration
+              options: [ ]
+              file_name: MIG_STG_Adserver_Audiencefactoring.sql
+              
+            - taskid: Migrate_Adslot_Hierarchy
+              active: true
+              dependencies_task: [ ]
+              task_type: migration
+              options: [ ]
+              file_name: MIG_adslot_hierarchy.sql
+
+            - taskid: Migrate_Retrospective_Forecasting_Actuals
+              active: true
+              dependencies_task: [ ]
+              task_type: migration
+              options: [ ]
+              file_name: MIG_Retrospective_Forecasting_Actuals.sql
+              
+            - taskid: MIG_Master_Frequency_Cap_Factor
+              active: true
+              dependencies_task: [ ]
+              task_type: migration
+              options: [ ]
+              file_name: MIG_master_frequency_cap_factor.sql
+
+            - taskid: Migrate_api_master_events
+              active: true
+              dependencies_task: [ ]
+              task_type: migration
+              options: [ ]
+              file_name: MIG_api_master_events.sql
+              
+            - taskid: Migrate_CatalogItem_Adsots_Mapping
+              active: true
+              dependencies_task: [ ]
+              task_type: migration
+              options: [ ]
+              file_name: MIG_CatalogItem_Adsots_Mapping.sql
+              
+            - taskid: Migrate_CP_CSA_AdunitMapping
+              active: true
+              dependencies_task: [ ]
+              task_type: migration
+              options: [ ]
+              file_name: MIG_STG_SA_CP_CSA_AdunitMapping.sql
+
+            - taskid: Migrate_TRF_Invfuture_booking
+              active: true
+              dependencies_task: [ ]
+              task_type: migration
+              options: [ ]
+              file_name: MIG_TRF_Invfuture_booking.sql
+
+    Execution:
+        Tasks:
+
+            - taskid: Mysql_API_Inventorycheck_upd_index
+              active: true
+              dependencies_task: []
+              task_type: mysql_execution
+              options: []
+              file_name: Mysql_API_Inventorycheck_upd_index.sql
+
+            - taskid: Mysql_API_Inventorycheck_switch
+              active: true
+              dependencies_task:
+                # - Mysql_Inventory_Update
+                - Mysql_API_Inventorycheck_upd_index
+                # api_inventorycheck                                                # MySQL table
+              task_type: mysql_execution
+              options: []
+              file_name: Mysql_API_Inventorycheck_switch.sql
+
+
+            # - taskid: Mysql_API_Inventorycheck_overwrite_upd
+            #   active: true
+            #   dependencies_task:
+            #     - Mysql_API_Inventorycheck_switch
+            #     - Mysql_API_Inventorycheck_Purge
+            #     # api_inventorycheck                                                # MySQL table
+            #   task_type: mysql_execution
+            #   options: []
+            #   file_name: Mysql_API_Inventorycheck_overwrite_upd.sql
+            # - taskid: Mysql_so_inventory_Insert
+            #   active: true
+            #   dependencies_task:
+            #     - Mysql_API_Inventorycheck_Update
+            #     # STG_SA_AFSAdSlot                                                  # MySQL table
+            #     # STG_SA_AdFormatSpec                                               # MySQL table
+            #     # STG_SA_CatalogItem                                                # MySQL table
+            #     # so_inventory                                                      # MySQL table
+            #   task_type: mysql_execution
+            #   options: []
+            #   file_name: Mysql_so_inventory_Insert.sql
+
+            # - taskid: Mysql_Inventory_Update
+            #   active: true
+            #   dependencies_task:
+            #     - Mysql_API_Inventorycheck_Purge
+            #     # ML_InvForecastingOutputSegment                                    # MySQL table
+            #     # TRF_InvFutureSegment                                              # MySQL table
+            #     # inventory                                                         # MySQL table
+            #   task_type: mysql_execution
+            #   options: []
+            #   file_name: Mysql_Inventory_Update.sql
+
+           # - taskid: Mysql_Inventory_Update
+            #   active: true
+            #   dependencies_task:
+            #     - Mysql_API_Inventorycheck_Purge
+            #     # ML_InvForecastingOutputSegment                                    # MySQL table
+            #     # TRF_InvFutureSegment                                              # MySQL table
+            #     # inventory                                                         # MySQL table
+            #   task_type: mysql_execution
+            #   options: []
+            #   file_name: Mysql_Inventory_Update.sql
+
+            - taskid: Mysql_api_adslot_hierarchy
+              active: true
+              dependencies_task: []
+                # ML_InvForecastingOutputSegment                                    # MySQL table
+                # TRF_InvFutureSegment                                              # MySQL table
+                # inventory                                                         # MySQL table
+              task_type: mysql_execution
+              options: []
+              file_name: Mysql_api_adslot_hierarchy.sql
+
+            - taskid: Mysql_api_frequency_cap_factor
+              active: true
+              dependencies_task:
+                 -  Mysql_api_adslot_hierarchy                                    # MySQL table
+                # TRF_InvFutureSegment                                              # MySQL table
+                # inventory                                                         # MySQL table
+              task_type: mysql_execution
+              options: []
+              file_name: Mysql_api_freq_cap_factor.sql
+            
+            - taskid: Mysql_inventory_override_events_lookup
+              active: true
+              dependencies_task: 
+                - Mysql_new_adslot_insert
+                # - Mysql_API_Inventorycheck_overwrite_upd
+                #- Mysql_API_Inventorycheck_Purge
+              task_type: mysql_execution
+              options: []
+              file_name: Mysql_update_inventory_override_events_lookup.sql
+
+            - taskid: Mysql_inventory_override_levels_lookup
+              active: true
+              dependencies_task: 
+                  - Mysql_inventory_override_events_lookup
+              task_type: mysql_execution
+              options: []
+              file_name: Mysql_update_inventory_override_levels_lookup.sql
+
+            - taskid: Mysql_new_adslot_insert
+              active: true
+              dependencies_task:
+                - Mysql_API_Inventorycheck_Purge
+            #    - Mysql_recreate_api_invcheck_trigger
+              #  - Mysql_API_Inventorycheck_overwrite_upd
+              task_type: mysql_execution
+              options: []
+              file_name: Mysql_insert_adslot.sql
+              
+            - taskid: Mysql_API_Inventorycheck_Purge
+              active: true
+              dependencies_task:
+                  - Mysql_recreate_api_invcheck_trigger
+              task_type: mysql_execution
+              options: []
+              file_name: Mysql_API_Inventorycheck_History.sql
+
+            - taskid: Mysql_CatalogItem_Adsots_Hierarchy
+              active: true
+              dependencies_task:
+                - Mysql_new_adslot_insert
+              task_type: mysql_execution
+              options: []
+              file_name: Mysql_CatalogItem_Adsots_Hierarchy.sql
+            
+            - taskid: Mysql_Forcasted_Revenue_Monthly
+              active: true
+              dependencies_task:
+                - Mysql_CatalogItem_Adsots_Hierarchy
+              task_type: mysql_execution
+              options: []
+              file_name: Mysql_Forcasted_Revenue_Monthly.sql
+              
+            - taskid: Mysql_Forcasted_Revenue_Distribution
+              active: true
+              dependencies_task:
+                - Mysql_Forcasted_Revenue_Monthly
+              task_type: mysql_execution
+              options: []
+              file_name: Mysql_Forcasted_Revenue_Distribution.sql
+              
+            - taskid: Mysql_Forcasted_Revenue_CSA_CP
+              active: true
+              dependencies_task:
+                - Mysql_Forcasted_Revenue_Distribution
+              task_type: mysql_execution
+              options: []
+              file_name: Mysql_Forcasted_Revenue_CSA_CP.sql
+            
+            - taskid:  Mysql_batch_status_rds_process_end
+              active: true
+              dependencies_task:
+                - Mysql_API_Inventorycheck_switch
+                - Mysql_recreate_api_invcheck_trigger
+                # - Mysql_API_Inventorycheck_overwrite_upd
+              task_type: mysql_execution
+              options: []
+              file_name:  Mysql_batch_status_rds_process_end.sql
+
+            - taskid:  Mysql_recreate_api_invcheck_trigger
+              active: true
+              dependencies_task:
+                - Mysql_API_Inventorycheck_switch
+              task_type: mysql_execution
+              options: []
+              file_name:  Mysql_trigger_override_history_update.sql
+
+            - taskid:  Mysql_recreate_api_inv_check_upd_table
+              active: true
+              dependencies_task:
+                - Mysql_API_Inventorycheck_switch
+              task_type: mysql_execution
+              options: []
+              file_name:  Mysql_api_inventorycheck_upd.sql
+
+             
+            
+    Mark_Completed: []
+
+MySQL_Creation:
+    Tables:
+        - Mysql_batch_status.sql
+        - Mysql_api_inventorycheck.sql
+        - Mysql_api_inventorycheck_upd.sql
+        - Mysql_API_Reserved_History.sql
+        - Mysql_api_status_change_action.sql
+        - Mysql_api_mold_attrib.sql
+        - Mysql_api_mold_history.sql
+        - Mysql_DataMart_inventory_taxonomy.sql
+        # - Mysql_Inventory.sql
+        - Mysql_ML_InvForecastingModelKPI.sql
+        - Mysql_ML_InvForecastingOutputSegment.sql
+        - Mysql_so_Inventory.sql
+        - Mysql_STG_Adserver_InvFuture.sql
+        - Mysql_trf_invFuture_commercials.sql
+        - Mysql_api_segment_reach.sql # Also part of Audience usecase (not CDP)
+        - Mysql_STG_Adserver_Audiencefactoring.sql
+        - Mysql_ML_InvForecastingOutputSegmentDistributed.sql
+        - Mysql_adslot_hierarchy.sql
+        - Mysql_api_adslot_hierarchy.sql
+        - Mysql_api_frequency_cap_factor.sql
+        - Mysql_api_master_events.sql
+        - Mysql_inventory_override_events_lookup.sql
+        - Mysql_inventory_override_levels_lookup.sql
+        - Mysql_override_update_history.sql
+        - Mysql_api_inventorycheck_history.sql
+        - Mysql_trigger_override_history_update.sql
+        - Mysql_procedure_gethistorydata.sql
+        - Mysql_Retrospective_Forecasting_Actuals.sql
+        - Mysql_procedure_GetEventImpressionDateRange.sql
+        - Mysql_procedure_GetEventImpressionDateSet.sql
+        - Mysql_procedure_GetForecastedImpressionsDateSet.sql
+        - Mysql_procedure_GetProductImpressionsDateRange.sql
+        - Mysql_procedure_UpdateInventoryEventsDateRange.sql
+        - Mysql_procedure_UpdateInventoryEventsDateSet.sql
+        - Mysql_procedure_UpdateInventoryProductDateRange.sql
+        - Mysql_procedure_UpdateInventoryProductDateSet.sql
+        - Mysql_procedure_GetSingleForecastedImpressionsDate.sql
+        - Mysql_procedure_GetSingleEventImpressionDateSet.sql
+        - Mysql_procedure_UpdateSingleInventoryProductDateSet.sql
+        - Mysql_procedure_UpdateSingleInventoryCheck.sql
+        - Mysql_CatalogItem_Adsots_Mapping.sql
+        - Mysql_FR_monthy_grouping.sql
+        - Mysql_FR_monthy_distribution.sql
+        - Mysql_STG_SA_CP_CSA_AdunitMapping.sql
+        - Mysql_FR_CSA_CP_Distribution.sql
+        - Mysql_CatalogItem_Adsots_Hierarchy.sql
+        - Mysql_api_order_message_queue.sql
+        - Mysql_api_order_process_state.sql
+        - Mysql_api_procedure_CheckOrderLineProcess.sql
+        - Mysql_TRF_Invfuture_booking.sql
+        - Mysql_master_frequency_cap_factor.sql
+
+    Views:
+        - View_DataMart_Inventory.sql
+        - View_DataMart_MOrderLines.sql
+        - View_retrospective_reporting.sql
+
+Data_Retention:
+    Retention_Groups:
+        - Group_id: 1
+          Tables:
+            - STG_AdServer_InvFuture
+            - STG_AdServer_InvHistorical
+            - STG_AdServer_PerformanceGathering
+            - TRF_perf_gathering_metric
+            - TRF_AdUnitSegmentUsage
+            - TRF_InvFuture_Commercials
+            #- TRF_percentage_vs_all  no partition_date
+            - TRF_Historical_Capacity
+            - ML_InvForecastingInput
+            - ML_InvForecastingOutputSegment
+            - ML_InvForecastingModelKPI
+          Retention_period: 90
+
+# E.O.F.

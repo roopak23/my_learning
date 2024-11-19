@@ -1,0 +1,50 @@
+image:
+  repository: registry.k8s.io/external-dns/external-dns
+  # Overrides the image tag whose default is v{{ .Chart.AppVersion }}
+  tag: "v0.13.5"
+  pullPolicy: IfNotPresent
+
+imagePullSecrets: []
+
+nameOverride: ""
+fullnameOverride: ""
+
+commonLabels: {}
+
+serviceAccount:
+  # Specifies whether a service account should be created
+  create: true
+  # Annotations to add to the service account
+  annotations: {}
+  # Labels to add to the service account
+  labels: {}
+  # The name of the service account to use.
+  # If not set and create is true, a name is generated using the fullname template
+  name: ""
+
+rbac:
+  # Specifies whether RBAC resources should be created
+  create: true
+  additionalPermissions: []
+
+nodeSelector:
+  group: foundation
+
+logLevel: info
+logFormat: text
+
+interval: 5m
+triggerLoopOnEvent: false
+
+sources:
+  # - service
+  - ingress
+
+policy: upsert-only
+
+domainFilters:
+  - PARAMS.AMAPIE_DOMAIN
+
+provider: aws
+
+extraArgs: []

@@ -1,0 +1,5 @@
+curl --request POST "http://localhost:8082/actuator/shutdown"
+curl --request POST "http://localhost:8087/actuator/shutdown"
+curl --request POST "http://localhost:8088/actuator/shutdown"
+curl --request POST "http://localhost:8888/actuator/shutdown"
+curl --request POST "http://localhost:8761/actuator/shutdown"

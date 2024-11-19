@@ -1,0 +1,51 @@
+config:
+  remove_duplicates: true
+  check_mandatory: true
+
+fields:
+  - name: line_item_remote_id
+    type: StringType()
+    mandatory: true
+  - name: order_remote_id
+    type: StringType()
+    mandatory: true
+  - name: end_date
+    type: StringType()
+    mandatory: true
+  - name: delivery_rate_type
+    type: StringType()
+    mandatory: true
+  - name: line_type
+    type: StringType()
+    mandatory: true
+  - name: selling_type
+    type: StringType()
+    mandatory: true
+  - name: expected_delivery
+    type: DoubleType()
+    mandatory: true
+  - name: actual_delivery
+    type: DoubleType()
+    mandatory: true
+  - name: impressions_delivered
+    type: IntegerType()
+    mandatory: true
+  - name: clicks_delivered
+    type: IntegerType()
+    mandatory: true
+  - name: status
+    type: StringType()
+    mandatory: true
+
+outputOrder:
+  - line_item_remote_id
+  - order_remote_id
+  - end_date
+  - delivery_rate_type
+  - line_type
+  - selling_type
+  - expected_delivery
+  - actual_delivery
+  - impressions_delivered
+  - clicks_delivered
+  - status

@@ -1,0 +1,43 @@
+Name: Audience_CDP_Mapping
+
+Tags:
+    - Audience_CDP
+
+Steps_Order:
+    - Start >> [Create_Cluster, Wait_For_Files]
+    - Create_Cluster >> [Preparation, Creation] >> Ingestion
+    - Wait_For_Files >> Ingestion
+    - Ingestion >> Migration >> Mark_Completed >> End
+
+Steps:
+    Create_Cluster: []
+    Wait_For_Files: []
+    Preparation: []
+    Creation:
+        Files:
+            - STG_DP_Adserver_Segment_Mapping.sql
+
+    Ingestion:
+        Tasks:
+            - task_id: STG_DP_Adserver_Segment_Mapping_ingest
+              pattern: STG_DP_Adserver_Segment_Mapping.*[cC][sS][vV]
+              validator: STG_DP_Adserver_Segment_Mapping_validator.yaml
+              delimiter: "|"
+              table: STG_DP_Adserver_Segment_Mapping
+              partitionedBy: partition_date
+              schedule_enabled: true
+              poke_interval: 60
+              timeout: 900
+              
+    Migration:
+        Tasks:
+            - taskid: Migrate_STG_DP_Adserver_Segment_Mapping
+              active: true
+              dependencies_task: [ ]
+              task_type: migration
+              options: [ ]
+              file_name: MIG_STG_DP_Adserver_Segment_Mapping.sql
+
+    Mark_Completed: []
+
+# E.O.F.

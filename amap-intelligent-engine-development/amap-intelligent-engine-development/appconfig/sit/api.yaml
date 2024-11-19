@@ -1,0 +1,63 @@
+params:
+  - name: PARAMS.AWS_REGION
+    value: ap-southeast-2
+    descirption: AWS region where applications will be deployed
+
+  - name: PARAMS.ECR_REPO
+    value: 956659591835.dkr.ecr.ap-southeast-2.amazonaws.com
+    descirption: ECR Reporitory where custome images will be stored
+
+  - name: PARAMS.EKS_CLUSTER_NAME
+    value: foxtel-hawkeye-sit-eks
+    descirption: Cluster Name where applications will be deployed
+
+  - name: PARAMS.KEYCLOAK_URL
+    value: pub.sitamapie.foxtel.com.au/keycloak
+    descirption: Host where kecyloack is deployed
+
+  # - name: PARAMS.VAULT_HOST
+  #   value: vaultsit.
+  #   descirption: Host where kecyloack is deployed
+
+  - name: PARAMS.API_HOST
+    value: pub.sitamapie.foxtel.com.au
+    descirption: Host name to use for ingress for connection from internet(public access)
+
+  - name: PARAMS.DB_HOST
+    value: foxtel-hawkeye-sit-rds.cotzvllmovcv.ap-southeast-2.rds.amazonaws.com
+    descirption: RDS database endpoint
+  
+  - name: PARAMS.DB_PORT
+    value: 3306
+    descirption: Database port
+
+  - name: PARAMS.API_DB_USER
+    value: api
+    descirption: Database user for API
+
+  - name: XPARAMS.API_DB_PASS
+    value: api_user_password_sit
+    descirption: Database API user password - stored in external provider
+
+  - name: PARAMS.API_MINREPLICAS
+    value: 1
+    descirption: Minimun replicas for API pod autoscaler
+
+  - name: PARAMS.API_MAXREPLICAS
+    value: 2
+    descirption: Maximum replicas for API pod autoscaler
+
+  - name: PARAMS.API_CPUUTILIZATION
+    value: 60
+    descirption: Default CPU utilization for API scaling
+
+  - name: PARAMS.INVENTORY_MANAGEMENT_REPO
+    value: 956659591835.dkr.ecr.ap-southeast-2.amazonaws.com/inventory-management
+    descirption: ECR repo for inventory-management
+
+  - name: PARAMS.ORDER_MANAGEMENT_REPO
+    value: 956659591835.dkr.ecr.ap-southeast-2.amazonaws.com/order-management
+    descirption: ECR repo for order-management
+
+
+

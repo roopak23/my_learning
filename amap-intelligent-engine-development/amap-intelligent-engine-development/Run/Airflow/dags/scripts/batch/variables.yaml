@@ -1,0 +1,33 @@
+
+# General configuration of the DAG
+DAG:
+  PIPELINES_CONFIGS_PATH: '/opt/airflow/dags/scripts/batch/pipelines'
+  FILE_PATH: '/opt/airflow/dags/Spark/Batch'
+  CLUSTER_DEF: '/opt/airflow/dags/scripts/batch/AWS_cluster_creation.yaml'
+  TEMP_FOLDER: '/tmp/batch-pipeline'
+  INSTALLATION_PATH: '/opt/airflow/dags/Spark/Installation'
+
+# Environment configuration (AWS, AZR, GCP)
+Environment:
+  NAME: AWS
+  BUCKET_NAME: PARAMS.S3_DATA_BUCKET_NAME
+  TABLEHOST: s3 #wasb #gs
+  INPUT_FILES_DIR: data/inbound/import
+  REJECTED_FILES_DIR: data/inbound/rejected
+  HIVE_DATA_PATH: data/hive/default
+  OUTBOUND_DIR: data/outbound
+
+
+# Variables for Tables
+Tables:
+  ENDDATE: (pendulum.now(tz='Australia/Sydney')- timedelta(1)).strftime('%Y%m%d')
+#  WEEKDATE: days_ago(7).strftime('%Y%m%d')
+#  MONTHDATE: days_ago(30).strftime('%Y%m%d')
+#
+#  RUNDATE: days_ago(0).strftime('%Y%m%d')
+#  RUNDAY: days_ago(0).day
+#  RUNWEEK: days_ago(0).isocalendar()[1]
+#  RUNMONTH: days_ago(0).month
+#  RUNYEAR: days_ago(0).year
+
+# EOF

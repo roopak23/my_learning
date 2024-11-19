@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Release.Name }}-auth
+  labels:
+    app: {{ .Release.Name }}
+    chart: {{ .Chart.Name }}
+    release: {{ .Chart.Version }}
+
+data:
+  spring.security.oauth2.resourceserver.jwt.issuer-uri: "{{ .Values.iam.keycloak.host }}/auth/realms/DM3"
+  jwt.auth.converter.resource-id: "{{ .Values.iam.keycloak.client.name }}"
+  jwt.auth.converter.principal-attribute: "{{ .Values.iam.keycloak.principal.attribute }}"

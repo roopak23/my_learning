@@ -1,0 +1,565 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<metadata>
+	<tables>
+		<table xml_id="1">
+			<active>Y</active>
+			<date_filter_column_logical_name/>
+			<date_filter_column_physical_name/>
+			<date_filter_column_condition/>
+			<db_id>1</db_id>
+			<db_type>HDFS</db_type>
+			<description>DM3 Car Interest</description>
+			<fields>
+				<field>
+					<aggregation_rule/>
+					<data_type>string</data_type>
+					<description>The user id</description>
+					<logical_name>User ID</logical_name>
+					<normalized>N</normalized>
+					<physical_name>userid</physical_name>
+					<statistics>N</statistics>
+					<view_id>1</view_id>
+					<visible>Y</visible>
+				</field>
+				<field>
+					<aggregation_rule/>
+					<data_type>integer</data_type>
+					<description>Automotive interest counter</description>
+					<logical_name>Automotive interest</logical_name>
+					<normalized>N</normalized>
+					<physical_name>automotive</physical_name>
+					<statistics>N</statistics>
+					<view_id>1</view_id>
+					<visible>Y</visible>
+				</field>
+				<field>
+					<aggregation_rule/>
+					<data_type>integer</data_type>
+					<description>Books and Literature interest counter</description>
+					<logical_name>Books and Literature interest</logical_name>
+					<normalized>N</normalized>
+					<physical_name>books_and_literature</physical_name>
+					<statistics>N</statistics>
+					<view_id>1</view_id>
+					<visible>Y</visible>
+				</field>
+				<field>
+					<aggregation_rule/>
+					<data_type>integer</data_type>
+					<description>business and finance interest counter</description>
+					<logical_name>business and finance interest</logical_name>
+					<normalized>N</normalized>
+					<physical_name>business_and_finance</physical_name>
+					<statistics>N</statistics>
+					<view_id>1</view_id>
+					<visible>Y</visible>
+				</field>
+				<field>
+					<aggregation_rule/>
+					<data_type>integer</data_type>
+					<description>careers interest counter</description>
+					<logical_name>careers interest</logical_name>
+					<normalized>N</normalized>
+					<physical_name>careers</physical_name>
+					<statistics>N</statistics>
+					<view_id>1</view_id>
+					<visible>Y</visible>
+				</field>
+				<field>
+					<aggregation_rule/>
+					<data_type>integer</data_type>
+					<description>education interest counter</description>
+					<logical_name>education interest</logical_name>
+					<normalized>N</normalized>
+					<physical_name>education</physical_name>
+					<statistics>N</statistics>
+					<view_id>1</view_id>
+					<visible>Y</visible>
+				</field>
+				<field>
+					<aggregation_rule/>
+					<data_type>integer</data_type>
+					<description>events_and_attractions interest counter</description>
+					<logical_name>events_and_attractions interest</logical_name>
+					<normalized>N</normalized>
+					<physical_name>events_and_attractions</physical_name>
+					<statistics>N</statistics>
+					<view_id>1</view_id>
+					<visible>Y</visible>
+				</field>
+				<field>
+					<aggregation_rule/>
+					<data_type>integer</data_type>
+					<description>family_and_relationships interest counter</description>
+					<logical_name>family_and_relationships interest</logical_name>
+					<normalized>N</normalized>
+					<physical_name>family_and_relationships</physical_name>
+					<statistics>N</statistics>
+					<view_id>1</view_id>
+					<visible>Y</visible>
+				</field>
+				<field>
+					<aggregation_rule/>
+					<data_type>integer</data_type>
+					<description>fine_art interest counter</description>
+					<logical_name>fine_art interest</logical_name>
+					<normalized>N</normalized>
+					<physical_name>fine_art</physical_name>
+					<statistics>N</statistics>
+					<view_id>1</view_id>
+					<visible>Y</visible>
+				</field>
+				<field>
+					<aggregation_rule/>
+					<data_type>integer</data_type>
+					<description>food_and_drink interest counter</description>
+					<logical_name>food_and_drink interest</logical_name>
+					<normalized>N</normalized>
+					<physical_name>food_and_drink</physical_name>
+					<statistics>N</statistics>
+					<view_id>1</view_id>
+					<visible>Y</visible>
+				</field>
+				<field>
+					<aggregation_rule/>
+					<data_type>integer</data_type>
+					<description>healthy_living interest counter</description>
+					<logical_name>healthy_living interest</logical_name>
+					<normalized>N</normalized>
+					<physical_name>healthy_living</physical_name>
+					<statistics>N</statistics>
+					<view_id>1</view_id>
+					<visible>Y</visible>
+				</field>
+				<field>
+					<aggregation_rule/>
+					<data_type>integer</data_type>
+					<description>hobbies_and_interests interest counter</description>
+					<logical_name>hobbies_and_interests interest</logical_name>
+					<normalized>N</normalized>
+					<physical_name>hobbies_and_interests</physical_name>
+					<statistics>N</statistics>
+					<view_id>1</view_id>
+					<visible>Y</visible>
+				</field>
+				<field>
+					<aggregation_rule/>
+					<data_type>integer</data_type>
+					<description>home_and_garden interest counter</description>
+					<logical_name>home_and_garden interest</logical_name>
+					<normalized>N</normalized>
+					<physical_name>home_and_garden</physical_name>
+					<statistics>N</statistics>
+					<view_id>1</view_id>
+					<visible>Y</visible>
+				</field>
+				<field>
+					<aggregation_rule/>
+					<data_type>integer</data_type>
+					<description>medical_health interest counter</description>
+					<logical_name>medical_health interest</logical_name>
+					<normalized>N</normalized>
+					<physical_name>medical_health</physical_name>
+					<statistics>N</statistics>
+					<view_id>1</view_id>
+					<visible>Y</visible>
+				</field>
+				<field>
+					<aggregation_rule/>
+					<data_type>integer</data_type>
+					<description>movies interest counter</description>
+					<logical_name>movies interest</logical_name>
+					<normalized>N</normalized>
+					<physical_name>movies</physical_name>
+					<statistics>N</statistics>
+					<view_id>1</view_id>
+					<visible>Y</visible>
+				</field>
+				<field>
+					<aggregation_rule/>
+					<data_type>integer</data_type>
+					<description>music_and_audio interest counter</description>
+					<logical_name>music_and_audio interest</logical_name>
+					<normalized>N</normalized>
+					<physical_name>music_and_audio</physical_name>
+					<statistics>N</statistics>
+					<view_id>1</view_id>
+					<visible>Y</visible>
+				</field>
+				<field>
+					<aggregation_rule/>
+					<data_type>integer</data_type>
+					<description>news_and_politics interest counter</description>
+					<logical_name>news_and_politics interest</logical_name>
+					<normalized>N</normalized>
+					<physical_name>news_and_politics</physical_name>
+					<statistics>N</statistics>
+					<view_id>1</view_id>
+					<visible>Y</visible>
+				</field>
+				<field>
+					<aggregation_rule/>
+					<data_type>integer</data_type>
+					<description>personal_finance interest counter</description>
+					<logical_name>personal_finance interest</logical_name>
+					<normalized>N</normalized>
+					<physical_name>personal_finance</physical_name>
+					<statistics>N</statistics>
+					<view_id>1</view_id>
+					<visible>Y</visible>
+				</field>
+				<field>
+					<aggregation_rule/>
+					<data_type>integer</data_type>
+					<description>pets interest counter</description>
+					<logical_name>pets interest</logical_name>
+					<normalized>N</normalized>
+					<physical_name>pets</physical_name>
+					<statistics>N</statistics>
+					<view_id>1</view_id>
+					<visible>Y</visible>
+				</field>
+				<field>
+					<aggregation_rule/>
+					<data_type>integer</data_type>
+					<description>pop_culture interest counter</description>
+					<logical_name>pop_culture interest</logical_name>
+					<normalized>N</normalized>
+					<physical_name>pop_culture</physical_name>
+					<statistics>N</statistics>
+					<view_id>1</view_id>
+					<visible>Y</visible>
+				</field>
+				<field>
+					<aggregation_rule/>
+					<data_type>integer</data_type>
+					<description>real_estate interest counter</description>
+					<logical_name>real_estate interest</logical_name>
+					<normalized>N</normalized>
+					<physical_name>real_estate</physical_name>
+					<statistics>N</statistics>
+					<view_id>1</view_id>
+					<visible>Y</visible>
+				</field>
+				<field>
+					<aggregation_rule/>
+					<data_type>integer</data_type>
+					<description>religion_and_spirituality interest counter</description>
+					<logical_name>religion_and_spirituality interest</logical_name>
+					<normalized>N</normalized>
+					<physical_name>religion_and_spirituality</physical_name>
+					<statistics>N</statistics>
+					<view_id>1</view_id>
+					<visible>Y</visible>
+				</field>
+				<field>
+					<aggregation_rule/>
+					<data_type>integer</data_type>
+					<description>science interest counter</description>
+					<logical_name>science interest</logical_name>
+					<normalized>N</normalized>
+					<physical_name>science</physical_name>
+					<statistics>N</statistics>
+					<view_id>1</view_id>
+					<visible>Y</visible>
+				</field>
+				<field>
+					<aggregation_rule/>
+					<data_type>integer</data_type>
+					<description>shopping interest counter</description>
+					<logical_name>shopping interest</logical_name>
+					<normalized>N</normalized>
+					<physical_name>shopping</physical_name>
+					<statistics>N</statistics>
+					<view_id>1</view_id>
+					<visible>Y</visible>
+				</field>
+				<field>
+					<aggregation_rule/>
+					<data_type>integer</data_type>
+					<description>sports interest counter</description>
+					<logical_name>sports interest</logical_name>
+					<normalized>N</normalized>
+					<physical_name>sports</physical_name>
+					<statistics>N</statistics>
+					<view_id>1</view_id>
+					<visible>Y</visible>
+				</field>
+				<field>
+					<aggregation_rule/>
+					<data_type>integer</data_type>
+					<description>style_and_fashion interest counter</description>
+					<logical_name>style_and_fashion interest</logical_name>
+					<normalized>N</normalized>
+					<physical_name>style_and_fashion</physical_name>
+					<statistics>N</statistics>
+					<view_id>1</view_id>
+					<visible>Y</visible>
+				</field>
+				<field>
+					<aggregation_rule/>
+					<data_type>integer</data_type>
+					<description>technology_and_computing interest counter</description>
+					<logical_name>technology_and_computing interest</logical_name>
+					<normalized>N</normalized>
+					<physical_name>technology_and_computing</physical_name>
+					<statistics>N</statistics>
+					<view_id>1</view_id>
+					<visible>Y</visible>
+				</field>
+				<field>
+					<aggregation_rule/>
+					<data_type>integer</data_type>
+					<description>television interest counter</description>
+					<logical_name>television interest</logical_name>
+					<normalized>N</normalized>
+					<physical_name>television</physical_name>
+					<statistics>N</statistics>
+					<view_id>1</view_id>
+					<visible>Y</visible>
+				</field>
+				<field>
+					<aggregation_rule/>
+					<data_type>integer</data_type>
+					<description>travel interest counter</description>
+					<logical_name>travel interest</logical_name>
+					<normalized>N</normalized>
+					<physical_name>travel</physical_name>
+					<statistics>N</statistics>
+					<view_id>1</view_id>
+					<visible>Y</visible>
+				</field>
+				<field>
+					<aggregation_rule/>
+					<data_type>integer</data_type>
+					<description>video_gaming interest counter</description>
+					<logical_name>video_gaming interest</logical_name>
+					<normalized>N</normalized>
+					<physical_name>video_gaming</physical_name>
+					<statistics>N</statistics>
+					<view_id>1</view_id>
+					<visible>Y</visible>
+				</field>
+				<field>
+					<aggregation_rule/>
+					<data_type>integer</data_type>
+					<description>sensitive_topics interest counter</description>
+					<logical_name>sensitive_topics interest</logical_name>
+					<normalized>N</normalized>
+					<physical_name>sensitive_topics</physical_name>
+					<statistics>N</statistics>
+					<view_id>1</view_id>
+					<visible>Y</visible>
+				</field>
+			</fields>
+			<file_path>/home/hadoop/car_interest.csv</file_path>
+			<key>userid</key>
+			<logical_name>Car Interest</logical_name>
+			<physical_name>CAR_Interest</physical_name>
+			<schema/>
+			<view_id>1</view_id>
+			<visible>Y</visible>
+		</table>
+		<table xml_id="2">
+			<active>Y</active>
+			<date_filter_column_logical_name/>
+			<date_filter_column_physical_name/>
+			<date_filter_column_condition/>
+			<db_id>1</db_id>
+			<db_type>HDFS</db_type>
+			<description>DM3 Car Geo</description>
+			<fields>	
+				<field>
+					<aggregation_rule/>
+					<data_type>string</data_type>
+					<description>The user id</description>
+					<logical_name>userid</logical_name>
+					<normalized>N</normalized>
+					<physical_name>userid</physical_name>
+					<statistics>N</statistics>
+					<view_id>1</view_id>
+					<visible>Y</visible>
+				</field>
+				<field>
+					<aggregation_rule/>
+					<data_type>string</data_type>
+					<description>The device</description>
+					<logical_name>device ID</logical_name>
+					<normalized>N</normalized>
+					<physical_name>device</physical_name>
+					<statistics>N</statistics>
+					<view_id>1</view_id>
+					<visible>Y</visible>
+				</field>
+				<field>
+					<aggregation_rule/>
+					<data_type>integer</data_type>
+					<description>Count of visits for device</description>
+					<logical_name>count_device</logical_name>
+					<normalized>N</normalized>
+					<physical_name>count_device</physical_name>
+					<statistics>N</statistics>
+					<view_id>1</view_id>
+					<visible>Y</visible>
+				</field>
+				<field>
+					<aggregation_rule/>
+					<data_type>string</data_type>
+					<description>country</description>
+					<logical_name>country</logical_name>
+					<normalized>N</normalized>
+					<physical_name>country</physical_name>
+					<statistics>N</statistics>
+					<view_id>1</view_id>
+					<visible>Y</visible>
+				</field>
+				<field>
+					<aggregation_rule/>
+					<data_type>integer</data_type>
+					<description>Count of visits for country</description>
+					<logical_name>count_country</logical_name>
+					<normalized>N</normalized>
+					<physical_name>count_country</physical_name>
+					<statistics>N</statistics>
+					<view_id>1</view_id>
+					<visible>Y</visible>
+				</field>
+				<field>
+					<aggregation_rule/>
+					<data_type>string</data_type>
+					<description>The ID of the region</description>
+					<logical_name>region ID</logical_name>
+					<normalized>N</normalized>
+					<physical_name>region</physical_name>
+					<statistics>N</statistics>
+					<view_id>1</view_id>
+					<visible>Y</visible>
+				</field>
+				<field>
+					<aggregation_rule/>
+					<data_type>integer</data_type>
+					<description>Count of visits for region</description>
+					<logical_name>region</logical_name>
+					<normalized>N</normalized>
+					<physical_name>count_region</physical_name>
+					<statistics>N</statistics>
+					<view_id>1</view_id>
+					<visible>Y</visible>
+				</field>
+				<field>
+					<aggregation_rule/>
+					<data_type>string</data_type>
+					<description>The ID of the zipcode</description>
+					<logical_name>zipcode ID</logical_name>
+					<normalized>N</normalized>
+					<physical_name>zipcode</physical_name>
+					<statistics>N</statistics>
+					<view_id>1</view_id>
+					<visible>Y</visible>
+				</field>
+				<field>
+					<aggregation_rule/>
+					<data_type>integer</data_type>
+					<description>Count of visits for zipcode</description>
+					<logical_name>count_zipcode</logical_name>
+					<normalized>N</normalized>
+					<physical_name>count_zipcode</physical_name>
+					<statistics>N</statistics>
+					<view_id>1</view_id>
+					<visible>Y</visible>
+				</field>
+			</fields>
+			<file_path>/home/hadoop/car_geo.csv</file_path>
+			<key>userid</key>
+			<logical_name>Car Geo</logical_name>
+			<physical_name>CAR_Geo</physical_name>
+			<schema/>
+			<view_id>1</view_id>
+			<visible>Y</visible>
+		</table>
+		<table xml_id="3">
+			<active>Y</active>
+			<date_filter_column_logical_name/>
+			<date_filter_column_physical_name/>
+			<date_filter_column_condition/>
+			<db_id>1</db_id>
+			<db_type>HDFS</db_type>
+			<description>DM3 Car SocioDemo (lookalike)</description>
+			<fields>	
+				<field>
+					<aggregation_rule/>
+					<data_type>string</data_type>
+					<description>The user id</description>
+					<logical_name>userid</logical_name>
+					<normalized>N</normalized>
+					<physical_name>userid</physical_name>
+					<statistics>N</statistics>
+					<view_id>1</view_id>
+					<visible>Y</visible>
+				</field>
+				<field>
+					<aggregation_rule/>
+					<data_type>string</data_type>
+					<description>The age</description>
+					<logical_name>age ID</logical_name>
+					<normalized>N</normalized>
+					<physical_name>age</physical_name>
+					<statistics>N</statistics>
+					<view_id>1</view_id>
+					<visible>Y</visible>
+				</field>
+				<field>
+					<aggregation_rule/>
+					<data_type>string</data_type>
+					<description>The gender</description>
+					<logical_name>gender</logical_name>
+					<normalized>N</normalized>
+					<physical_name>gender</physical_name>
+					<statistics>N</statistics>
+					<view_id>1</view_id>
+					<visible>Y</visible>
+				</field>
+				<field>
+					<aggregation_rule/>
+					<data_type>integer</data_type>
+					<description>Partition Date</description>
+					<logical_name>Partition Date</logical_name>
+					<normalized>N</normalized>
+					<physical_name>partition_date</physical_name>
+					<statistics>N</statistics>
+					<view_id>1</view_id>
+					<visible>Y</visible>
+				</field>
+				<field>
+					<aggregation_rule/>
+					<data_type>float</data_type>
+					<description>Model accuracy for Age</description>
+					<logical_name>accuracy_age</logical_name>
+					<normalized>N</normalized>
+					<physical_name>accuracy_age</physical_name>
+					<statistics>N</statistics>
+					<view_id>1</view_id>
+					<visible>Y</visible>
+				</field>
+				<field>
+					<aggregation_rule/>
+					<data_type>float</data_type>
+					<description>Model accuracy for Gender</description>
+					<logical_name>accuracy_gender</logical_name>
+					<normalized>N</normalized>
+					<physical_name>accuracy_gender</physical_name>
+					<statistics>N</statistics>
+					<view_id>1</view_id>
+					<visible>Y</visible>
+				</field>
+			</fields>
+			<file_path>/home/hadoop/car_sociodemo.csv</file_path>
+			<key>userid</key>
+			<logical_name>Car SocioDemo</logical_name>
+			<physical_name>AUD_MODEL_SocioDemo</physical_name>
+			<schema/>
+			<view_id>1</view_id>
+			<visible>Y</visible>
+		</table>
+	</tables>
+</metadata>

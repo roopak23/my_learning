@@ -1,0 +1,39 @@
+dependencies:
+    
+  - taskid: Mysql_API_Inventorycheck_Update
+    active: true
+    dependencies_task: 
+    - Mysql_Inventory_Update
+    task_type: mysql_execution
+    options: []
+    file_name: Mysql_API_Inventorycheck_Update.sql
+
+  - taskid: Mysql_so_inventory_Insert
+    active: true
+    dependencies_task:
+      - Mysql_API_Inventorycheck_Update
+    task_type: mysql_execution
+    options: []
+    file_name: Mysql_so_inventory_Insert.sql
+  - taskid: sugggested_proposal_insert
+    active: true
+    dependencies_task: []
+    task_type: mysql_execution
+    options: []
+    file_name: Insert_Suggested_Proposal.sql
+
+  - taskid: sugggested_product_insert
+    active: true
+    dependencies_task:
+      - sugggested_proposal_insert
+      - Mysql_so_inventory_Insert
+    task_type: mysql_execution
+    options: []
+    file_name: Insert_Suggested_Product.sql
+    
+  - taskid: Mysql_Inventory_Update
+    active: true
+    dependencies_task: []
+    task_type: mysql_execution
+    options: []
+    file_name: Mysql_Inventory_Update.sql

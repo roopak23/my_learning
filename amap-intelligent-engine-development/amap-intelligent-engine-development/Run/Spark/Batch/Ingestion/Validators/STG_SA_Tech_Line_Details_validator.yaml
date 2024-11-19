@@ -1,0 +1,89 @@
+config:
+  remove_duplicates: true
+  check_mandatory: true
+
+# StringType, BinaryType, BooleanType, DecimalType, FloatType, DoubleType, ByteType, ShortType, IntegerType, LongType, DateType, TimestampType, NullType
+fields:
+  - name: Id
+    type: StringType()
+    mandatory: true
+  - name: Name
+    type: StringType()
+    mandatory: false
+  - name: Advertiser_Name__c
+    type: StringType()
+    mandatory: true
+  - name: Market_Order_Line_Details__c
+    type: StringType()
+    mandatory: true
+  - name: Start_Date__c
+    type: LongType()
+    mandatory: true
+  - name: End_Date__c
+    type: LongType()
+    mandatory: true
+  - name: Type__c
+    type: StringType()
+    mandatory: false
+  - name: Ad_Ops_System__c
+    type: StringType()
+    mandatory: true
+  - name: Remote_id__c
+    type: StringType()
+    mandatory: true
+  - name: Remote_Name__c
+    type: StringType()
+    mandatory: false
+  - name: Fb_Cost_Bid_Cap__c
+    type: StringType()
+    mandatory: false
+  - name: Status__c
+    type: StringType()
+    mandatory: true
+  - name: Bid_Strategy__c
+    type: StringType()
+    mandatory: false
+  - name: Max_Bid_Amount__c
+    type: DoubleType()
+    mandatory: false
+  - name: Total_price__c
+    type: DoubleType()
+    mandatory: false
+  - name: Pacing_Type__c
+    type: StringType()
+    mandatory: false
+  - name: Quantity__c
+    type: DoubleType()
+    mandatory: false
+  - name: Tech_Order__c
+    type: StringType()
+    mandatory: true
+  - name: Priority__c
+    type: IntegerType()
+    mandatory: false
+  - name: Max_Video_Duration__c
+    type: DoubleType()
+    mandatory: false
+
+# column order from list above
+outputOrder:
+  - Id
+  - Name 
+  - Advertiser_Name__c
+  - Market_Order_Line_Details__c
+  - Start_Date__c 
+  - End_Date__c 
+  - Type__c 
+  - Ad_Ops_System__c 
+  - Remote_id__c 
+  - Remote_Name__c 
+  - Fb_Cost_Bid_Cap__c 
+  - Status__c 
+  - Bid_Strategy__c
+  - Max_Bid_Amount__c 
+  - Total_price__c
+  - Pacing_Type__c
+  - Quantity__c
+  - Tech_Order__c
+  - Priority__c
+  - Max_Video_Duration__c
